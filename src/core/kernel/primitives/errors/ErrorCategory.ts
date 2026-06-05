@@ -1,0 +1,7 @@
+export enum ErrorCategory {
+  LOGICAL = "LOGICAL",
+  TECHNICAL = "TECHNICAL",
+  SECURITY = "SECURITY",
+  EXTERNAL = "EXTERNAL",
+  VALIDATION = "VALIDATION",
+}
