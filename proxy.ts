@@ -1,6 +1,6 @@
 import { headers } from "next/headers";
 import { type NextRequest, NextResponse } from "next/server";
-import { auth } from "@/core/foundations/infrastructure/services/better-auth/auth-server";
+import { auth } from "@/Lib/BetterAuth/Config";
 
 export async function proxy(request: NextRequest) {
   const session = await auth.api.getSession({
