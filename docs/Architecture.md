@@ -33,10 +33,10 @@
 
 | الطبقة | النمط المستخدم | السبب المعماري | نطاق الاستخدام |
 |--------|---------------|----------------|----------------|
-| **Domain** | 🟢 OOP Classes | Aggregates, Entities, Interface Repo Value Objects تحتاج Invariants و Encapsulation | Server-Side فقط |
-| **Application** | 🟢 OOP Classes | UseCases و Handlers تحتاج DI و Orchestration | Server-Side فقط |
-| **Infrastructure** | 🟢 OOP Classes | Repositories و External Clients تحتاج Polymorphism | Server-Side فقط |
-| **Presentation** | 🔵 Discriminated Unions | Server Actions و Client Components تحتاج Serialization Safety | Server + Client |
+| **Domain** | 🟢 OOP Classes | Aggregates, Entities, Interface RepoRepositories ValueObjects تحتاج Invariants و Encapsulation | Server-Side فقط |
+| **Application** | 🟢 OOP Classes | UseCases و Dtos و Handlers تحتاج DI و Orchestration | Server-Side فقط |
+| **Infrastructure** | 🟢 OOP Classes | Repositories و Mappers و External Clients تحتاج Polymorphism | Server-Side فقط |
+| **Presentation** | 🔵 Discriminated Unions | Server Actions و Hooks و Client Components تحتاج Serialization Safety | Server + Client |
 
 ---
 
@@ -119,25 +119,31 @@
 
 ---
 
-## 📁 7. هيكلية المجلدات (Folder Structure)
+## 📁 7. هيكلية المجلدات للمشروع الحالي بشكل عام(Folder Structure)
 
 ```
 src/
-├── core/
-│   ├── capabilities/          # Cross-cutting concerns
-│   ├── foundations/
-│   │   ├── domain/           # DomainResult, DomainError (OOP)
-│   │   ├── application/      # ApplicationResult, ApplicationError (OOP)
-│   │   ├── infrastructure/   # InfrastructureResult, InfrastructureError (OOP)
-│   │   └── presentation/     # PresentationResult, PresentationError (DU)
-│   └── kernel/              # Contracts, Primitives
-├── modules/
-│   ├── NameModel/
-│   │   ├── domain/          # Aggregate (OOP)
-│   │   ├── application/     # Handler (OOP)
-│   │   ├── infrastructure/  # Repository (OOP)
-│   │   └── presentation/    # Server Actions (DU)
-└── compositions-root/       # DI Container Modern Composition Root Pattern [Bindings, Modules]
+└── app/           # Next.js 16 App Routes (Page Only, import components from Presentation Layer)  
+├── Core/
+│   ├── Capabilities/          # Cross-cutting concerns
+│   ├── Foundations/
+│   │   ├── Base/             # Abstract Classes, TypeGuards, Validation (OOP)
+│   │   ├── Domain/           # DomainResult, DomainError (OOP)
+│   │   ├── Application/      # ApplicationResult, ApplicationError, Mappers (OOP)
+│   │   ├── Infrastructure/   # InfrastructureResult, InfrastructureError, Mappers (OOP)
+│   │   └── Presentation/     # PresentationResult, PresentationError, Mappers (DU)
+│   └── Kernel/              # Contracts, Primitives, Constants, etc.
+│
+├── Modules/
+│   ├── [Name]Model/
+│   │   ├── Domain/          # Aggregate, etc (OOP)
+│   │   ├── Application/     # Handler UseCase etc. (OOP)
+│   │   ├── Infrastructure/  # Repository, Database Mappers etc. (OOP) DB Schema this is module's.
+│   │   └── Presentation/    # Server Actions, etc. (DU)
+└── compositions-root/       # DI Container Modern Composition Root Pattern [Bindings, Modules, etc.]
+└── Shared/                  # Components, Action, Hooks, Utils, etc. shared between Modules
+└── Lib/                     # Third-party integrations, Library Config etc.
+└── Scripts/                 # Testing Conections Database, Seeding, etc.  
 ```
 
 ---
