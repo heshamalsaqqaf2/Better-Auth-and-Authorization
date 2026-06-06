@@ -12,6 +12,8 @@
     "db:drizzleMigrate": "drizzle-kit migrate",
     "db:drizzleDrop": "drizzle-kit drop",
     "db:drizzleStudio": "drizzle-kit studio",
+    "db:test": "tsx --env-file=.env.local src/Scripts/test-db.ts",
+    "db:debug": "tsx src/Scripts/debug-env.ts",
     "auth:betterAuthGenerate": "pnpm dlx auth@latest generate --config ./src/core/foundations/infrastructure/services/better-auth/auth-server.ts --output ./src/core/foundations/infrastructure/services/better-auth/generated-betterAuthGenerate.ts"
   },
   "dependencies": {

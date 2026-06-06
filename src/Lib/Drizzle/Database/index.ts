@@ -1,7 +1,17 @@
 /**
- * @file index.ts
- * @description Database Layer Entry Point.
+ * @file src/lib/drizzle/database/index.ts
+ * @description 📤 Database Layer Public API
  */
 
-export { databaseServer } from "./connection";
-export { databaseSchema } from "./Schema";
+// Export database client and utilities
+export * from "../Config";
+
+// Export connection pool config
+export {
+  type ConnectionPoolConfig,
+  getConnectionPoolConfig,
+  validateDatabaseUrl,
+} from "./connection.pool";
+
+// Export schema
+export { type DatabaseSchema, databaseSchema } from "./Schema";
