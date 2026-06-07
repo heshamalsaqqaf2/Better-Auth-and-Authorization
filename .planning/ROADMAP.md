@@ -6,7 +6,7 @@ Build a production-grade, multi-layered Error and Result system for a Next.js 16
 
 ## Phases
 
-- [x] **Phase 1: Kernel Layer** — Typed primitives, contracts, and constants that define the error/result system's vocabulary
+- [x] **Phase 1: Kernel Layer** ✅ — Typed primitives, contracts, and constants that define the error/result system's vocabulary — 14 requirements covered, 0 external dependencies, `npx tsc --noEmit` clean
 - [ ] **Phase 2: Foundations Base Layer** — Reusable abstract classes implementing Kernel contracts with full monadic behavior
 - [ ] **Phase 3: Domain Layer** — Business rule errors and results carrying domain semantics
 - [ ] **Phase 4: Application Layer** — Use case orchestration with observability hooks and cross-layer mapping
@@ -31,10 +31,10 @@ Build a production-grade, multi-layered Error and Result system for a Next.js 16
 **Plans**: 2 plans
 
 **Wave 1 *(Primitives)***
-- [ ] 01-01-PLAN.md — Primitives: enums (Severity, LayerType), branded types (CorrelationId, ErrorCode, OperationId), and initial barrel
+- [x] 01-01-PLAN.md — Primitives: enums (Severity, LayerType), branded types (CorrelationId, ErrorCode, OperationId), and initial barrel
 
 **Wave 2 *(blocked on Wave 1 completion) — Contracts + Constants***
-- [ ] 01-02-PLAN.md — Contracts (ErrorBase, ResultBase, Validators), constants (ErrorCodes, LayerNames), and complete barrel API surface
+- [x] 01-02-PLAN.md — Contracts (ErrorBase, ResultBase, Validators), constants (ErrorCodes, LayerNames), and complete barrel API surface
 
 **Cross-cutting constraints:**
 - All plans must execute `npx tsc --noEmit` for verification
@@ -153,7 +153,7 @@ Plans:
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Kernel Layer | 2/2 | Planned | - |
+| 1. Kernel Layer | 2/2 | ✓ Complete | 2026-06-08 |
 | 2. Foundations Base Layer | 0/0 | Not started | - |
 | 3. Domain Layer | 0/0 | Not started | - |
 | 4. Application Layer | 0/0 | Not started | - |

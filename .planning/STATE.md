@@ -5,16 +5,16 @@
 See: .planning/PROJECT.md (updated 2026-06-07)
 
 **Core value:** Every error in the system is typed, traceable to its origin layer, and safely serializable — no untyped exceptions, no information leaks, no "cannot read properties of undefined" in production.
-**Current focus:** Phase 1 — Kernel Layer
+**Current focus:** Phase 1 — Kernel Layer (Complete)
 
 ## Current Position
 
 Phase: 1 of 8 (Kernel Layer)
-Plan: 1 of 2 in current phase
-Status: Wave 1 complete (Primitives — enums, branded types, barrel chain)
-Last activity: 2026-06-08 — Wave 1 executed (Plan 01-01 complete)
+Plan: 2 of 2 in current phase
+Status: Phase 1 complete (Primitives + Contracts + Constants + full barrel chain)
+Last activity: 2026-06-08 — Wave 2 executed (Plan 01-02 complete)
 
-Progress: [█████               ] 25%
+Progress: [████████████████████] 100%
 
 ## Performance Metrics
 
@@ -50,6 +50,12 @@ Recent decisions affecting current work:
 - [Phase 1]: Unique-symbol branded types with named factory functions — single `as` cast per factory
 - [Phase 1]: ES2022 target needed for `unique symbol`, `Error.cause`, private fields
 - [Phase 1]: `dependency-cruiser`, ESLint `import/no-restricted-paths` setup to be included in Phase 1 plans
+- [Phase 1]: ErrorBase cause is optional (`cause?: ErrorBase`) — root errors have no cause
+- [Phase 1]: ResultBase includes `mapError` alongside `map`/`flatMap`/`match`/`fold`
+- [Phase 1]: Validator contracts are interface-only (no implementations) per Pitfall 5 avoidance
+- [Phase 1]: ErrorCodes constants object is empty by design — domain-specific codes added in Phase 3
+- [Phase 1]: LayerNames uses `satisfies Record<keyof typeof LayerType, string>` to enforce key alignment
+- [Phase 1]: WR-02 pre-existing errors resolved via `@ts-expect-error` directives
 
 ### Pending Todos
 
