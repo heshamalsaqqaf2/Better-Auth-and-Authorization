@@ -10,11 +10,11 @@ See: .planning/PROJECT.md (updated 2026-06-07)
 ## Current Position
 
 Phase: 1 of 8 (Kernel Layer)
-Plan: 0 of 2 in current phase
-Status: Ready to execute
-Last activity: 2026-06-07 — Phase 1 planned (2 plans, 2 waves)
+Plan: 1 of 2 in current phase
+Status: Wave 1 complete (Primitives — enums, branded types, barrel chain)
+Last activity: 2026-06-08 — Wave 1 executed (Plan 01-01 complete)
 
-Progress: [                    ] 0%
+Progress: [█████               ] 25%
 
 ## Performance Metrics
 
@@ -69,6 +69,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-06-07 00:00
-Stopped at: Phase 1 planned — ready for gsd-execute-phase 01-kernel-layer
+Last session: 2026-06-08 00:00
+Stopped at: Wave 1 (Primitives) complete — Wave 2 (Contracts + Constants) remaining
 Resume file: None
