@@ -8,6 +8,7 @@ const Toaster = ({ ...props }: ToasterProps) => {
   const { theme = "system" } = useTheme()
 
   return (
+    // @ts-expect-error -- theme can be undefined, incompatible with exactOptionalPropertyTypes
     <Sonner
       theme={theme as ToasterProps["theme"]}
       className="toaster group"

@@ -90,6 +90,7 @@ function Calendar({
             : "flex items-center gap-1 rounded-(--cell-radius) text-sm [&>svg]:size-3.5 [&>svg]:text-muted-foreground",
           defaultClassNames.caption_label,
         ),
+        // @ts-expect-error -- 'table' not in upstream ClassNames type; required for custom layout
         table: "w-full border-collapse",
         weekdays: cn("flex", defaultClassNames.weekdays),
         weekday: cn(
@@ -171,6 +172,7 @@ function Calendar({
           );
         },
         DayButton: ({ ...props }) => (
+          // @ts-expect-error -- locale can be undefined, incompatible with exactOptionalPropertyTypes
           <CalendarDayButton locale={locale} {...props} />
         ),
         WeekNumber: ({ children, ...props }) => {
