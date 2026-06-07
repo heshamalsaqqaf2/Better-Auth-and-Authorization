@@ -6,7 +6,7 @@ Build a production-grade, multi-layered Error and Result system for a Next.js 16
 
 ## Phases
 
-- [ ] **Phase 1: Kernel Layer** — Typed primitives, contracts, and constants that define the error/result system's vocabulary
+- [x] **Phase 1: Kernel Layer** — Typed primitives, contracts, and constants that define the error/result system's vocabulary
 - [ ] **Phase 2: Foundations Base Layer** — Reusable abstract classes implementing Kernel contracts with full monadic behavior
 - [ ] **Phase 3: Domain Layer** — Business rule errors and results carrying domain semantics
 - [ ] **Phase 4: Application Layer** — Use case orchestration with observability hooks and cross-layer mapping
@@ -30,9 +30,17 @@ Build a production-grade, multi-layered Error and Result system for a Next.js 16
    5. Developer can import all Kernel exports (primitives, contracts, constants) from a single barrel (`src/Core/Kernel/index.ts`)
 **Plans**: 2 plans
 
-Plans:
+**Wave 1 *(Primitives)***
 - [ ] 01-01-PLAN.md — Primitives: enums (Severity, LayerType), branded types (CorrelationId, ErrorCode, OperationId), and initial barrel
+
+**Wave 2 *(blocked on Wave 1 completion) — Contracts + Constants***
 - [ ] 01-02-PLAN.md — Contracts (ErrorBase, ResultBase, Validators), constants (ErrorCodes, LayerNames), and complete barrel API surface
+
+**Cross-cutting constraints:**
+- All plans must execute `npx tsc --noEmit` for verification
+- Zero external dependencies enforced throughout
+- `tsconfig.json` target must be ES2022+
+- All exports must route through `src/Core/Kernel/index.ts` barrel
 
 ### Phase 2: Foundations Base Layer
 **Goal**: Developers have reusable abstract base classes that implement Kernel contracts with concrete monadic behavior, `toJSON()` serialization, and runtime type guards
@@ -145,7 +153,7 @@ Plans:
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Kernel Layer | 0/2 | Planning complete | - |
+| 1. Kernel Layer | 2/2 | Planned | - |
 | 2. Foundations Base Layer | 0/0 | Not started | - |
 | 3. Domain Layer | 0/0 | Not started | - |
 | 4. Application Layer | 0/0 | Not started | - |
