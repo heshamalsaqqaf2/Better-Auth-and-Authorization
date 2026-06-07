@@ -27,11 +27,12 @@ Build a production-grade, multi-layered Error and Result system for a Next.js 16
   2. Developer can create `CorrelationId`, `ErrorCode`, and `OperationId` branded values via factory functions, and invalid inputs are rejected at construction
   3. Developer can implement the `ErrorBase` contract interface on error classes and satisfy all required properties and methods (`code`, `message`, `timestamp`, `layer`, `cause`, `toJSON`, `isRecoverable`, `getSeverity`)
   4. Developer can implement the `ResultBase<T, E>` contract interface and use monadic operations (`map`, `flatMap`, `match`, `fold`, `tap`, `tapError`)
-  5. Developer can import all Kernel exports (primitives, contracts, constants) from a single barrel (`src/Core/Kernel/index.ts`)
-**Plans**: TBD
+   5. Developer can import all Kernel exports (primitives, contracts, constants) from a single barrel (`src/Core/Kernel/index.ts`)
+**Plans**: 2 plans
 
 Plans:
-- (Plans defined during gsd-plan-phase)
+- [ ] 01-01-PLAN.md — Primitives: enums (Severity, LayerType), branded types (CorrelationId, ErrorCode, OperationId), and initial barrel
+- [ ] 01-02-PLAN.md — Contracts (ErrorBase, ResultBase, Validators), constants (ErrorCodes, LayerNames), and complete barrel API surface
 
 ### Phase 2: Foundations Base Layer
 **Goal**: Developers have reusable abstract base classes that implement Kernel contracts with concrete monadic behavior, `toJSON()` serialization, and runtime type guards
@@ -144,7 +145,7 @@ Plans:
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Kernel Layer | 0/0 | Not started | - |
+| 1. Kernel Layer | 0/2 | Planning complete | - |
 | 2. Foundations Base Layer | 0/0 | Not started | - |
 | 3. Domain Layer | 0/0 | Not started | - |
 | 4. Application Layer | 0/0 | Not started | - |
