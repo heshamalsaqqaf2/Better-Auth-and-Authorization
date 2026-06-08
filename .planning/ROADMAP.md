@@ -55,11 +55,11 @@ Build a production-grade, multi-layered Error and Result system for a Next.js 16
 **Plans**: 4 plans
 
 **Wave 1 *(Abstract classes — zero dependency within phase)***
-- [ ] 02-01-PLAN.md — Abstract base classes: ErrorBase (toJSON circularity-safe), ResultBase + Success/Failure + ok/err monadic, Abstracts barrel
+- [x] 02-01-PLAN.md — Abstract base classes: ErrorBase (toJSON circularity-safe), ResultBase + Success/Failure + ok/err monadic, Abstracts barrel
 
 **Wave 2 *(parallel — depends on Wave 1 for abstract class types)***
-- [ ] 02-02-PLAN.md — Duck-typing validators (BaseErrorValidator, BaseResultValidator) and type guards (isBaseError, isBaseResult)
-- [ ] 02-03-PLAN.md — Safe factory functions in Factories/: ValidationError interface, createCorrelationIdSafe, createErrorCodeSafe, createOperationIdSafe
+- [x] 02-02-PLAN.md — Duck-typing validators (BaseErrorValidator, BaseResultValidator) and type guards (isBaseError, isBaseResult)
+- [x] 02-03-PLAN.md — Safe factory functions in Factories/: ValidationError interface, createCorrelationIdSafe, createErrorCodeSafe, createOperationIdSafe
 
 **Wave 3 *(barrel chain — depends on all prior waves)***
 - [ ] 02-04-PLAN.md — Barrel chain: Base/index.ts → Foundations/index.ts re-export all subdirectories
@@ -166,7 +166,7 @@ Plans:
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Kernel Layer | 2/2 | ✓ Complete | 2026-06-08 |
-| 2. Foundations Base Layer | 0/4 | Not started | - |
+| 2. Foundations Base Layer | 3/4 | ◆ Wave 2 Complete | - |
 | 3. Domain Layer | 0/0 | Not started | - |
 | 4. Application Layer | 0/0 | Not started | - |
 | 5. Infrastructure Layer | 0/0 | Not started | - |

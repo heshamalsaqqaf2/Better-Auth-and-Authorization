@@ -1,5 +1,5 @@
-import { LayerType } from "../../../Kernel/Primitives/Enums/layer-type.enum";
-import { Severity } from "../../../Kernel/Primitives/Enums/severity.enum";
+import { LayerType } from "@/Core/Kernel/Primitives/Enums/layer-type.enum";
+import { Severity } from "@/Core/Kernel/Primitives/Enums/severity.enum";
 
 export interface ValidationError {
   readonly code: string;
