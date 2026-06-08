@@ -1,7 +1,7 @@
 import type { ErrorValidator } from "@/Core/Kernel/Contracts/Validators/error-validator.contract";
 import type { ValidationResult } from "@/Core/Kernel/Contracts/Validators/layer-validator.contract";
 import { LayerType } from "@/Core/Kernel/Primitives/Enums/layer-type.enum";
-import type { DomainErrorContract } from "./domain-error.contract";
+import type { DomainErrorContract } from "../Contracts/domain-error.contract";
 
 export class DomainErrorValidator
   implements ErrorValidator<DomainErrorContract>

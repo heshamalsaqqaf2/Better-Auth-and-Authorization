@@ -1,3 +1,3 @@
-export * from "./contracts";
+export * from "./Contracts";
 export * from "./Errors";
 export * from "./Results";
