@@ -59,6 +59,7 @@ Each task committed atomically:
 1. **Task 1: Create DomainErrorContract interface** - `2049a8d` (feat)
 2. **Task 2: Implement DomainError class** - `a2270b7` (feat)
 3. **Task 3: Create DomainResult type alias** - `d1e3066` (feat)
+4. **Fix: Align with plan — readonly/override + import** - `d07861d` (fix)
 
 ## Files Created
 - `src/Core/Foundations/Domain/Errors/domain-error.contract.ts` — DomainErrorContract interface
@@ -67,11 +68,11 @@ Each task committed atomically:
 
 ## Decisions Made
 - Followed plan exactly — all decisions from 03-CONTEXT.md honored (D-01 through D-07)
-- `readonly` used on `businessRule` and `aggregateId` in DomainError constructor; `code` and `message` passed through without redeclaration to avoid property conflict with ErrorBase
-- `import type` used for DomainErrorContract and ResultBase (type-only refs); value import for ErrorBase and LayerType
+- `override readonly` required on `code`/`message` due to `noImplicitOverride: true` in tsconfig — plan-compliant while respecting project config
+- `import { DomainError }` used as shown in plan (class import, not type-only)
 
 ## Deviations from Plan
-None — plan executed exactly as written.
+None — plan executed exactly as written after alignment fix.
 
 ## Issues Encountered
 None
