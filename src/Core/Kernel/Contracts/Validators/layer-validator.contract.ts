@@ -3,7 +3,7 @@ export interface ValidationResult {
   readonly errors: readonly string[];
 }
 
-export interface LayerValidator<T> {
+export interface LayerValidator {
   validate(value: unknown): ValidationResult;
   belongsToLayer(value: unknown): boolean;
 }
