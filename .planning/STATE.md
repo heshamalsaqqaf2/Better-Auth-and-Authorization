@@ -5,16 +5,16 @@
 See: .planning/PROJECT.md (updated 2026-06-07)
 
 **Core value:** Every error in the system is typed, traceable to its origin layer, and safely serializable — no untyped exceptions, no information leaks, no "cannot read properties of undefined" in production.
-**Current focus:** Phase 2 — Foundations Base Layer (✅ complete)
+**Current focus:** Phase 3 — Domain Layer (context gathered, ready for planning)
 
 ## Current Position
 
-Phase: 2 of 8 (Foundations Base Layer)
-Plan: 4/4 plans complete — all waves executed
-Status: ✅ Phase 2 complete
-Last activity: 2026-06-08 — Wave 3 barrel chain complete (02-04)
+Phase: 3 of 8 (Domain Layer)
+Plan: 0/0 plans — context gathered, ready for planning
+Status: 🔄 Phase 3 context gathered
+Last activity: 2026-06-08 — Phase 3 context discussion complete (03-CONTEXT.md)
 
-Progress: [████████████████████] 100% (Phase 1) — [████████████████████] 100% (Phase 2)
+Progress: [████████████████████] 100% (Phase 1) — [████████████████████] 100% (Phase 2) — [░░░░░░░░░░░░░░░░░░░░] 0% (Phase 3)
 
 ## Performance Metrics
 
@@ -68,6 +68,15 @@ Recent decisions affecting current work:
 - [Phase 2] [executed]: ErrorBase uses class property + conditional assignment (not constructor shorthand) for `cause` to satisfy `exactOptionalPropertyTypes` + `implements ErrorBaseContract`
 - [Phase 2] [executed]: ResultBase abstract class uses `T | undefined` / `E | undefined` (not optional `T?`/`E?`) to satisfy `exactOptionalPropertyTypes`
 - [Phase 2] [executed]: toJSON() uses recursive internal helper with Set-based circularity tracking
+- [Phase 3] [context]: DomainError class: businessRule (required string), aggregateId (required string), layer hardcoded to LayerType.DOMAIN
+- [Phase 3] [context]: DomainResult type alias: type DomainResult<T> = ResultBase<T, DomainError> — no subclass
+- [Phase 3] [context]: domain-error.contract.ts kept; domain-result.contract.ts skipped
+- [Phase 3] [context]: DomainErrorValidator checks layer === DOMAIN + businessRule non-empty string
+- [Phase 3] [context]: isDomainError duck-types businessRule + aggregateId; no isDomainResult guard
+- [Phase 3] [context]: Specific errors implemented flat (ComplaintNotFound, ComplaintAlreadyExists, UserNotFound) — no subdirectories
+- [Phase 3] [context]: ValidationError stays as interface + factory in Base/Factories — no class upgrade
+- [Phase 3] [context]: Domain/index.ts re-exports contracts, errors, results only — no Base re-exports
+- [Phase 3] [context]: Zero external dependencies — Domain imports Kernel + Base only
 
 ### Pending Todos
 
@@ -87,6 +96,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-06-08 04:30
-Stopped at: Phase 2 Wave 2 (02-02, 02-03) complete — 02-04 (Wave 3 barrel chain) pending
-Resume file: .planning/phases/02-foundations-base-layer/02-CONTEXT.md
+Last session: 2026-06-08 06:09
+Stopped at: Phase 3 context discussion complete — ready for planning
+Resume file: .planning/phases/03-domain-layer/03-CONTEXT.md
