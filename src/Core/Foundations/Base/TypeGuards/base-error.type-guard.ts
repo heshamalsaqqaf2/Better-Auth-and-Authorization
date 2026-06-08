@@ -19,7 +19,7 @@ export function isBaseError(value: unknown): value is ErrorBase {
     return false;
   }
 
-  if (!(obj.timestamp instanceof Date)) {
+  if (typeof obj.timestamp !== "object" || obj.timestamp === null || typeof (obj.timestamp as Record<string, unknown>).getTime !== "function") {
     return false;
   }
 

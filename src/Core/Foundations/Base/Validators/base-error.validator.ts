@@ -20,7 +20,7 @@ export class BaseErrorValidator implements ErrorValidator<ErrorBase> {
       errors.push("message must be a string");
     }
 
-    if (!(error.timestamp instanceof Date)) {
+    if (typeof error.timestamp !== "object" || error.timestamp === null || typeof error.timestamp.getTime !== "function") {
       errors.push("timestamp must be a Date");
     }
 
