@@ -75,14 +75,25 @@ Build a production-grade, multi-layered Error and Result system for a Next.js 16
 **Depends on**: Phase 2
 **Requirements**: DOMN-01, DOMN-02, DOMN-03
 **Success Criteria** (what must be TRUE):
-  1. Developer can create `DomainError` subclasses (e.g., `UserNotFoundError`, `ComplaintNotFoundError`) that include domain context and are traceable to the Domain layer via `LayerType`
-  2. Developer can use `DomainResult<T>` to represent business operation outcomes with success/failure states via `.match()`/`.fold()` on returned results
-  3. Domain type guards (`isDomainError`) discriminate domain errors from other layer errors at runtime
-  4. Domain layer imports from Kernel and Base only — no Application, Infrastructure, or Presentation imports exist
-**Plans**: TBD
+   1. Developer can create `DomainError` subclasses (e.g., `UserNotFoundError`, `ComplaintNotFoundError`) that include domain context and are traceable to the Domain layer via `LayerType`
+   2. Developer can use `DomainResult<T>` to represent business operation outcomes with success/failure states via `.match()`/`.fold()` on returned results
+   3. Domain type guards (`isDomainError`) discriminate domain errors from other layer errors at runtime
+   4. Domain layer imports from Kernel and Base only — no Application, Infrastructure, or Presentation imports exist
+**Plans**: 3 plans
 
-Plans:
-- (Plans defined during gsd-plan-phase)
+**Wave 1 *(Core Contracts — zero dependency within phase)***
+- [ ] 03-01-PLAN.md — DomainErrorContract, DomainError class, DomainResult type alias
+
+**Wave 2 *(depends on Wave 1) — Specific Errors + Validators***
+- [ ] 03-02-PLAN.md — ComplaintNotFoundError, ComplaintAlreadyExistsError, UserNotFoundError, DomainErrorValidator, isDomainError type guard
+
+**Wave 3 *(depends on Waves 1+2) — Cleanup + Barrel Chain***
+- [ ] 03-03-PLAN.md — Collapse subdirectories, remove stubs, chain barrels
+
+**Cross-cutting constraints:**
+- All plans must execute `npx tsc --noEmit` for verification
+- Zero external dependencies enforced
+- Domain layer imports Kernel + Base only (no App/Infra/Presentation)
 
 ### Phase 4: Application Layer
 **Goal**: Developers have use case orchestration with observability hooks and a Domain-to-Application error mapper that preserves the full cause chain
@@ -167,7 +178,7 @@ Plans:
 |-------|----------------|--------|-----------|
 | 1. Kernel Layer | 2/2 | ✓ Complete | 2026-06-08 |
 | 2. Foundations Base Layer | 4/4 | ✓ Complete | 2026-06-08 |
-| 3. Domain Layer | 0/0 | Not started | - |
+| 3. Domain Layer | 3/3 | Planned | 2026-06-08 |
 | 4. Application Layer | 0/0 | Not started | - |
 | 5. Infrastructure Layer | 0/0 | Not started | - |
 | 6. Presentation Layer | 0/0 | Not started | - |
