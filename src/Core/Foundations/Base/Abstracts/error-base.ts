@@ -1,7 +1,7 @@
-import type { ErrorBase as ErrorBaseContract } from "../../../Kernel/Contracts/Base/error-base.contract";
-import type { LayerType } from "../../../Kernel/Primitives/Enums/layer-type.enum";
-import type { Severity as SeverityType } from "../../../Kernel/Primitives/Enums/severity.enum";
-import { Severity } from "../../../Kernel/Primitives/Enums/severity.enum";
+import type { ErrorBase as ErrorBaseContract } from "@/Core/Kernel/Contracts/Base/error-base.contract";
+import type { LayerType } from "@/Core/Kernel/Primitives/Enums/layer-type.enum";
+import type { Severity as SeverityType } from "@/Core/Kernel/Primitives/Enums/severity.enum";
+import { Severity } from "@/Core/Kernel/Primitives/Enums/severity.enum";
 
 export abstract class ErrorBase implements ErrorBaseContract {
   readonly timestamp: Date = new Date();
