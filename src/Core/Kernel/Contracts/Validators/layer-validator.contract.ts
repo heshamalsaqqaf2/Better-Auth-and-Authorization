@@ -4,6 +4,6 @@ export interface ValidationResult {
 }
 
 export interface LayerValidator<T> {
-  validate(value: unknown): ValidationResult;
-  belongsToLayer(value: unknown): boolean;
+  validate(value: T): ValidationResult;
+  belongsToLayer(value: T): boolean;
 }
