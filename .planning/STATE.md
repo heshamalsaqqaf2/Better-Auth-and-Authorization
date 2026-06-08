@@ -5,29 +5,30 @@
 See: .planning/PROJECT.md (updated 2026-06-07)
 
 **Core value:** Every error in the system is typed, traceable to its origin layer, and safely serializable — no untyped exceptions, no information leaks, no "cannot read properties of undefined" in production.
-**Current focus:** Phase 2 — Foundations Base Layer (Context gathered, ready for planning)
+**Current focus:** Phase 2 — Foundations Base Layer (Wave 1 complete: abstract base classes)
 
 ## Current Position
 
 Phase: 2 of 8 (Foundations Base Layer)
-Plan: 0 plans yet
-Status: Phase 1 complete. Phase 2 context gathered — 31 decisions captured across 7 gray areas
-Last activity: 2026-06-08 — Phase 2 discussion complete (CONTEXT.md written)
+Plan: 02-01 (Wave 1) complete — abstracts, 3 plans remaining
+Status: Wave 1 (abstracts: ErrorBase, ResultBase, ok/err) done. Wave 2 (validators + type guards + safe factories) ready.
+Last activity: 2026-06-08 — Wave 1 execution complete (02-01)
 
-Progress: [████████████████████] 100% (Phase 1) — Phase 2: Context ready
+Progress: [████████████████████] 100% (Phase 1) — Phase 2 Wave 1: 1/4 plans done
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 0
+- Total plans completed: 1
 - Average duration: N/A
-- Total execution time: 0 hours
+- Total execution time: ~15 min
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
 | 1. Kernel Layer | 2 | Planned | TBD |
+| 2. Foundations Base Layer | 1 | 1/4 | ~15 min |
 
 **Recent Trend:**
 - Last 5 plans: N/A
@@ -64,6 +65,9 @@ Recent decisions affecting current work:
 - [Phase 2]: WR-01: Safe Result-wrapped factories in new Factories/ directory with ValidationError interface + factory
 - [Phase 2]: Barrel: subdir index.ts re-exports all -> Base/index.ts -> Foundations/index.ts
 - [Phase 2]: Zero external dependencies for Foundation layer (pure TypeScript)
+- [Phase 2] [executed]: D-05 `implements ErrorBaseContract` omitted due to `exactOptionalPropertyTypes` — cause property type mismatch (structural compatibility preserved)
+- [Phase 2] [executed]: ResultBase abstract class uses `T | undefined` / `E | undefined` (not optional `T?`/`E?`) to satisfy `exactOptionalPropertyTypes`
+- [Phase 2] [executed]: toJSON() uses recursive internal helper with Set-based circularity tracking
 
 ### Pending Todos
 
