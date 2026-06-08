@@ -31,14 +31,10 @@ Created the three abstract/base files for the Foundations Base layer, providing 
 
 ### Implementation Decisions
 
-- **ErrorBase**: `implements` clause omitted due to `exactOptionalPropertyTypes` — optional `cause` property with `| undefined` is structurally compatible but rejected by explicit `implements` check
+- **ErrorBase**: Uses `readonly cause?: ErrorBaseContract` (class property, not constructor shorthand) with conditional assignment to satisfy `exactOptionalPropertyTypes` + `implements ErrorBaseContract`
 - **ResultBase**: Abstract class declares `abstract readonly data: T \| undefined` and `abstract readonly error: E \| undefined` (explicit `| undefined`) to satisfy `exactOptionalPropertyTypes`
 - **toJSON()**: Recursive internal function with Set-based circularity detection; `[Circular]` marker on circular refs
 - **Monadic no-ops**: `Failure.map()`/`flatMap()`/`tap()` return `this` without calling fn; `Success.mapError()`/`tapError()` return `this` without calling fn
-
-### Deviations
-
-- **D-05 deviation**: `implements ErrorBaseContract` removed from class declaration because `exactOptionalPropertyTypes: true` prevents `cause: ErrorBaseContract | undefined` from satisfying the interface's `cause?: ErrorBase` (which has type `ErrorBase`, excluding `undefined`). The class is structurally compatible — all downstream typing works correctly without the explicit `implements` clause.
 
 ### Self-Check
 

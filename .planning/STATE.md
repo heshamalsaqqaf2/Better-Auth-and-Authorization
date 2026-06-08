@@ -65,7 +65,7 @@ Recent decisions affecting current work:
 - [Phase 2]: WR-01: Safe Result-wrapped factories in new Factories/ directory with ValidationError interface + factory
 - [Phase 2]: Barrel: subdir index.ts re-exports all -> Base/index.ts -> Foundations/index.ts
 - [Phase 2]: Zero external dependencies for Foundation layer (pure TypeScript)
-- [Phase 2] [executed]: D-05 `implements ErrorBaseContract` omitted due to `exactOptionalPropertyTypes` — cause property type mismatch (structural compatibility preserved)
+- [Phase 2] [executed]: ErrorBase uses class property + conditional assignment (not constructor shorthand) for `cause` to satisfy `exactOptionalPropertyTypes` + `implements ErrorBaseContract`
 - [Phase 2] [executed]: ResultBase abstract class uses `T | undefined` / `E | undefined` (not optional `T?`/`E?`) to satisfy `exactOptionalPropertyTypes`
 - [Phase 2] [executed]: toJSON() uses recursive internal helper with Set-based circularity tracking
 
