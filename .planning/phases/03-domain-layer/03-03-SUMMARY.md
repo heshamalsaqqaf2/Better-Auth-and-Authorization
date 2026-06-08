@@ -7,7 +7,7 @@ key-files:
   - src/Core/Foundations/Domain/Errors/Specific/index.ts
   - src/Core/Foundations/Domain/Errors/index.ts
   - src/Core/Foundations/Domain/Results/index.ts
-  - src/Core/Foundations/Domain/contracts/index.ts
+  - src/Core/Foundations/Domain/Contracts/index.ts
   - src/Core/Foundations/Domain/index.ts
 metrics:
   plan_duration: ~5 min
@@ -30,7 +30,7 @@ Completed the Domain layer barrel chain and cleanup. All 5 tasks executed succes
 ## Deviations
 
 - **Pre-emptively cleaned subdirectories:** ComplaintErrors/ and UserErrors/ subdirectories were already deleted during Wave 2 execution — no action needed in Task 1 for those paths.
-- **Domain/contracts directory created:** The plan called for this, and it was done as specified.
+- **Domain/Contracts directory created:** The plan called for this, and it was done as specified. Casing corrected to PascalCase (`Contracts/` not `contracts/`).
 
 ## Self-Check
 

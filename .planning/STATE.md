@@ -12,7 +12,7 @@ See: .planning/PROJECT.md (updated 2026-06-07)
 Phase: 3 of 8 (Domain Layer)
 Plan: 3/3 complete — Wave 3 done, Phase 3 complete
 Status: ✓ Complete
-Last activity: 2026-06-08 — Plan 03-03 executed: barrel chain, cleanup, compilation
+Last activity: 2026-06-08 — Plan 03-03 executed: barrel chain, cleanup, compilation; Contracts/ directory created with DomainErrorContract moved from Errors/
 
 Progress: [████████████████████] 100% (Phase 1) — [████████████████████] 100% (Phase 2) — [████████████████████] 100% (Phase 3)
 
@@ -75,7 +75,8 @@ Recent decisions affecting current work:
 - [Phase 3] [context]: isDomainError duck-types businessRule + aggregateId; no isDomainResult guard
 - [Phase 3] [context]: Specific errors implemented flat (ComplaintNotFound, ComplaintAlreadyExists, UserNotFound) — no subdirectories
 - [Phase 3] [context]: ValidationError stays as interface + factory in Base/Factories — no class upgrade
-- [Phase 3] [context]: Domain/index.ts re-exports contracts, errors, results only — no Base re-exports
+- [Phase 3] [context]: Domain/index.ts re-exports Contracts, Errors, Results only — no Base re-exports
+- [Phase 3] [executed]: DomainErrorContract moved to dedicated Contracts/ directory (PascalCase) — follows Kernel/Base contract pattern; all imports updated
 - [Phase 3] [context]: Zero external dependencies — Domain imports Kernel + Base only
 
 ### Pending Todos
