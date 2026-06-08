@@ -4,8 +4,8 @@ import type { DomainErrorContract } from "./domain-error.contract";
 
 export class DomainError extends ErrorBase implements DomainErrorContract {
   constructor(
-    code: string,
-    message: string,
+    override readonly code: string,
+    override readonly message: string,
     readonly businessRule: string,
     readonly aggregateId: string,
     cause?: DomainErrorContract,
