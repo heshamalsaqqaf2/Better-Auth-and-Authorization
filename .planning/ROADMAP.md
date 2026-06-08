@@ -88,7 +88,7 @@ Build a production-grade, multi-layered Error and Result system for a Next.js 16
 - [x] 03-02-PLAN.md — ComplaintNotFoundError, ComplaintAlreadyExistsError, UserNotFoundError, DomainErrorValidator, isDomainError type guard
 
 **Wave 3 *(depends on Waves 1+2) — Cleanup + Barrel Chain***
-- [ ] 03-03-PLAN.md — Collapse subdirectories, remove stubs, chain barrels
+- [x] 03-03-PLAN.md — Collapse subdirectories, remove stubs, chain barrels
 
 **Cross-cutting constraints:**
 - All plans must execute `npx tsc --noEmit` for verification
@@ -178,7 +178,7 @@ Plans:
 |-------|----------------|--------|-----------|
 | 1. Kernel Layer | 2/2 | ✓ Complete | 2026-06-08 |
 | 2. Foundations Base Layer | 4/4 | ✓ Complete | 2026-06-08 |
-| 3. Domain Layer | 1/3 | ◆ In Progress | — |
+| 3. Domain Layer | 3/3 | ✓ Complete | 2026-06-08 |
 | 4. Application Layer | 0/0 | Not started | - |
 | 5. Infrastructure Layer | 0/0 | Not started | - |
 | 6. Presentation Layer | 0/0 | Not started | - |
