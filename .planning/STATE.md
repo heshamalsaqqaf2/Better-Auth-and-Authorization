@@ -5,16 +5,16 @@
 See: .planning/PROJECT.md (updated 2026-06-07)
 
 **Core value:** Every error in the system is typed, traceable to its origin layer, and safely serializable — no untyped exceptions, no information leaks, no "cannot read properties of undefined" in production.
-**Current focus:** Phase 1 — Kernel Layer (Complete)
+**Current focus:** Phase 2 — Foundations Base Layer (Context gathered, ready for planning)
 
 ## Current Position
 
-Phase: 1 of 8 (Kernel Layer)
-Plan: 2 of 2 in current phase
-Status: Phase 1 complete (Primitives + Contracts + Constants + full barrel chain)
-Last activity: 2026-06-08 — Wave 2 executed (Plan 01-02 complete)
+Phase: 2 of 8 (Foundations Base Layer)
+Plan: 0 plans yet
+Status: Phase 1 complete. Phase 2 context gathered — 31 decisions captured across 7 gray areas
+Last activity: 2026-06-08 — Phase 2 discussion complete (CONTEXT.md written)
 
-Progress: [████████████████████] 100%
+Progress: [████████████████████] 100% (Phase 1) — Phase 2: Context ready
 
 ## Performance Metrics
 
@@ -56,6 +56,14 @@ Recent decisions affecting current work:
 - [Phase 1]: ErrorCodes constants object is empty by design — domain-specific codes added in Phase 3
 - [Phase 1]: LayerNames uses `satisfies Record<keyof typeof LayerType, string>` to enforce key alignment
 - [Phase 1]: WR-02 pre-existing errors resolved via `@ts-expect-error` directives
+- [Phase 2]: ErrorBase abstract class: isRecoverable() defaults to false, getSeverity() defaults to ERROR, timestamp auto-generated, layer required in constructor, implements ErrorBaseContract with alias
+- [Phase 2]: toJSON(): Set-based circularity tracking with `[Circular]` marker, nested cause chain, internal Set management
+- [Phase 2]: ResultBase: minimal abstract base (only isSuccess/isFailure abstract), Success/Failure extend it, all in result-base.ts, ok()/err() as standalone functions
+- [Phase 2]: Monadic: map/flatMap/tap on wrong variant = return self no-op; mapError on Success = no-op
+- [Phase 2]: Validators: duck typing, satisfiesContract() = validate().isValid, surface-level only
+- [Phase 2]: WR-01: Safe Result-wrapped factories in new Factories/ directory with ValidationError interface + factory
+- [Phase 2]: Barrel: subdir index.ts re-exports all -> Base/index.ts -> Foundations/index.ts
+- [Phase 2]: Zero external dependencies for Foundation layer (pure TypeScript)
 
 ### Pending Todos
 
@@ -75,6 +83,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-06-08 00:00
-Stopped at: Wave 1 (Primitives) complete — Wave 2 (Contracts + Constants) remaining
-Resume file: None
+Last session: 2026-06-08 03:16
+Stopped at: Phase 2 context gathered — ready for planning
+Resume file: .planning/phases/02-foundations-base-layer/02-CONTEXT.md
