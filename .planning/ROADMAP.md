@@ -85,7 +85,7 @@ Build a production-grade, multi-layered Error and Result system for a Next.js 16
 - [x] 03-01-PLAN.md — DomainErrorContract, DomainError class, DomainResult type alias
 
 **Wave 2 *(depends on Wave 1) — Specific Errors + Validators***
-- [ ] 03-02-PLAN.md — ComplaintNotFoundError, ComplaintAlreadyExistsError, UserNotFoundError, DomainErrorValidator, isDomainError type guard
+- [x] 03-02-PLAN.md — ComplaintNotFoundError, ComplaintAlreadyExistsError, UserNotFoundError, DomainErrorValidator, isDomainError type guard
 
 **Wave 3 *(depends on Waves 1+2) — Cleanup + Barrel Chain***
 - [ ] 03-03-PLAN.md — Collapse subdirectories, remove stubs, chain barrels
