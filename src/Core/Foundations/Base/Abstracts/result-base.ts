@@ -1,29 +1,11 @@
 import type { ErrorBase } from "@/Core/Kernel/Contracts/Base/error-base.contract";
 import type { ResultBase as ResultBaseContract } from "@/Core/Kernel/Contracts/Base/result-base.contract";
-import type { ErrorBase as ErrorBaseImpl } from "./error-base";
 
-export abstract class ResultBase<T, E extends ErrorBaseImpl>
-  implements ResultBaseContract<T, E>
-{
+export abstract class ResultBase<T, E extends ErrorBase> {
   abstract readonly isSuccess: boolean;
   abstract readonly isFailure: boolean;
   abstract readonly data?: T;
   abstract readonly error?: E;
-
-  abstract map<U>(fn: (data: T) => U): ResultBaseContract<U, E>;
-  abstract flatMap<U>(
-    fn: (data: T) => ResultBaseContract<U, E>,
-  ): ResultBaseContract<U, E>;
-  abstract mapError<F extends ErrorBase>(
-    fn: (error: E) => F,
-  ): ResultBaseContract<T, F>;
-  abstract match<R>(handlers: {
-    onSuccess: (data: T) => R;
-    onFailure: (error: E) => R;
-  }): R;
-  abstract fold<R>(onSuccess: (data: T) => R, onFailure: (error: E) => R): R;
-  abstract tap(fn: (data: T) => void): ResultBaseContract<T, E>;
-  abstract tapError(fn: (error: E) => void): ResultBaseContract<T, E>;
 }
 
 export class Success<T> extends ResultBase<T, never> {
@@ -70,7 +52,7 @@ export class Success<T> extends ResultBase<T, never> {
   }
 }
 
-export class Failure<T, E extends ErrorBaseImpl> extends ResultBase<T, E> {
+export class Failure<T, E extends ErrorBase> extends ResultBase<T, E> {
   readonly isSuccess = false;
   readonly isFailure = true;
   readonly data?: T;
@@ -118,6 +100,6 @@ export function ok<T>(data: T): Success<T> {
   return new Success(data);
 }
 
-export function err<E extends ErrorBaseImpl>(error: E): Failure<never, E> {
+export function err<E extends ErrorBase>(error: E): Failure<never, E> {
   return new Failure<never, E>(error);
 }
