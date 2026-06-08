@@ -82,7 +82,7 @@ Build a production-grade, multi-layered Error and Result system for a Next.js 16
 **Plans**: 3 plans
 
 **Wave 1 *(Core Contracts — zero dependency within phase)***
-- [ ] 03-01-PLAN.md — DomainErrorContract, DomainError class, DomainResult type alias
+- [x] 03-01-PLAN.md — DomainErrorContract, DomainError class, DomainResult type alias
 
 **Wave 2 *(depends on Wave 1) — Specific Errors + Validators***
 - [ ] 03-02-PLAN.md — ComplaintNotFoundError, ComplaintAlreadyExistsError, UserNotFoundError, DomainErrorValidator, isDomainError type guard
@@ -178,7 +178,7 @@ Plans:
 |-------|----------------|--------|-----------|
 | 1. Kernel Layer | 2/2 | ✓ Complete | 2026-06-08 |
 | 2. Foundations Base Layer | 4/4 | ✓ Complete | 2026-06-08 |
-| 3. Domain Layer | 3/3 | Planned | 2026-06-08 |
+| 3. Domain Layer | 1/3 | ◆ In Progress | — |
 | 4. Application Layer | 0/0 | Not started | - |
 | 5. Infrastructure Layer | 0/0 | Not started | - |
 | 6. Presentation Layer | 0/0 | Not started | - |
