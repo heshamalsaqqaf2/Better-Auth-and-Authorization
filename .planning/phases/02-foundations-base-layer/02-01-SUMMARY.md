@@ -32,7 +32,9 @@ Created the three abstract/base files for the Foundations Base layer, providing 
 ### Implementation Decisions
 
 - **ErrorBase**: Uses `readonly cause?: ErrorBaseContract` (class property, not constructor shorthand) with conditional assignment to satisfy `exactOptionalPropertyTypes` + `implements ErrorBaseContract`
-- **ResultBase**: Abstract class declares `abstract readonly data: T \| undefined` and `abstract readonly error: E \| undefined` (explicit `| undefined`) to satisfy `exactOptionalPropertyTypes`
+- **ResultBase**: Abstract class declares `abstract readonly data?: T` and `abstract readonly error?: E` (matching kernel contract's optional syntax), with `implements ResultBaseContract<T, E>` — concrete subclasses use `readonly error?: never` (Success) and `readonly data?: T` (Failure) to satisfy the abstract override
+- **Imports**: All cross-layer imports use `@/Core/Kernel/...` path aliases; same-directory imports (e.g. `./error-base`) remain relative
+- **Generic constraints**: `E extends ErrorBaseImpl` (abstract class) instead of `E extends ErrorBase` (interface) — uses imported concrete class for more specific constraint
 - **toJSON()**: Recursive internal function with Set-based circularity detection; `[Circular]` marker on circular refs
 - **Monadic no-ops**: `Failure.map()`/`flatMap()`/`tap()` return `this` without calling fn; `Success.mapError()`/`tapError()` return `this` without calling fn
 
