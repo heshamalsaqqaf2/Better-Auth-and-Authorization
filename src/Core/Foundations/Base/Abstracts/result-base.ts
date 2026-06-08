@@ -1,6 +1,4 @@
 import type { ErrorBase } from "../../../Kernel/Contracts/Base/error-base.contract";
-import type { ResultBase as ResultBaseContract } from "../../../Kernel/Contracts/Base/result-base.contract";
-import { ErrorBase as ErrorBaseImpl } from "./error-base";
 
 export abstract class ResultBase<T, E extends ErrorBase> {
   abstract readonly isSuccess: boolean;

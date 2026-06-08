@@ -3,9 +3,9 @@ import type { LayerType } from "../../../Kernel/Primitives/Enums/layer-type.enum
 import type { Severity as SeverityType } from "../../../Kernel/Primitives/Enums/severity.enum";
 import { Severity } from "../../../Kernel/Primitives/Enums/severity.enum";
 
-export abstract class ErrorBase {
+export abstract class ErrorBase implements ErrorBaseContract {
   readonly timestamp: Date = new Date();
-  readonly cause: ErrorBaseContract | undefined;
+  readonly cause?: ErrorBaseContract;
 
   constructor(
     readonly layer: LayerType,
@@ -13,7 +13,9 @@ export abstract class ErrorBase {
     readonly message: string,
     cause?: ErrorBaseContract,
   ) {
-    this.cause = cause;
+    if (cause !== undefined) {
+      (this as { cause: ErrorBaseContract }).cause = cause;
+    }
   }
 
   isRecoverable(): boolean {
