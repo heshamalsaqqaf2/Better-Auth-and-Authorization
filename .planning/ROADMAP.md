@@ -101,14 +101,23 @@ Build a production-grade, multi-layered Error and Result system for a Next.js 16
 **Depends on**: Phase 3
 **Requirements**: APP-01, APP-02, APP-03
 **Success Criteria** (what must be TRUE):
-  1. Developer can create `ApplicationError` instances from `DomainError` via the domain-to-application mapper, preserving the cause chain and adding correlation context
-  2. Developer can use `ApplicationResult<T>` with observability hooks that log each operation result (`tap`/`tapError`) and emit metrics
-  3. Correlation IDs propagate automatically through Application-level error chains and are accessible in logs
-  4. Application layer uses constructor injection (no direct DB or external service calls in Use Cases)
-**Plans**: TBD
+   1. Developer can create `ApplicationError` instances from `DomainError` via the domain-to-application mapper, preserving the cause chain and adding correlation context
+   2. Developer can use `ApplicationResult<T>` with observability hooks that log each operation result (`tap`/`tapError`) and emit metrics
+   3. Correlation IDs propagate automatically through Application-level error chains and are accessible in logs
+   4. Application layer uses constructor injection (no direct DB or external service calls in Use Cases)
+**Plans**: 4 plans
 
-Plans:
-- (Plans defined during gsd-plan-phase)
+**Wave 1 *(Contracts & Cleanup — zero dependency within phase)***
+- [ ] 04-01-PLAN.md — ApplicationErrorContract + RequestContext interfaces; delete scaffolding stubs
+
+**Wave 2 *(depends on Wave 1) — Core Error & Result***
+- [ ] 04-02-PLAN.md — ApplicationError class, ApplicationResult type alias, ApplicationErrorValidator, isApplicationError type guard
+
+**Wave 3 *(depends on Wave 2) — Mapper & Specific Errors***
+- [ ] 04-03-PLAN.md — Domain→Application mapper, three specific ApplicationError subclasses (UseCaseExecution, AuthorizationFailed, CommandValidation), Mappers/Results/Specific barrels
+
+**Wave 4 *(depends on Waves 2+3) — CQRS Interfaces, Decorators, All Barrels***
+- [ ] 04-04-PLAN.md — ICommandHandler, IQueryHandler, CommandHandlerDecorator, QueryHandlerDecorator, Contracts/Errors/Application barrels
 
 ### Phase 5: Infrastructure Layer
 **Goal**: Developers have resilient I/O error handling with sanitization, retry, timeout, circuit breaker, and fallback — safely wrapping external concerns
