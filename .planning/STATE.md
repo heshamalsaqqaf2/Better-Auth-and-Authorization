@@ -5,14 +5,14 @@
 See: .planning/PROJECT.md (updated 2026-06-07)
 
 **Core value:** Every error in the system is typed, traceable to its origin layer, and safely serializable — no untyped exceptions, no information leaks, no "cannot read properties of undefined" in production.
-**Current focus:** Phase 3 — Domain Layer (Complete — 3/3 plans done)
+**Current focus: Phase 4 — Application Layer (Context ready — 0/0 plans)
 
 ## Current Position
 
-Phase: 3 of 8 (Domain Layer)
+Phase: 4 of 8 (Application Layer)
 Plan: 3/3 complete — Wave 3 done, Phase 3 complete
 Status: ✓ Complete
-Last activity: 2026-06-08 — Plan 03-03 executed: barrel chain, cleanup, compilation; Contracts/ directory created with DomainErrorContract moved from Errors/
+Last activity: 2026-06-11 — Phase 4 context gathered (ApplicationError, ApplicationResult, CQRS handlers, mapper, decorators)
 
 Progress: [████████████████████] 100% (Phase 1) — [████████████████████] 100% (Phase 2) — [████████████████████] 100% (Phase 3)
 
@@ -97,6 +97,7 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-06-08 06:09
-Stopped at: Phase 3 context discussion complete — ready for planning
-Resume file: .planning/phases/03-domain-layer/03-CONTEXT.md
+Last session: 2026-06-11 06:09
+Stopped at: Phase 4 context gathered — ready for planning
+Resume file: .planning/phases/04-application-layer/04-CONTEXT.md
+
