@@ -5,21 +5,22 @@
 See: .planning/PROJECT.md (updated 2026-06-07)
 
 **Core value:** Every error in the system is typed, traceable to its origin layer, and safely serializable — no untyped exceptions, no information leaks, no "cannot read properties of undefined" in production.
-**Current focus: Phase 4 — Application Layer (Context ready — 0/0 plans)
+**Current focus: Phase 4 — Application Layer (Planned — 4/4 plans ready to execute)
 
 ## Current Position
 
 Phase: 4 of 8 (Application Layer)
-Plan: 3/3 complete — Wave 3 done, Phase 3 complete
-Status: ✓ Complete
-Last activity: 2026-06-11 — Phase 4 context gathered (ApplicationError, ApplicationResult, CQRS handlers, mapper, decorators)
+Plan: 4/4 planned — Wave 4 ready, Phase 3 complete
+Status: ◆ Planned
+Last activity: 2026-06-11 — Phase 4 planning complete (4 plans in 4 waves)
 
-Progress: [████████████████████] 100% (Phase 1) — [████████████████████] 100% (Phase 2) — [████████████████████] 100% (Phase 3)
+Progress: [████████████████████] 100% (Phase 1) — [████████████████████] 100% (Phase 2) — [████████████████████] 100% (Phase 3) — [████████████████████] 100% (Phase 4 Planned)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 3
+- Total plans completed: 3 (executed)
+- Total plans planned: 4 (Phase 4)
 - Average duration: ~6 min
 - Total execution time: ~19 min
 
@@ -29,6 +30,7 @@ Progress: [████████████████████] 100% (P
 |-------|-------|-------|----------|
 | 1. Kernel Layer | 2 | Planned | TBD |
 | 2. Foundations Base Layer | 3 | 3/4 | ~6 min |
+| 3. Domain Layer | 3 | 3/3 | ~6 min |
 
 **Recent Trend:**
 - Last 5 plans: N/A
@@ -78,6 +80,12 @@ Recent decisions affecting current work:
 - [Phase 3] [context]: Domain/index.ts re-exports Contracts, Errors, Results only — no Base re-exports
 - [Phase 3] [executed]: DomainErrorContract moved to dedicated Contracts/ directory (PascalCase) — follows Kernel/Base contract pattern; all imports updated
 - [Phase 3] [context]: Zero external dependencies — Domain imports Kernel + Base only
+- [Phase 4] [planned]: ApplicationError extends ErrorBase with operationName, correlationId, userId — named params constructor, layer=APPLICATION hardcoded
+- [Phase 4] [planned]: ApplicationResult<T> = ResultBase<T, ApplicationError> — pure type alias, no contract/validator/type-guard (D-11/D-12)
+- [Phase 4] [planned]: RequestContext { correlationId: CorrelationId; userId?: string } — method argument injection, NOT constructor (D-14/D-15/D-16)
+- [Phase 4] [planned]: CQRS separation: ICommandHandler + IQueryHandler with abstract decorator bases (D-17..D-22)
+- [Phase 4] [planned]: mapDomainToAppError generic function — single mapper, passes domain error code/message as-is (D-23/D-24/D-25)
+- [Phase 4] [planned]: Three specific errors: UseCaseExecutionError, AuthorizationFailedError, CommandValidationError (D-26)
 
 ### Pending Todos
 
@@ -97,7 +105,7 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-06-11 06:09
-Stopped at: Phase 4 context gathered — ready for planning
-Resume file: .planning/phases/04-application-layer/04-CONTEXT.md
+Last session: 2026-06-11
+Stopped at: Phase 4 planning complete — 4 plans ready for execution
+Resume file: .planning/phases/04-application-layer/04-01-PLAN.md
 
