@@ -188,7 +188,7 @@ Plans:
 | 1. Kernel Layer | 2/2 | ✓ Complete | 2026-06-08 |
 | 2. Foundations Base Layer | 4/4 | ✓ Complete | 2026-06-08 |
 | 3. Domain Layer | 3/3 | ✓ Complete | 2026-06-08 |
-| 4. Application Layer | 4/4 | Planned | - |
+| 4. Application Layer | 3/4 | ◆ In Progress | - |
 | 5. Infrastructure Layer | 0/0 | Not started | - |
 | 6. Presentation Layer | 0/0 | Not started | - |
 | 7. Tooling & Boundary Enforcement | 0/0 | Not started | - |
