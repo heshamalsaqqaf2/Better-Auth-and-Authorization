@@ -4,10 +4,7 @@ import { LayerType } from "@/Core/Kernel/Primitives/Enums/layer-type.enum";
 import type { CorrelationId } from "@/Core/Kernel/Primitives/Types/correlation-id.type";
 import type { ApplicationErrorContract } from "../Contracts/application-error.contract";
 
-export class ApplicationError
-  extends ErrorBase
-  implements ApplicationErrorContract
-{
+export class ApplicationError extends ErrorBase implements ApplicationErrorContract {
   readonly operationName: string;
   readonly correlationId: CorrelationId;
   readonly userId?: string;

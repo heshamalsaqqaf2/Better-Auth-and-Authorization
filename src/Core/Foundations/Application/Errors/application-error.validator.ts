@@ -4,9 +4,7 @@ import { LayerType } from "@/Core/Kernel/Primitives/Enums/layer-type.enum";
 import { isCorrelationId } from "@/Core/Kernel/Primitives/Types/correlation-id.type";
 import type { ApplicationErrorContract } from "../Contracts/application-error.contract";
 
-export class ApplicationErrorValidator
-  implements ErrorValidator<ApplicationErrorContract>
-{
+export class ApplicationErrorValidator implements ErrorValidator<ApplicationErrorContract> {
   validate(error: ApplicationErrorContract): ValidationResult {
     const errors: string[] = [];
 
