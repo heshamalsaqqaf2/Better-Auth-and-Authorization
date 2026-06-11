@@ -5,16 +5,16 @@
 See: .planning/PROJECT.md (updated 2026-06-07)
 
 **Core value:** Every error in the system is typed, traceable to its origin layer, and safely serializable — no untyped exceptions, no information leaks, no "cannot read properties of undefined" in production.
-**Current focus: Phase 4 — Application Layer (Wave 1/4 complete — 1/4 plans executed)
+**Current focus: Phase 4 — Application Layer (Wave 2/4 complete — 2/4 plans executed)
 
 ## Current Position
 
 Phase: 4 of 8 (Application Layer)
-Plan: 1/4 executed — Wave 1 complete, 3 remaining
+Plan: 2/4 executed — Wave 2 complete, 2 remaining
 Status: ◆ In Progress
-Last activity: 2026-06-11 — Plan 04-01 executed (ApplicationErrorContract + RequestContext + cleanup)
+Last activity: 2026-06-11 — Plan 04-02 executed (ApplicationError class + ApplicationResult + validator + type-guard)
 
-Progress: [████████████████████] 100% (Phase 1) — [████████████████████] 100% (Phase 2) — [████████████████████] 100% (Phase 3) — [██████░░░░░░░░░░░░░░░░] 25% (Phase 4 Wave 1)
+Progress: [████████████████████] 100% (Phase 1) — [████████████████████] 100% (Phase 2) — [████████████████████] 100% (Phase 3) — [████████████░░░░░░░░░░] 50% (Phase 4 Wave 2)
 
 ## Performance Metrics
 
@@ -31,7 +31,7 @@ Progress: [████████████████████] 100% (P
 | 1. Kernel Layer | 2 | Planned | TBD |
 | 2. Foundations Base Layer | 3 | 3/4 | ~6 min |
 | 3. Domain Layer | 3 | 3/3 | ~6 min |
-| 4. Application Layer | 1 | 1/4 | ~2 min |
+| 4. Application Layer | 2 | 2/4 | ~2 min |
 
 **Recent Trend:**
 - Last 5 plans: N/A
@@ -109,6 +109,6 @@ Items acknowledged and carried forward from previous milestone close:
 ## Session Continuity
 
 Last session: 2026-06-11
-Stopped at: Phase 4 Wave 1 complete — Plan 04-01 executed (ApplicationErrorContract + RequestContext + stub cleanup)
-Resume file: .planning/phases/04-application-layer/04-02-PLAN.md
+Stopped at: Phase 4 Wave 2 complete — Plan 04-02 executed (ApplicationError class + ApplicationResult + validator + type-guard)
+Resume file: .planning/phases/04-application-layer/04-03-PLAN.md
 
