@@ -8,8 +8,8 @@ Build a production-grade, multi-layered Error and Result system for a Next.js 16
 
 - [x] **Phase 1: Kernel Layer** ✅ — Typed primitives, contracts, and constants that define the error/result system's vocabulary — 14 requirements covered, 0 external dependencies, `npx tsc --noEmit` clean
 - [x] **Phase 2: Foundations Base Layer** ✅ — Reusable abstract classes implementing Kernel contracts with full monadic behavior
-- [ ] **Phase 3: Domain Layer** — Business rule errors and results carrying domain semantics
-- [x] **Phase 4: Application Layer** ◆ — Use case orchestration with observability hooks and cross-layer mapping
+- [x] **Phase 3: Domain Layer** ✅ — Business rule errors and results carrying domain semantics
+- [x] **Phase 4: Application Layer** ✅ — Use case orchestration with observability hooks and cross-layer mapping
 - [ ] **Phase 5: Infrastructure Layer** — Resilient I/O error handling with retry, timeout, and sanitization
 - [ ] **Phase 6: Presentation Layer** — Serialization-safe discriminated unions for RSC transport
 - [ ] **Phase 7: Tooling & Boundary Enforcement** — Layer isolation enforcement via tooling and CI
@@ -188,7 +188,7 @@ Plans:
 | 1. Kernel Layer | 2/2 | ✓ Complete | 2026-06-08 |
 | 2. Foundations Base Layer | 4/4 | ✓ Complete | 2026-06-08 |
 | 3. Domain Layer | 3/3 | ✓ Complete | 2026-06-08 |
-| 4. Application Layer | 3/4 | ◆ In Progress | - |
+| 4. Application Layer | 4/4 | ✓ Complete | 2026-06-11 |
 | 5. Infrastructure Layer | 0/0 | Not started | - |
 | 6. Presentation Layer | 0/0 | Not started | - |
 | 7. Tooling & Boundary Enforcement | 0/0 | Not started | - |

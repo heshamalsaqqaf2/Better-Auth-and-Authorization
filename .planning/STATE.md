@@ -5,22 +5,22 @@
 See: .planning/PROJECT.md (updated 2026-06-07)
 
 **Core value:** Every error in the system is typed, traceable to its origin layer, and safely serializable — no untyped exceptions, no information leaks, no "cannot read properties of undefined" in production.
-**Current focus: Phase 4 — Application Layer (Wave 3/4 complete — 3/4 plans executed)
+**Current focus: Phase 4 — Application Layer (Wave 4/4 complete — 4/4 plans executed)
 
 ## Current Position
 
 Phase: 4 of 8 (Application Layer)
-Plan: 3/4 executed — Wave 3 complete, 1 remaining
+Plan: 4/4 executed — Wave 4 complete, phase ready for verification
 Status: ◆ In Progress
-Last activity: 2026-06-11 — Plan 04-03 executed (Specific errors + mapper + barrels)
+Last activity: 2026-06-11 — Plan 04-04 executed (CQRS handler interfaces, decorator bases, barrel chain)
 
-Progress: [████████████████████] 100% (Phase 1) — [████████████████████] 100% (Phase 2) — [████████████████████] 100% (Phase 3) — [███████████████████████░░] 75% (Phase 4 Wave 3)
+Progress: [████████████████████] 100% (Phase 1) — [████████████████████] 100% (Phase 2) — [████████████████████] 100% (Phase 3) — [████████████████████████] 100% (Phase 4 Wave 4)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 7 (executed)
-- Total plans planned: 7 (Phase 4)
+- Total plans completed: 8 (executed across Phases 1-4)
+- Total plans planned: 8 (Phase 4: 4)
 - Average duration: ~5.57 min
 - Total execution time: ~39 min
 
@@ -31,7 +31,7 @@ Progress: [████████████████████] 100% (P
 | 1. Kernel Layer | 2 | Planned | TBD |
 | 2. Foundations Base Layer | 3 | 3/4 | ~6 min |
 | 3. Domain Layer | 3 | 3/3 | ~6 min |
-| 4. Application Layer | 2 | 3/4 | ~2 min |
+| 4. Application Layer | 2 | 4/4 | ~2 min |
 
 **Recent Trend:**
 - Last 5 plans: N/A
@@ -86,9 +86,10 @@ Recent decisions affecting current work:
 - [Phase 4] [executed]: RequestContext { correlationId: CorrelationId; userId?: string } — method argument injection, NOT constructor (D-14/D-15/D-16)
 - [Phase 4] [executed]: D-12 compliance — deleted scaffold stub files for contract/validator/type-guard; pure type alias pattern
 - [Phase 4] [executed]: D-27 compliance — cleared empty subdirectories from Errors/Specific/; flat file organization
-- [Phase 4] [planned]: CQRS separation: ICommandHandler + IQueryHandler with abstract decorator bases (D-17..D-22)
+- [Phase 4] [executed]: CQRS separation: ICommandHandler + IQueryHandler with abstract decorator bases (D-17..D-22)
 - [Phase 4] [executed]: mapDomainToAppError generic function — single mapper, passes domain error code/message as-is, preserves cause chain (D-23/D-24/D-25)
 - [Phase 4] [executed]: Three specific errors: UseCaseExecutionError (cause mandatory, USE_CASE_EXECUTION_ERROR), AuthorizationFailedError (reason: string, AUTHORIZATION_FAILED), CommandValidationError (fieldErrors, COMMAND_VALIDATION_ERROR) — flat Specific/ directory (D-26/D-27)
+- [Phase 4] [executed]: Barrel chain complete — Application/index.ts exports Contracts, Errors, Mappers, Results; Errors/index.ts includes Specific/ re-export (D-31/D-32/D-33)
 
 ### Pending Todos
 
@@ -109,6 +110,6 @@ Items acknowledged and carried forward from previous milestone close:
 ## Session Continuity
 
 Last session: 2026-06-11
-Stopped at: Phase 4 Wave 3 complete — Plan 04-03 executed (Specific errors + mapper + barrels)
-Resume file: .planning/phases/04-application-layer/04-04-PLAN.md
+Stopped at: Phase 4 Wave 4 complete — Plan 04-04 executed (CQRS handler interfaces, decorator bases, barrel chain)
+Resume file: .planning/phases/05-infrastructure-layer/ (next phase)
 
