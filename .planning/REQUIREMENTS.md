@@ -61,7 +61,7 @@ Deferred to future releases. Tracked but not in current roadmap.
 ### Foundations — Infrastructure Layer
 
 - **INFO-01**: `InfrastructureError` class extending ErrorBase
-- **INFO-02**: `InfrastructureResult<T>` class with resilience methods
+- **INFO-02**: `InfrastructureResult<T>` type alias + standalone resilience wrappers (`withRetry`, `withTimeout`, `withFallback`)
 - **INFO-03**: Application → Infrastructure error mapper
 
 ### Foundations — Presentation Layer

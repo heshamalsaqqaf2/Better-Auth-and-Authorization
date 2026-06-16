@@ -120,19 +120,22 @@ Build a production-grade, multi-layered Error and Result system for a Next.js 16
 - [x] 04-04-PLAN.md — ICommandHandler, IQueryHandler, CommandHandlerDecorator, QueryHandlerDecorator, Contracts/Errors/Application barrels
 
 ### Phase 5: Infrastructure Layer
-**Goal**: Developers have resilient I/O error handling with sanitization, retry, timeout, circuit breaker, and fallback — safely wrapping external concerns
+**Goal**: Developers have resilient I/O error handling with sanitization, retry, timeout, and fallback — safely wrapping external concerns
 **Mode**: v2
 **Depends on**: Phase 4
 **Requirements**: INFO-01, INFO-02, INFO-03
 **Success Criteria** (what must be TRUE):
-  1. Developer can wrap external service calls with `InfrastructureResult` and apply `retry()` with configurable backoff, `withTimeout()`, `withCircuitBreaker()`, and `withFallback()` behavior
+  1. Developer can wrap external service calls with `InfrastructureResult` and apply `withRetry()` with configurable exponential backoff, `withTimeout()`, and `withFallback()` behavior
   2. Infrastructure errors sanitize sensitive information (hostnames, connection strings, stack traces) before wrapping upward to Application layer
-  3. Application-to-Infrastructure error mapper preserves error semantics without leaking infrastructure internals
+  3. Infrastructure-to-Application error mapper preserves error semantics without leaking infrastructure internals
   4. Infrastructure depends on Application/Domain (not vice versa) — no upward dependency violations
-**Plans**: TBD
+**Plans**: 4 plans
 
 Plans:
-- (Plans defined during gsd-plan-phase)
+- [ ] 05-01-PLAN.md — Contracts & Cleanup: Contracts types, contract interface, delete scaffold stubs
+- [ ] 05-02-PLAN.md — Core Error & Result: InfrastructureError class, InfrastructureResult type alias, validator, type guard
+- [ ] 05-03-PLAN.md — Specific Errors & Mapper: 5 specific error subclasses, Infrastructure→Application mapper, sanitization
+- [ ] 05-04-PLAN.md — Resilience & Barrel: withRetry, withTimeout, withFallback wrappers, top-level Infrastructure barrel
 
 ### Phase 6: Presentation Layer
 **Goal**: Server Actions can safely return serializable error/results to client components — no OOP classes cross the RSC boundary
