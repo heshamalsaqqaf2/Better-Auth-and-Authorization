@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Phase 6: Presentation Layer — Discussion Questions</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; background: #f8fafc; color: #1e293b; line-height: 1.6; padding: 24px; }
+  .container { max-width: 1200px; margin: 0 auto; }
+  h1 { font-size: 1.5rem; font-weight: 700; margin-bottom: 4px; color: #0f172a; }
+  .subtitle { color: #64748b; font-size: 0.9rem; margin-bottom: 24px; }
+  .done-banner { background: #f0fdf4; border: 2px solid #22c55e; border-radius: 8px; padding: 20px; text-align: center; margin-bottom: 24px; }
+  .done-banner h2 { color: #16a34a; font-size: 1.2rem; margin-bottom: 8px; }
+  .done-banner p { color: #166534; font-size: 0.9rem; }
+  .stats-bar { background: white; border: 1px solid #e2e8f0; border-radius: 8px; padding: 16px 20px; margin-bottom: 24px; display: flex; align-items: center; gap: 24px; flex-wrap: wrap; }
+  .stat { display: flex; align-items: baseline; gap: 6px; }
+  .stat-label { font-size: 0.8rem; color: #64748b; text-transform: uppercase; letter-spacing: 0.05em; }
+  .stat-value { font-size: 1.2rem; font-weight: 700; }
+  .stat-value.total { color: #0f172a; }
+  .stat-value.answered { color: #16a34a; }
+  .stat-value.remaining { color: #dc2626; }
+  .progress-container { flex: 1; min-width: 120px; }
+  .progress-bar { height: 8px; background: #e2e8f0; border-radius: 4px; overflow: hidden; }
+  .progress-fill { height: 100%; background: #22c55e; border-radius: 4px; transition: width 0.3s ease; width: 100%; }
+  .section { background: white; border: 1px solid #e2e8f0; border-radius: 8px; margin-bottom: 16px; overflow: hidden; }
+  .section-header { padding: 14px 20px; cursor: pointer; display: flex; align-items: center; justify-content: space-between; user-select: none; }
+  .section-header:hover { background: #f8fafc; }
+  .section-title { font-weight: 600; font-size: 1rem; }
+  .section-meta { font-size: 0.8rem; color: #64748b; }
+  .section-toggle { font-size: 0.75rem; color: #94a3b8; transition: transform 0.2s; }
+  .section-toggle.open { transform: rotate(90deg); }
+  .section-body { padding: 0 20px 20px; display: none; }
+  .section-body.open { display: block; }
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 16px; }
+  .card { border: 2px solid #22c55e; border-radius: 8px; padding: 16px; background: #f0fdf4; }
+  .card-id { font-size: 0.7rem; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 4px; }
+  .card-title { font-weight: 600; font-size: 0.95rem; margin-bottom: 8px; line-height: 1.4; }
+  .card-context { font-size: 0.8rem; color: #64748b; font-style: italic; margin-bottom: 12px; line-height: 1.5; }
+  .card-options { display: flex; flex-direction: column; gap: 8px; margin-bottom: 12px; }
+  .card-option { display: flex; align-items: flex-start; gap: 8px; padding: 8px 10px; border-radius: 6px; border: 1px solid #22c55e; cursor: default; }
+  .card-option input[type="radio"] { margin-top: 3px; accent-color: #22c55e; }
+  .card-option label { flex: 1; }
+  .option-label { font-weight: 600; font-size: 0.85rem; display: block; }
+  .option-desc { font-size: 0.8rem; color: #475569; margin-top: 2px; }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>Phase 6: Presentation Layer — Discussion Questions</h1>
+  <p class="subtitle">All 18 questions answered. Say <strong>"finalize"</strong> to generate CONTEXT.md.</p>
+
+  <div class="done-banner">
+    <h2>All questions answered</h2>
+    <p>Say <strong>"finalize"</strong> to generate 06-CONTEXT.md with all decisions.</p>
+  </div>
+
+  <div class="stats-bar">
+    <div class="stat"><span class="stat-label">Total</span><span class="stat-value total">18</span></div>
+    <div class="stat"><span class="stat-label">Answered</span><span class="stat-value answered">18</span></div>
+    <div class="stat"><span class="stat-label">Remaining</span><span class="stat-value remaining">0</span></div>
+    <div class="progress-container">
+      <div class="progress-bar"><div class="progress-fill" style="width:100%"></div></div>
+    </div>
+  </div>
+
+  <div id="sections-container"></div>
+</div>
+
+<script>
+const data = {
+  "phase": "06-presentation-layer",
+  "generated_at": "2026-06-17T01:40:00.000Z",
+  "refreshed_at": "2026-06-17T01:55:00.000Z",
+  "stats": { "total": 18, "answered": 18, "chat_more": 0, "remaining": 0 },
+  "sections": [
+    {
+      "id": "du-shape",
+      "title": "Discriminated Union Shape",
+      "questions": [
+        {
+          "id": "Q-01", "title": "ValidationError fieldErrors type: single vs array",
+          "context": "Base_System.md §2.2 defines fieldErrors as Record<string, string> (single message per field). But Phase 4's CommandValidationError has fieldErrors: Record<string, string[]>. Which should PresentationError use?",
+          "options": [
+            { "id": "a", "label": "Record<string, string> (single message per field)", "description": "Matches Base_System.md spec exactly. Simpler for UI rendering. Breaks consistency with Application layer's array type." },
+            { "id": "b", "label": "Record<string, string[]> (multiple messages per field)", "description": "Matches Application layer's CommandValidationError. Richer validation feedback. UI needs to handle arrays." }
+          ], "answer": "b", "chat_more": "", "status": "answered"
+        },
+        {
+          "id": "Q-02", "title": "SystemError.severity: string union vs Kernel Severity enum",
+          "context": "Base_System.md defines severity as 'warning'|'error'|'critical' (string union). Kernel has a Severity enum with same values. Enum values don't survive JSON round-trip reliably across RSC.",
+          "options": [
+            { "id": "a", "label": "Plain string union: 'warning' | 'error' | 'critical'", "description": "100% serialization-safe. Matches Base_System.md spec. No Kernel Severity enum needed." },
+            { "id": "b", "label": "Template literal from Severity enum", "description": "Type-level alignment with Kernel. At runtime still plain strings. Slightly more complex type." }
+          ], "answer": "a", "chat_more": "", "status": "answered"
+        },
+        {
+          "id": "Q-03", "title": "NotFoundError: optional vs required suggestedAction",
+          "context": "Base_System.md shows suggestedAction?: string. Optional keeps flexibility but means client must handle undefined every match.",
+          "options": [
+            { "id": "a", "label": "Optional (suggestedAction?: string)", "description": "Matches spec. Flexible. Client must handle missing action." },
+            { "id": "b", "label": "Required (suggestedAction: string)", "description": "Always provides action. Simpler client. May force 'Go back' as default." }
+          ], "answer": "a", "chat_more": "", "status": "answered"
+        },
+        {
+          "id": "Q-04", "title": "AuthorizationError.requiredPermission: keep or drop?",
+          "context": "requiredPermission?: string leaks internal permission names to the client. Enables granular 'you need X permission' messages.",
+          "options": [
+            { "id": "a", "label": "Keep as optional (requiredPermission?: string)", "description": "Enables detailed UI messages. Permissions typically not sensitive." },
+            { "id": "b", "label": "Drop — use userMessage only", "description": "Security-first: never expose permission structure. UserMessage conveys access denial." }
+          ], "answer": "b", "chat_more": "", "status": "answered"
+        }
+      ]
+    },
+    {
+      "id": "presentation-result",
+      "title": "PresentationResult & Metadata",
+      "questions": [
+        {
+          "id": "Q-05", "title": "PresentationResult metadata: include or omit in v1?",
+          "context": "Base_System.md §3.2 defines metadata with operationId, duration, timestamp for Success; operationId, timestamp, retryAfter for Failure. Requires Server Action instrumentation.",
+          "options": [
+            { "id": "a", "label": "Include metadata (match spec exactly)", "description": "Richer client observability. Enables retry-after UX. More mapper code." },
+            { "id": "b", "label": "Omit metadata in v1 — minimal DU only", "description": "Simpler types, less code. Add in follow-up phase." },
+            { "id": "c", "label": "Partial: only operationId on both variants", "description": "Minimal useful metadata for correlation. Middle ground." }
+          ], "answer": "c", "chat_more": "", "status": "answered"
+        },
+        {
+          "id": "Q-06", "title": "operationId type: string vs branded OperationId",
+          "context": "Kernel has branded OperationId type. Branded types survive JSON as strings. But DUs should be plain serializable.",
+          "options": [
+            { "id": "a", "label": "Plain string in DU", "description": "DU stays 100% plain. Clean separation: brands for server, strings for transport." },
+            { "id": "b", "label": "Reuse branded OperationId", "description": "Keeps type safety. At runtime it's a string. But creates dependency on Kernel branded type." }
+          ], "answer": "a", "chat_more": "", "status": "answered"
+        }
+      ]
+    },
+    {
+      "id": "mappers",
+      "title": "Mapper Strategy",
+      "questions": [
+        {
+          "id": "Q-07", "title": "Error variant detection: how does mapper choose the right variant?",
+          "context": "ApplicationError has specific subclasses (UseCaseExecutionError, AuthorizationFailedError, CommandValidationError). Mapper must decide which PresentationError variant to produce.",
+          "options": [
+            { "id": "a", "label": "Duck-type on properties (fieldErrors, reason, code)", "description": "No class imports needed. Works with any ApplicationError. Matches prior duck-typing pattern." },
+            { "id": "b", "label": "Exhaustive instanceof check", "description": "Precise — no false matches. Couples to every specific error class." },
+            { "id": "c", "label": "Hybrid: instanceof for known, duck-type fallback", "description": "Most robust. Check known classes first, fallback to properties for unknown." }
+          ], "answer": "c", "chat_more": "", "status": "answered"
+        },
+        {
+          "id": "Q-08", "title": "Unexpected ApplicationError: fallback variant?",
+          "context": "Mapper cannot anticipate every ApplicationError. What happens with unknown/novel error types?",
+          "options": [
+            { "id": "a", "label": "Map to SystemError (catch-all)", "description": "Safe fallback. User sees 'Something went wrong' with error code." },
+            { "id": "b", "label": "Log and return generic result", "description": "Pure safety: never return unexpected structure. May lose error context." },
+            { "id": "c", "label": "Let mapper throw — caught by error boundary", "description": "Forces handling new error types. Risk of production crashes." }
+          ], "answer": "a", "chat_more": "", "status": "answered"
+        },
+        {
+          "id": "Q-09", "title": "User message strategy: auto-generate or manual mapping?",
+          "context": "PresentationError needs user-friendly messages. Options: pass through ApplicationError message with sanitization, or require explicit mappings.",
+          "options": [
+            { "id": "a", "label": "Auto-generate from ApplicationError message", "description": "Simpler mapper. Requires messages to be user-friendly." },
+            { "id": "b", "label": "Require explicit userMessage mapping", "description": "Ensures user-friendly output. May need message registry later." },
+            { "id": "c", "label": "Hybrid: auto-generate default + override param", "description": "Default to sanitized message. Allow per-code overrides." }
+          ], "answer": "c", "chat_more": "", "status": "answered"
+        }
+      ]
+    },
+    {
+      "id": "helpers",
+      "title": "Factory Functions & Narrowing Helpers",
+      "questions": [
+        {
+          "id": "Q-10", "title": "Factory functions for PresentationError variants?",
+          "context": "DUs have no constructors. Options: standalone factories (like ok()/err()), single createPresentationError(), or inline object literals.",
+          "options": [
+            { "id": "a", "label": "Standalone factories per variant", "description": "E.g., createValidationError(fieldErrors). Type-safe, tree-shakeable. Follows ok()/err() pattern." },
+            { "id": "b", "label": "Single factory with discriminated input", "description": "createPresentationError({ type: 'Validation', ... }). One import. More complex signature." },
+            { "id": "c", "label": "No factories — inline object literals", "description": "Zero extra code. Repetitive — every Server Action writes { _tag: 'ValidationError', ... }." }
+          ], "answer": "a", "chat_more": "", "status": "answered"
+        },
+        {
+          "id": "Q-11", "title": "Type narrowing helpers: isSuccess, isFailure, match helper?",
+          "context": "TypeScript narrowing on _tag already works. Extra helpers add convenience but more code. Client-side pattern.",
+          "options": [
+            { "id": "a", "label": "None — native narrowing sufficient", "description": "if (result._tag === 'Success') works perfectly. Zero extra code." },
+            { "id": "b", "label": "isSuccess / isFailure guards only", "description": "Convenience guards. Minimal code. Common pattern (c.f. React Query)." },
+            { "id": "c", "label": "Full match() function for client", "description": "result.match({ onSuccess, onFailure }). Follows monadic pattern. Adds function to pure DUs." }
+          ], "answer": "a", "chat_more": "", "status": "answered"
+        }
+      ]
+    },
+    {
+      "id": "scaffold",
+      "title": "Scaffold Cleanup & File Organization",
+      "questions": [
+        {
+          "id": "Q-12", "title": "Scaffold stub files: which to DELETE vs RETAIN?",
+          "context": "Phase 6 has OOP-style scaffold stubs. Phase 4 D-12 and Phase 5 D-15 establish deletion pattern for type alias stubs. Specific/ has nested category subdirectories needing flattening.",
+          "options": [
+            { "id": "a", "label": "Aggressive cleanup — delete all OOP stubs, flatten Specific/", "description": "Follow Phase 4/5 pattern. DELETE: presentation-error.contract.ts/validator.ts/type-guard.ts, all presentation-result.* stubs except .ts. Flatten Specific/ subdirectories." },
+            { "id": "b", "label": "Selective — keep type-guards as runtime DU validators", "description": "RETAIN type-guard files as runtime isPresentationError() checks. Delete contract/validator stubs. Flatten Specific/." },
+            { "id": "c", "label": "Minimal — keep stubs, flatten later", "description": "Delete only clear contradictions (contract files). Keep type-guard/validator stubs empty. Keep Specific/ subdirectories." }
+          ], "answer": "a", "chat_more": "", "status": "answered"
+        }
+      ]
+    },
+    {
+      "id": "variant-gaps",
+      "title": "Variant Design Gaps",
+      "questions": [
+        {
+          "id": "Q-13", "title": "NetworkError variant: should it carry statusCode or retryAfter?",
+          "context": "Base_System.md defines NetworkError as just { userMessage, retryable }. No status code, no retryAfter. HTTP errors have status codes (429=rate limit, 503=unavailable) that the client could use.",
+          "options": [
+            { "id": "a", "label": "Keep minimal: userMessage + retryable only", "description": "Matches spec. Simple type. Client can't differentiate subtypes." },
+            { "id": "b", "label": "Add statusCode?: number", "description": "Enables HTTP-aware error handling. Optional." },
+            { "id": "c", "label": "Add statusCode + retryAfter?: number", "description": "Full HTTP semantics. Countdown UI." }
+          ], "answer": "a", "chat_more": "", "status": "answered"
+        },
+        {
+          "id": "Q-14", "title": "ValidationError vs NotFoundError boundary in mapper",
+          "context": "When a user submits an entity ID that doesn't exist, is it ValidationError or NotFoundError? The mapper must choose one variant.",
+          "options": [
+            { "id": "a", "label": "NotFoundError by error code prefix (NOT_FOUND_*)", "description": "Clean prefix convention." },
+            { "id": "b", "label": "NotFoundError only for explicit 404 semantics", "description": "Everything else → SystemError. Conservative." },
+            { "id": "c", "label": "Merge: ValidationError covers both", "description": "One 'input error' path. suggestedAction disambiguates." }
+          ], "answer": "a", "chat_more": "", "status": "answered"
+        }
+      ]
+    },
+    {
+      "id": "mapper-arch",
+      "title": "Mapper Architecture",
+      "questions": [
+        {
+          "id": "Q-15", "title": "Single unified mapper vs two separate mappers?",
+          "context": "Scaffold has two files (error mapper + result mapper). The real entry point is ApplicationResult<T> monad.",
+          "options": [
+            { "id": "a", "label": "Single: toPresentationResult<T>(appResult, params?)", "description": "One function handles both paths." },
+            { "id": "b", "label": "Two: error mapper + result wrapper", "description": "Separate concerns. Testable in isolation." },
+            { "id": "c", "label": "Keep both scaffold files, restructured", "description": "Error: AppError→PresError. Result: AppResult→PresResult." }
+          ], "answer": "c", "chat_more": "", "status": "answered"
+        },
+        {
+          "id": "Q-16", "title": "Mapper error handling: what if mapper itself throws?",
+          "context": "Last transform before RSC boundary. Prior mappers are server-to-server and can throw.",
+          "options": [
+            { "id": "a", "label": "Try/catch → generic SystemError", "description": "Never throws. Log + SystemError." },
+            { "id": "b", "label": "Let it throw — error boundary catches", "description": "Simpler. Loses error type." },
+            { "id": "c", "label": "Hybrid: try/catch in result, assertive in error mapper", "description": "Result never-throws. Error mapper is pure." }
+          ], "answer": "c", "chat_more": "", "status": "answered"
+        }
+      ]
+    },
+    {
+      "id": "client-monitoring",
+      "title": "Client-side Error Monitoring",
+      "questions": [
+        {
+          "id": "Q-17", "title": "Should all PresentationError variants carry errorCode?",
+          "context": "Only SystemError has errorCode. Without codes, monitoring can't distinguish similar errors.",
+          "options": [
+            { "id": "a", "label": "Add errorCode to ALL 5 variants", "description": "Uniform traceability." },
+            { "id": "b", "label": "Keep on SystemError only", "description": "Matches spec. Simpler types." },
+            { "id": "c", "label": "Add to Auth + Network too", "description": "Middle ground." }
+          ], "answer": "a", "chat_more": "", "status": "answered"
+        }
+      ]
+    },
+    {
+      "id": "file-org",
+      "title": "File Organization",
+      "questions": [
+        {
+          "id": "Q-18", "title": "Specific/ directory: one file per variant or single DU type file?",
+          "context": "Scaffold has 3 subdirectories with empty files. No Authorization or NotFound. DUs are a single type.",
+          "options": [
+            { "id": "a", "label": "Single file: presentation-error.types.ts", "description": "All variants in one file. Specific/ deleted." },
+            { "id": "b", "label": "Flatten: one file per variant", "description": "Flat files. Specific/index.ts barrel." },
+            { "id": "c", "label": "Keep subdirectories, add missing", "description": "Retain structure. Inconsistent with Phases 3-5." }
+          ], "answer": "a", "chat_more": "", "status": "answered"
+        }
+      ]
+    }
+  ]
+};
+
+function render() {
+  const container = document.getElementById('sections-container');
+  container.innerHTML = '';
+  for (const section of data.sections) {
+    const answered = section.questions.filter(q => q.answer !== null && q.answer !== '').length;
+    const div = document.createElement('div');
+    div.className = 'section';
+    div.innerHTML = `
+      <div class="section-header" onclick="toggleSection(this)">
+        <div>
+          <div class="section-title">${section.title}</div>
+          <div class="section-meta">${answered}/${section.questions.length} answered</div>
+        </div>
+        <span class="section-toggle open">▶</span>
+      </div>
+      <div class="section-body open">
+        <div class="card-grid">
+          ${section.questions.map(q => renderCard(q)).join('')}
+        </div>
+      </div>
+    `;
+    container.appendChild(div);
+  }
+}
+
+function renderCard(q) {
+  const chosen = q.options.find(o => o.id === q.answer);
+  return `
+    <div class="card">
+      <div class="card-id">${q.id}</div>
+      <div class="card-title">${q.title}</div>
+      <div class="card-context">${q.context}</div>
+      <div class="card-options">
+        ${q.options.map(o => `
+          <div class="card-option">
+            <input type="radio" disabled ${q.answer === o.id ? 'checked' : ''}>
+            <label>
+              <span class="option-label">${o.label}</span>
+              <span class="option-desc">${o.description}</span>
+            </label>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+  `;
+}
+
+function toggleSection(header) {
+  const body = header.nextElementSibling;
+  const toggle = header.querySelector('.section-toggle');
+  body.classList.toggle('open');
+  toggle.classList.toggle('open');
+}
+
+render();
+</script>
+</body>
+</html>
