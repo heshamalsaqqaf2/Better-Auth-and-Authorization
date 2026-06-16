@@ -5,16 +5,16 @@
 See: .planning/PROJECT.md (updated 2026-06-07)
 
 **Core value:** Every error in the system is typed, traceable to its origin layer, and safely serializable — no untyped exceptions, no information leaks, no "cannot read properties of undefined" in production.
-**Current focus: Phase 5 — Infrastructure Layer (Wave 2/4 complete)
+**Current focus: Phase 5 — Infrastructure Layer (Wave 3/4 complete)
 
 ## Current Position
 
 Phase: 5 of 8 (Infrastructure Layer)
-Plan: 2/4 complete (Core Error & Result done)
-Status: ◆ Executing Wave 2
-Last activity: 2026-06-16 — 05-02 complete: InfrastructureError class, InfrastructureResult alias, validator, type guard, barrels
+Plan: 3/4 complete (Specific Errors & Mapper done)
+Status: ◆ Executing Wave 3
+Last activity: 2026-06-16 — 05-03 complete: 5 specific InfrastructureError subclasses, Infrastructure→Application mapper with sanitization
 
-Progress: [████████████████████] 100% (Phase 1) — [████████████████████] 100% (Phase 2) — [████████████████████] 100% (Phase 3) — [████████████████████████] 100% (Phase 4) — [██████████········] 50% (Phase 5)
+Progress: [████████████████████] 100% (Phase 1) — [████████████████████] 100% (Phase 2) — [████████████████████] 100% (Phase 3) — [████████████████████████] 100% (Phase 4) — [███████████████████···] 75% (Phase 5)
 
 ## Performance Metrics
 
@@ -32,7 +32,7 @@ Progress: [████████████████████] 100% (P
 | 2. Foundations Base Layer | 3 | 3/4 | ~6 min |
 | 3. Domain Layer | 3 | 3/3 | ~6 min |
 | 4. Application Layer | 2 | 4/4 | ~2 min |
-| 5. Infrastructure Layer | 2 | Executing | ~4 min |
+| 5. Infrastructure Layer | 3 | Executing | ~3 min |
 
 **Recent Trend:**
 - Last 5 plans: 05-02 (~2 min), 05-01 (~5 min)
@@ -97,6 +97,9 @@ Recent decisions affecting current work:
 - [Phase 5] [executed]: InfrastructureResult<T> = ResultBase<T, InfrastructureError> — pure type alias, no contract/validator/type-guard files (D-14/D-15)
 - [Phase 5] [executed]: InfrastructureErrorValidator checks layer===INFRASTRUCTURE + systemComponent non-empty; isInfrastructureError duck-types only systemComponent (D-27/D-28)
 - [Phase 5] [executed]: Barrel files follow Application layer pattern — Errors/index.ts + Results/index.ts
+- [Phase 5] [executed]: 5 specific InfrastructureError subclasses created (DatabaseConnectionError, DatabaseQueryError, ApiTimeoutError, ApiUnavailableError, CacheUnavailableError) — all follow named-params constructor pattern with hardcoded codes and correct systemComponent values (D-24/D-25)
+- [Phase 5] [executed]: mapInfrastructureToAppError() generic mapper and sanitizeInfraError() sanitization utility created — sanitizer defaults to sanitized mode, strips hostnames/IPs/stack traces, debug flag opt-out (D-11/D-12/D-13/D-21/D-22)
+- [Phase 5] [executed]: Mappers/index.ts barrel exports both mapper and sanitize function; Specific/index.ts barrel re-exports all 5 specific errors
 
 ### Pending Todos
 
@@ -117,6 +120,6 @@ Items acknowledged and carried forward from previous milestone close:
 ## Session Continuity
 
 Last session: 2026-06-16
-Stopped at: Completed 05-02 (Wave 2) — Core Error & Result
-Resume file: .planning/phases/05-infrastructure-layer/05-03-PLAN.md
+Stopped at: Completed 05-03 (Wave 3) — Specific Errors & Mapper
+Resume file: .planning/phases/05-infrastructure-layer/05-04-PLAN.md
 
