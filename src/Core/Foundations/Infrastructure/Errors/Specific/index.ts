@@ -1,2 +1,5 @@
-// Specific infrastructure errors will be defined in a later plan.
-export {}
+export { ApiTimeoutError } from "./api-timeout.error";
+export { ApiUnavailableError } from "./api-unavailable.error";
+export { CacheUnavailableError } from "./cache-unavailable.error";
+export { DatabaseConnectionError } from "./database-connection.error";
+export { DatabaseQueryError } from "./database-query.error";
