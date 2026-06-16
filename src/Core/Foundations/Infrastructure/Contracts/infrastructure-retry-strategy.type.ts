@@ -1,1 +1,1 @@
-export type InfrastructureRetryStrategy = 'exponential' | 'fixed' | 'jitter';
+export type InfrastructureRetryStrategy = "exponential" | "fixed" | "jitter";

@@ -1,1 +1,1 @@
-export type InfrastructureComponent = 'Database' | 'Network' | 'Cache';
+export type InfrastructureComponent = "Database" | "Network" | "Cache";
