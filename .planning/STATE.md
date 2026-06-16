@@ -113,6 +113,6 @@ Items acknowledged and carried forward from previous milestone close:
 ## Session Continuity
 
 Last session: 2026-06-16
-Stopped at: Phase 5 context gathered — InfrastructureError, resilience API, sanitization, mapper direction
-Resume file: .planning/phases/05-infrastructure-layer/05-CONTEXT.md
+Stopped at: Completed 05-01 (Wave 1) — Contracts & Cleanup
+Resume file: .planning/phases/05-infrastructure-layer/05-02-PLAN.md
 
