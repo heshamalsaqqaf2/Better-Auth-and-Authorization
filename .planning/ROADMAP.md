@@ -132,7 +132,7 @@ Build a production-grade, multi-layered Error and Result system for a Next.js 16
 **Plans**: 4 plans
 
 Plans:
-- [ ] 05-01-PLAN.md — Contracts & Cleanup: Contracts types, contract interface, delete scaffold stubs
+- [x] 05-01-PLAN.md — Contracts & Cleanup: Contracts types, contract interface, delete scaffold stubs
 - [ ] 05-02-PLAN.md — Core Error & Result: InfrastructureError class, InfrastructureResult type alias, validator, type guard
 - [ ] 05-03-PLAN.md — Specific Errors & Mapper: 5 specific error subclasses, Infrastructure→Application mapper, sanitization
 - [ ] 05-04-PLAN.md — Resilience & Barrel: withRetry, withTimeout, withFallback wrappers, top-level Infrastructure barrel

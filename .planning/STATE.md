@@ -5,16 +5,16 @@
 See: .planning/PROJECT.md (updated 2026-06-07)
 
 **Core value:** Every error in the system is typed, traceable to its origin layer, and safely serializable — no untyped exceptions, no information leaks, no "cannot read properties of undefined" in production.
-**Current focus: Phase 5 — Infrastructure Layer (context gathered, ready for planning)
+**Current focus: Phase 5 — Infrastructure Layer (Wave 1/4 complete)
 
 ## Current Position
 
 Phase: 5 of 8 (Infrastructure Layer)
-Plan: Context gathered — 4 plans defined
-Status: ◆ Planning Complete
-Last activity: 2026-06-16 — Phase 5 planned: 4 plans, 4 waves (Contracts/cleanup → Core error/result → Specific errors/mapper → Resilience wrappers/barrel)
+Plan: 1/4 complete (Contracts & Cleanup done)
+Status: ◆ Executing Wave 1
+Last activity: 2026-06-16 — 05-01 complete: Infrastructure contracts created (Component, RetryStrategy, ErrorContract) + scaffold stubs deleted
 
-Progress: [████████████████████] 100% (Phase 1) — [████████████████████] 100% (Phase 2) — [████████████████████] 100% (Phase 3) — [████████████████████████] 100% (Phase 4) — [····················] Planning (Phase 5)
+Progress: [████████████████████] 100% (Phase 1) — [████████████████████] 100% (Phase 2) — [████████████████████] 100% (Phase 3) — [████████████████████████] 100% (Phase 4) — [█████···········] 25% (Phase 5)
 
 ## Performance Metrics
 
@@ -32,11 +32,11 @@ Progress: [████████████████████] 100% (P
 | 2. Foundations Base Layer | 3 | 3/4 | ~6 min |
 | 3. Domain Layer | 3 | 3/3 | ~6 min |
 | 4. Application Layer | 2 | 4/4 | ~2 min |
-| 5. Infrastructure Layer | 0 | Planning | - |
+| 5. Infrastructure Layer | 1 | Executing | ~5 min |
 
 **Recent Trend:**
-- Last 5 plans: N/A
-- Trend: N/A
+- Last 5 plans: 05-01 (~5 min)
+- Trend: Consistent ~5 min per plan
 
 *Updated after each plan completion*
 
@@ -91,6 +91,8 @@ Recent decisions affecting current work:
 - [Phase 4] [executed]: mapDomainToAppError generic function — single mapper, passes domain error code/message as-is, preserves cause chain (D-23/D-24/D-25)
 - [Phase 4] [executed]: Three specific errors: UseCaseExecutionError (cause mandatory, USE_CASE_EXECUTION_ERROR), AuthorizationFailedError (reason: string, AUTHORIZATION_FAILED), CommandValidationError (fieldErrors, COMMAND_VALIDATION_ERROR) — flat Specific/ directory (D-26/D-27)
 - [Phase 4] [executed]: Barrel chain complete — Application/index.ts exports Contracts, Errors, Mappers, Results; Errors/index.ts includes Specific/ re-export (D-31/D-32/D-33)
+- [Phase 5] [executed]: Infrastructure contracts defined: InfrastructureComponent, InfrastructureRetryStrategy, InfrastructureErrorContract (D-01..D-10)
+- [Phase 5] [executed]: Scaffold cleanup per D-15, D-21, D-23 — Results stubs, old mapper stub, category subdirectories deleted
 
 ### Pending Todos
 
