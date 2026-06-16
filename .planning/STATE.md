@@ -5,16 +5,16 @@
 See: .planning/PROJECT.md (updated 2026-06-07)
 
 **Core value:** Every error in the system is typed, traceable to its origin layer, and safely serializable — no untyped exceptions, no information leaks, no "cannot read properties of undefined" in production.
-**Current focus: Phase 4 — Application Layer (Wave 4/4 complete — 4/4 plans executed)
+**Current focus: Phase 5 — Infrastructure Layer (context gathered, ready for planning)
 
 ## Current Position
 
-Phase: 4 of 8 (Application Layer)
-Plan: 4/4 executed — Wave 4 complete, phase ready for verification
-Status: ◆ In Progress
-Last activity: 2026-06-11 — Plan 04-04 executed (CQRS handler interfaces, decorator bases, barrel chain)
+Phase: 5 of 8 (Infrastructure Layer)
+Plan: Context gathered — ready for planning
+Status: ◆ Context Gathered
+Last activity: 2026-06-16 — Phase 5 context gathered (InfrastructureError, resilience API, sanitization, mapper direction)
 
-Progress: [████████████████████] 100% (Phase 1) — [████████████████████] 100% (Phase 2) — [████████████████████] 100% (Phase 3) — [████████████████████████] 100% (Phase 4 Wave 4)
+Progress: [████████████████████] 100% (Phase 1) — [████████████████████] 100% (Phase 2) — [████████████████████] 100% (Phase 3) — [████████████████████████] 100% (Phase 4) — [····················] Context (Phase 5)
 
 ## Performance Metrics
 
@@ -32,6 +32,7 @@ Progress: [████████████████████] 100% (P
 | 2. Foundations Base Layer | 3 | 3/4 | ~6 min |
 | 3. Domain Layer | 3 | 3/3 | ~6 min |
 | 4. Application Layer | 2 | 4/4 | ~2 min |
+| 5. Infrastructure Layer | 0 | Context | - |
 
 **Recent Trend:**
 - Last 5 plans: N/A
@@ -109,7 +110,7 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-06-11
-Stopped at: Phase 4 Wave 4 complete — Plan 04-04 executed (CQRS handler interfaces, decorator bases, barrel chain)
-Resume file: .planning/phases/05-infrastructure-layer/ (next phase)
+Last session: 2026-06-16
+Stopped at: Phase 5 context gathered — InfrastructureError, resilience API, sanitization, mapper direction
+Resume file: .planning/phases/05-infrastructure-layer/05-CONTEXT.md
 
