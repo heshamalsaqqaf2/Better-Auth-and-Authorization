@@ -5,24 +5,24 @@
 See: .planning/PROJECT.md (updated 2026-06-07)
 
 **Core value:** Every error in the system is typed, traceable to its origin layer, and safely serializable — no untyped exceptions, no information leaks, no "cannot read properties of undefined" in production.
-**Current focus: Phase 5 — Infrastructure Layer (Wave 3/4 complete)
+**Current focus: Phase 5 — Infrastructure Layer (Wave 4/4 complete)
 
 ## Current Position
 
 Phase: 5 of 8 (Infrastructure Layer)
-Plan: 3/4 complete (Specific Errors & Mapper done)
-Status: ◆ Executing Wave 3
-Last activity: 2026-06-16 — 05-03 complete: 5 specific InfrastructureError subclasses, Infrastructure→Application mapper with sanitization
+Plan: 4/4 complete (Resilience wrappers & barrel done)
+Status: ◆ Phase 5 Complete
+Last activity: 2026-06-16 — 05-04 complete: withRetry, withTimeout, withFallback resilience wrappers + top-level Infrastructure barrel
 
-Progress: [████████████████████] 100% (Phase 1) — [████████████████████] 100% (Phase 2) — [████████████████████] 100% (Phase 3) — [████████████████████████] 100% (Phase 4) — [███████████████████···] 75% (Phase 5)
+Progress: [████████████████████] 100% (Phase 1) — [████████████████████] 100% (Phase 2) — [████████████████████] 100% (Phase 3) — [████████████████████████] 100% (Phase 4) — [████████████████████████] 100% (Phase 5)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 15 (executed across Phases 1-5)
+- Total plans completed: 16 (executed across Phases 1-5)
 - Total plans planned: 17 (Phase 5: 4)
 - Average duration: ~2.7 min
-- Total execution time: ~41 min
+- Total execution time: ~43 min
 
 **By Phase:**
 
@@ -32,10 +32,10 @@ Progress: [████████████████████] 100% (P
 | 2. Foundations Base Layer | 3 | 3/4 | ~6 min |
 | 3. Domain Layer | 3 | 3/3 | ~6 min |
 | 4. Application Layer | 2 | 4/4 | ~2 min |
-| 5. Infrastructure Layer | 3 | Executing | ~3 min |
+| 5. Infrastructure Layer | 4 | Complete | ~3 min |
 
 **Recent Trend:**
-- Last 5 plans: 05-02 (~2 min), 05-01 (~5 min)
+- Last 5 plans: 05-02 (~2 min), 05-01 (~5 min), 05-04 (~2 min)
 - Trend: Consistent ~3.5 min per plan
 
 *Updated after each plan completion*
@@ -100,6 +100,10 @@ Recent decisions affecting current work:
 - [Phase 5] [executed]: 5 specific InfrastructureError subclasses created (DatabaseConnectionError, DatabaseQueryError, ApiTimeoutError, ApiUnavailableError, CacheUnavailableError) — all follow named-params constructor pattern with hardcoded codes and correct systemComponent values (D-24/D-25)
 - [Phase 5] [executed]: mapInfrastructureToAppError() generic mapper and sanitizeInfraError() sanitization utility created — sanitizer defaults to sanitized mode, strips hostnames/IPs/stack traces, debug flag opt-out (D-11/D-12/D-13/D-21/D-22)
 - [Phase 5] [executed]: Mappers/index.ts barrel exports both mapper and sanitize function; Specific/index.ts barrel re-exports all 5 specific errors
+- [Phase 5] [executed]: withRetry uses internal recursive `attempt()` helper with exponential backoff (baseDelay * 2^attempt + random jitter), clamped to maxDelayMs; on exhaustion creates RETRY_EXHAUSTED InfrastructureError with last attempt as cause
+- [Phase 5] [executed]: withTimeout uses async/await with try/catch — timeout Promise rejects, catch converts to InfrastructureResult Failure; never throws
+- [Phase 5] [executed]: withFallback is pure synchronous function — if Success returns unchanged, if Failure returns `ok(fallback)`
+- [Phase 5] [executed]: Infrastructure/index.ts top-level barrel follows Application/index.ts pattern: `export * from` for Contracts, Errors, Mappers, Results, Resilience (in that order)
 
 ### Pending Todos
 
@@ -120,6 +124,6 @@ Items acknowledged and carried forward from previous milestone close:
 ## Session Continuity
 
 Last session: 2026-06-16
-Stopped at: Completed 05-03 (Wave 3) — Specific Errors & Mapper
-Resume file: .planning/phases/05-infrastructure-layer/05-04-PLAN.md
+Stopped at: Completed 05-04 (Wave 4) — Resilience wrappers & barrel
+Resume file: .planning/phases/06-presentation-layer/06-01-PLAN.md
 
