@@ -1,4 +1,4 @@
-import { err, ok } from "@/Core/Foundations/Base/Abstracts/result-base";
+import { err } from "@/Core/Foundations/Base/Abstracts/result-base";
 import type { InfrastructureComponent } from "../Contracts/infrastructure-component.type";
 import { InfrastructureError } from "../Errors/infrastructure-error";
 import type { InfrastructureResult } from "../Results/infrastructure-result";
@@ -35,7 +35,7 @@ export function withRetry<T>(
           systemComponent,
           retryCount: attemptCount,
           retryStrategy: "exponential",
-          cause: result.error!,
+          ...(result.error ? { cause: result.error } : {}),
         }),
       );
     }
