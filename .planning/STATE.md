@@ -5,24 +5,24 @@
 See: .planning/PROJECT.md (updated 2026-06-07)
 
 **Core value:** Every error in the system is typed, traceable to its origin layer, and safely serializable — no untyped exceptions, no information leaks, no "cannot read properties of undefined" in production.
-**Current focus: Phase 5 — Infrastructure Layer (Wave 1/4 complete)
+**Current focus: Phase 5 — Infrastructure Layer (Wave 2/4 complete)
 
 ## Current Position
 
 Phase: 5 of 8 (Infrastructure Layer)
-Plan: 1/4 complete (Contracts & Cleanup done)
-Status: ◆ Executing Wave 1
-Last activity: 2026-06-16 — 05-01 complete: Infrastructure contracts created (Component, RetryStrategy, ErrorContract) + scaffold stubs deleted
+Plan: 2/4 complete (Core Error & Result done)
+Status: ◆ Executing Wave 2
+Last activity: 2026-06-16 — 05-02 complete: InfrastructureError class, InfrastructureResult alias, validator, type guard, barrels
 
-Progress: [████████████████████] 100% (Phase 1) — [████████████████████] 100% (Phase 2) — [████████████████████] 100% (Phase 3) — [████████████████████████] 100% (Phase 4) — [█████···········] 25% (Phase 5)
+Progress: [████████████████████] 100% (Phase 1) — [████████████████████] 100% (Phase 2) — [████████████████████] 100% (Phase 3) — [████████████████████████] 100% (Phase 4) — [██████████········] 50% (Phase 5)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 8 (executed across Phases 1-4)
-- Total plans planned: 8 (Phase 4: 4)
-- Average duration: ~5.57 min
-- Total execution time: ~39 min
+- Total plans completed: 15 (executed across Phases 1-5)
+- Total plans planned: 17 (Phase 5: 4)
+- Average duration: ~2.7 min
+- Total execution time: ~41 min
 
 **By Phase:**
 
@@ -32,11 +32,11 @@ Progress: [████████████████████] 100% (P
 | 2. Foundations Base Layer | 3 | 3/4 | ~6 min |
 | 3. Domain Layer | 3 | 3/3 | ~6 min |
 | 4. Application Layer | 2 | 4/4 | ~2 min |
-| 5. Infrastructure Layer | 1 | Executing | ~5 min |
+| 5. Infrastructure Layer | 2 | Executing | ~4 min |
 
 **Recent Trend:**
-- Last 5 plans: 05-01 (~5 min)
-- Trend: Consistent ~5 min per plan
+- Last 5 plans: 05-02 (~2 min), 05-01 (~5 min)
+- Trend: Consistent ~3.5 min per plan
 
 *Updated after each plan completion*
 
@@ -93,6 +93,10 @@ Recent decisions affecting current work:
 - [Phase 4] [executed]: Barrel chain complete — Application/index.ts exports Contracts, Errors, Mappers, Results; Errors/index.ts includes Specific/ re-export (D-31/D-32/D-33)
 - [Phase 5] [executed]: Infrastructure contracts defined: InfrastructureComponent, InfrastructureRetryStrategy, InfrastructureErrorContract (D-01..D-10)
 - [Phase 5] [executed]: Scaffold cleanup per D-15, D-21, D-23 — Results stubs, old mapper stub, category subdirectories deleted
+- [Phase 5] [executed]: InfrastructureError class extends ErrorBase with named params constructor — systemComponent, retryCount?, retryStrategy?, safeDetails?; layer=INFRASTRUCTURE hardcoded; isRecoverable() returns true (D-09)
+- [Phase 5] [executed]: InfrastructureResult<T> = ResultBase<T, InfrastructureError> — pure type alias, no contract/validator/type-guard files (D-14/D-15)
+- [Phase 5] [executed]: InfrastructureErrorValidator checks layer===INFRASTRUCTURE + systemComponent non-empty; isInfrastructureError duck-types only systemComponent (D-27/D-28)
+- [Phase 5] [executed]: Barrel files follow Application layer pattern — Errors/index.ts + Results/index.ts
 
 ### Pending Todos
 
@@ -113,6 +117,6 @@ Items acknowledged and carried forward from previous milestone close:
 ## Session Continuity
 
 Last session: 2026-06-16
-Stopped at: Completed 05-01 (Wave 1) — Contracts & Cleanup
-Resume file: .planning/phases/05-infrastructure-layer/05-02-PLAN.md
+Stopped at: Completed 05-02 (Wave 2) — Core Error & Result
+Resume file: .planning/phases/05-infrastructure-layer/05-03-PLAN.md
 

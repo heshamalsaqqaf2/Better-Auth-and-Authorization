@@ -60,8 +60,8 @@ Deferred to future releases. Tracked but not in current roadmap.
 
 ### Foundations — Infrastructure Layer
 
-- **INFO-01**: `InfrastructureError` class extending ErrorBase
-- **INFO-02**: `InfrastructureResult<T>` type alias + standalone resilience wrappers (`withRetry`, `withTimeout`, `withFallback`)
+- [x] **INFO-01**: `InfrastructureError` class extending ErrorBase
+- [ ] **INFO-02**: `InfrastructureResult<T>` type alias + standalone resilience wrappers (`withRetry`, `withTimeout`, `withFallback`)
 - **INFO-03**: Application → Infrastructure error mapper
 
 ### Foundations — Presentation Layer
@@ -119,8 +119,8 @@ Explicitly excluded. Documented to prevent scope creep.
 | APP-01 | Phase 4 | Outline |
 | APP-02 | Phase 4 | Outline |
 | APP-03 | Phase 4 | Outline |
-| INFO-01 | Phase 5 | Outline |
-| INFO-02 | Phase 5 | Outline |
+| INFO-01 | Phase 5 | Complete |
+| INFO-02 | Phase 5 | In Progress |
 | INFO-03 | Phase 5 | Outline |
 | PRES-01 | Phase 6 | Outline |
 | PRES-02 | Phase 6 | Outline |
