@@ -10,11 +10,11 @@ See: .planning/PROJECT.md (updated 2026-06-07)
 ## Current Position
 
 Phase: 6 of 8 (Presentation Layer)
-Plan: 2/4 planned (Types & Cleanup, Result DU, Mappers, Barrel Chain)
-Status: ◆ Phase 6 Wave 2 Complete
-Last activity: 2026-06-17 — Plan 06-02 executed: PresentationResult<T> DU created, Result OOP stubs deleted
+Plan: 3/4 planned (Types & Cleanup, Result DU, Mappers, Barrel Chain)
+Status: ◆ Phase 6 Wave 3 Complete
+Last activity: 2026-06-17 — Plan 06-03 executed: Application-to-Presentation mappers created (hybrid error mapper + try/catch-safe result mapper)
 
-Progress: [████████████████████] 100% (Phase 1) — [████████████████████] 100% (Phase 2) — [████████████████████] 100% (Phase 3) — [████████████████████████] 100% (Phase 4) — [████████████████████████] 100% (Phase 5) — [██████████░░░░░░░░░░░░] 50% (Phase 6)
+Progress: [████████████████████] 100% (Phase 1) — [████████████████████] 100% (Phase 2) — [████████████████████] 100% (Phase 3) — [████████████████████████] 100% (Phase 4) — [████████████████████████] 100% (Phase 5) — [████████████████████] 75% (Phase 6)
 
 ## Performance Metrics
 

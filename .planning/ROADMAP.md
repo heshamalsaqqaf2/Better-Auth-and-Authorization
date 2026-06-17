@@ -156,7 +156,7 @@ Plans:
 - [x] 06-02-PLAN.md — Delete Result stubs, create PresentationResult DU (_tag discriminant + operationId metadata), update Results barrel
 
 **Wave 3 *(depends on Waves 1+2) — Mappers***
-- [ ] 06-03-PLAN.md — Implement error mapper (hybrid instanceof/duck-type detection) + result mapper (try/catch safety), update Mappers barrel
+- [x] 06-03-PLAN.md — Implement error mapper (hybrid instanceof/duck-type detection) + result mapper (try/catch safety), update Mappers barrel
 
 **Wave 4 *(depends on all prior waves) — Barrel Chain & Final Cleanup***
 - [ ] 06-04-PLAN.md — Create Presentation/index.ts barrel, verify sub-barrels, final tsc type-check
