@@ -10,11 +10,11 @@ See: .planning/PROJECT.md (updated 2026-06-07)
 ## Current Position
 
 Phase: 6 of 8 (Presentation Layer)
-Plan: 0/4 planned (Types & Cleanup, Result DU, Mappers, Barrel Chain)
-Status: ◆ Phase 6 Planned
-Last activity: 2026-06-17 — Phase 6 planned: 4 waves (types, result, mappers, barrels)
+Plan: 1/4 planned (Types & Cleanup, Result DU, Mappers, Barrel Chain)
+Status: ◆ Phase 6 Wave 1 Complete
+Last activity: 2026-06-17 — Plan 06-01 executed: PresentationError DU created, OOP stubs deleted
 
-Progress: [████████████████████] 100% (Phase 1) — [████████████████████] 100% (Phase 2) — [████████████████████] 100% (Phase 3) — [████████████████████████] 100% (Phase 4) — [████████████████████████] 100% (Phase 5) — [░░░░░░░░░░░░░░░░░░░░] 0% (Phase 6)
+Progress: [████████████████████] 100% (Phase 1) — [████████████████████] 100% (Phase 2) — [████████████████████] 100% (Phase 3) — [████████████████████████] 100% (Phase 4) — [████████████████████████] 100% (Phase 5) — [█████░░░░░░░░░░░░░░░░░] 25% (Phase 6)
 
 ## Performance Metrics
 

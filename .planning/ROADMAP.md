@@ -150,7 +150,7 @@ Plans:
 **Plans**: 4 plans
 
 **Wave 1 *(Types & Cleanup — zero dependency within phase)***
-- [ ] 06-01-PLAN.md — Delete OOP stubs, create PresentationError DU (5 variants + factories), update Errors barrel
+- [x] 06-01-PLAN.md — Delete OOP stubs, create PresentationError DU (5 variants + factories), update Errors barrel
 
 **Wave 2 *(depends on Wave 1) — Result DU***
 - [ ] 06-02-PLAN.md — Delete Result stubs, create PresentationResult DU (_tag discriminant + operationId metadata), update Results barrel
@@ -209,6 +209,6 @@ Plans:
 | 3. Domain Layer | 3/3 | ✓ Complete | 2026-06-08 |
 | 4. Application Layer | 4/4 | ✓ Complete | 2026-06-11 |
 | 5. Infrastructure Layer | 4/4 | ✓ Complete | 2026-06-16 |
-| 6. Presentation Layer | 0/4 | Planned | - |
+| 6. Presentation Layer | 1/4 | Wave 1 Complete | - |
 | 7. Tooling & Boundary Enforcement | 0/0 | Not started | - |
 | 8. Module Integration & Server Actions | 0/0 | Not started | - |
