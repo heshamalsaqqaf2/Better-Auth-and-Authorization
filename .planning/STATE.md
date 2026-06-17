@@ -54,7 +54,7 @@ Recent decisions affecting current work:
 - [Phase 1]: `as const` objects for enums (not TypeScript `enum`) — better tree-shaking, no reverse-mapping bloat
 - [Phase 1]: Unique-symbol branded types with named factory functions — single `as` cast per factory
 - [Phase 1]: ES2022 target needed for `unique symbol`, `Error.cause`, private fields
-- [Phase 1]: `dependency-cruiser`, ESLint `import/no-restricted-paths` setup to be included in Phase 1 plans
+- [Phase 1]: `dependency-cruiser`, Biome `noRestrictedImports` setup to be included in Phase 1 plans
 - [Phase 1]: ErrorBase cause is optional (`cause?: ErrorBase`) — root errors have no cause
 - [Phase 1]: ResultBase includes `mapError` alongside `map`/`flatMap`/`match`/`fold`
 - [Phase 1]: Validator contracts are interface-only (no implementations) per Pitfall 5 avoidance

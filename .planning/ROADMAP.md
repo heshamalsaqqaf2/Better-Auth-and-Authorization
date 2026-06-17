@@ -12,7 +12,7 @@ Build a production-grade, multi-layered Error and Result system for a Next.js 16
 - [x] **Phase 4: Application Layer** ✅ — Use case orchestration with observability hooks and cross-layer mapping
 - [x] **Phase 5: Infrastructure Layer** ✅ — Resilient I/O error handling with retry, timeout, and sanitization
 - [x] **Phase 6: Presentation Layer** ✅ — Serialization-safe discriminated unions for RSC transport — 3 requirements covered, `npx tsc --noEmit` clean
-- [ ] **Phase 7: Tooling & Boundary Enforcement** — Layer isolation enforcement via tooling and CI
+- [ ] **Phase 7: Tooling & Boundary Enforcement** — Layer isolation enforcement via Biome rules, dependency-cruiser, and CI
 - [ ] **Phase 8: Module Integration & Server Actions** — End-to-end architecture validation in real Server Actions
 
 ## Phase Details
@@ -169,13 +169,13 @@ Plans:
 - Barrel chain: each subdirectory `index.ts` → `Presentation/index.ts`
 
 ### Phase 7: Tooling & Boundary Enforcement
-**Goal**: Layer isolation is enforced by automated tooling, and all architectural invariants are validated in CI before any code reaches production
+**Goal**: Layer isolation is enforced by Biome linter rules, dependency-cruiser, and CI — no ESLint configuration needed
 **Mode**: v2
 **Depends on**: Phase 1
 **Requirements**: (Infrastructure/tooling — supports all phases)
 **Success Criteria** (what must be TRUE):
   1. `dependency-cruiser` detects and blocks any import from Domain to Infrastructure (or other layer violations) as a CI-blocking failure
-  2. ESLint `import/no-restricted-paths` prevents cross-layer imports during local development with clear error messages
+  2. Biome `noRestrictedImports` rule prevents cross-layer imports during local development with clear error messages
   3. `madge` circular dependency detection runs as a pre-commit hook and in CI
   4. Serialization safety tests verify that no OOP class (no prototype methods) can accidentally cross the Presentation boundary in a Server Action
 **Plans**: TBD
