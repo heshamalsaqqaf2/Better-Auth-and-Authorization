@@ -24,6 +24,6 @@ export function mapApplicationToPresentationResult<T>(
     return failureResult(mappedError, operationId);
   } catch {
     const operationId = createOperationId(params.operationName);
-    return failureResult(createSystemError("An unexpected error occurred", "MAPPER_ERROR", "critical"), operationId);
+    return failureResult(createSystemError("MAPPER_ERROR", "An unexpected error occurred", "critical"), operationId);
   }
 }
