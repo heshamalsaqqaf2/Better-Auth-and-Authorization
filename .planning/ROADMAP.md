@@ -153,7 +153,7 @@ Plans:
 - [x] 06-01-PLAN.md — Delete OOP stubs, create PresentationError DU (5 variants + factories), update Errors barrel
 
 **Wave 2 *(depends on Wave 1) — Result DU***
-- [ ] 06-02-PLAN.md — Delete Result stubs, create PresentationResult DU (_tag discriminant + operationId metadata), update Results barrel
+- [x] 06-02-PLAN.md — Delete Result stubs, create PresentationResult DU (_tag discriminant + operationId metadata), update Results barrel
 
 **Wave 3 *(depends on Waves 1+2) — Mappers***
 - [ ] 06-03-PLAN.md — Implement error mapper (hybrid instanceof/duck-type detection) + result mapper (try/catch safety), update Mappers barrel
@@ -209,6 +209,6 @@ Plans:
 | 3. Domain Layer | 3/3 | ✓ Complete | 2026-06-08 |
 | 4. Application Layer | 4/4 | ✓ Complete | 2026-06-11 |
 | 5. Infrastructure Layer | 4/4 | ✓ Complete | 2026-06-16 |
-| 6. Presentation Layer | 1/4 | Wave 1 Complete | - |
+| 6. Presentation Layer | 2/4 | Wave 2 Complete | - |
 | 7. Tooling & Boundary Enforcement | 0/0 | Not started | - |
 | 8. Module Integration & Server Actions | 0/0 | Not started | - |
