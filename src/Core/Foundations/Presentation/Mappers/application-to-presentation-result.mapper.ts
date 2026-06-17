@@ -1,7 +1,6 @@
 import { createOperationId } from "@/Core/Kernel/Primitives/Types/operation-id.type";
 import type { ApplicationResult } from "../../Application/Results/application-result";
 import { createSystemError } from "../Errors/presentation-error";
-import type { PresentationError } from "../Errors/presentation-error.types";
 import type { PresentationResult } from "../Results/presentation-result";
 import { failureResult, successResult } from "../Results/presentation-result";
 import { mapApplicationToPresentationError } from "./application-to-presentation-error.mapper";

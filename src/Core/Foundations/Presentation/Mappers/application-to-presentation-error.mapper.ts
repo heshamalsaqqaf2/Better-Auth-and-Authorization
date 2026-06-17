@@ -1,4 +1,4 @@
-import { ApplicationError } from "../../Application/Errors/application-error";
+import type { ApplicationError } from "../../Application/Errors/application-error";
 import { AuthorizationFailedError } from "../../Application/Errors/Specific/authorization.error";
 import { CommandValidationError } from "../../Application/Errors/Specific/command-validation.error";
 import {
@@ -54,10 +54,7 @@ export function mapApplicationToPresentationError(
   const hasFieldErrors = "fieldErrors" in appError;
   if (hasFieldErrors) {
     const fieldErrors = (appError as Record<string, unknown>).fieldErrors;
-    return createValidationError(
-      appError.code,
-      fieldErrors as Record<string, string[]>,
-    );
+    return createValidationError(appError.code, fieldErrors as Record<string, string[]>);
   }
 
   const hasReason = "reason" in appError;
