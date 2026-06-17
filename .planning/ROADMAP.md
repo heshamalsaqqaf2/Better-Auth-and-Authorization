@@ -11,7 +11,7 @@ Build a production-grade, multi-layered Error and Result system for a Next.js 16
 - [x] **Phase 3: Domain Layer** ✅ — Business rule errors and results carrying domain semantics
 - [x] **Phase 4: Application Layer** ✅ — Use case orchestration with observability hooks and cross-layer mapping
 - [x] **Phase 5: Infrastructure Layer** ✅ — Resilient I/O error handling with retry, timeout, and sanitization
-- [ ] **Phase 6: Presentation Layer** — Serialization-safe discriminated unions for RSC transport
+- [x] **Phase 6: Presentation Layer** ✅ — Serialization-safe discriminated unions for RSC transport — 3 requirements covered, `npx tsc --noEmit` clean
 - [ ] **Phase 7: Tooling & Boundary Enforcement** — Layer isolation enforcement via tooling and CI
 - [ ] **Phase 8: Module Integration & Server Actions** — End-to-end architecture validation in real Server Actions
 
@@ -159,7 +159,7 @@ Plans:
 - [x] 06-03-PLAN.md — Implement error mapper (hybrid instanceof/duck-type detection) + result mapper (try/catch safety), update Mappers barrel
 
 **Wave 4 *(depends on all prior waves) — Barrel Chain & Final Cleanup***
-- [ ] 06-04-PLAN.md — Create Presentation/index.ts barrel, verify sub-barrels, final tsc type-check
+- [x] 06-04-PLAN.md — Create Presentation/index.ts barrel, verify sub-barrels, final tsc type-check
 
 **Cross-cutting constraints:**
 - All plans must execute `npx tsc --noEmit` for verification
@@ -209,6 +209,6 @@ Plans:
 | 3. Domain Layer | 3/3 | ✓ Complete | 2026-06-08 |
 | 4. Application Layer | 4/4 | ✓ Complete | 2026-06-11 |
 | 5. Infrastructure Layer | 4/4 | ✓ Complete | 2026-06-16 |
-| 6. Presentation Layer | 2/4 | Wave 2 Complete | - |
+| 6. Presentation Layer | 4/4 | ✓ Complete | 2026-06-17 |
 | 7. Tooling & Boundary Enforcement | 0/0 | Not started | - |
 | 8. Module Integration & Server Actions | 0/0 | Not started | - |
