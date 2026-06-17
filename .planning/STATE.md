@@ -5,22 +5,22 @@
 See: .planning/PROJECT.md (updated 2026-06-07)
 
 **Core value:** Every error in the system is typed, traceable to its origin layer, and safely serializable — no untyped exceptions, no information leaks, no "cannot read properties of undefined" in production.
-**Current focus: Phase 5 — Infrastructure Layer (Wave 4/4 complete)
+**Current focus: Phase 6 — Presentation Layer (Planned — 4 waves)
 
 ## Current Position
 
-Phase: 5 of 8 (Infrastructure Layer)
-Plan: 4/4 complete (Resilience wrappers & barrel done)
-Status: ◆ Phase 5 Complete
-Last activity: 2026-06-16 — 05-04 complete: withRetry, withTimeout, withFallback resilience wrappers + top-level Infrastructure barrel
+Phase: 6 of 8 (Presentation Layer)
+Plan: 0/4 planned (Types & Cleanup, Result DU, Mappers, Barrel Chain)
+Status: ◆ Phase 6 Planned
+Last activity: 2026-06-17 — Phase 6 planned: 4 waves (types, result, mappers, barrels)
 
-Progress: [████████████████████] 100% (Phase 1) — [████████████████████] 100% (Phase 2) — [████████████████████] 100% (Phase 3) — [████████████████████████] 100% (Phase 4) — [████████████████████████] 100% (Phase 5)
+Progress: [████████████████████] 100% (Phase 1) — [████████████████████] 100% (Phase 2) — [████████████████████] 100% (Phase 3) — [████████████████████████] 100% (Phase 4) — [████████████████████████] 100% (Phase 5) — [░░░░░░░░░░░░░░░░░░░░] 0% (Phase 6)
 
 ## Performance Metrics
 
 **Velocity:**
 - Total plans completed: 16 (executed across Phases 1-5)
-- Total plans planned: 17 (Phase 5: 4)
+- Total plans planned: 21 (Phase 5: 4, Phase 6: 4)
 - Average duration: ~2.7 min
 - Total execution time: ~43 min
 
@@ -123,7 +123,8 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-06-16
-Stopped at: Completed 05-04 (Wave 4) — Resilience wrappers & barrel
+Last session: 2026-06-17
+Stopped at: Phase 6 planned — 4 waves created
 Resume file: .planning/phases/06-presentation-layer/06-01-PLAN.md
+Next command: `/gsd-execute-phase 6 06-01` or `execute context via gsd-executor`
 

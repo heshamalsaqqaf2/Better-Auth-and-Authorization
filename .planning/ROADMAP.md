@@ -143,14 +143,30 @@ Plans:
 **Depends on**: Phase 4
 **Requirements**: PRES-01, PRES-02, PRES-03
 **Success Criteria** (what must be TRUE):
-  1. `PresentationError` discriminated union has exactly 5 variants (`ValidationError`, `NotFoundError`, `AuthorizationError`, `SystemError`, `NetworkError`) with only safe-for-client fields (no `cause`, no `stack`)
-  2. `PresentationResult<T>` is a plain object discriminated union with `_tag` discriminant that survives JSON serialization/deserialization
-  3. Application-to-Presentation error mapper converts any `ApplicationError` to the correct `PresentationError` variant, stripping internal details
-  4. Client component can exhaustively match on `PresentationError._tag` in a switch statement with TypeScript narrowing
-**Plans**: TBD
+   1. `PresentationError` discriminated union has exactly 5 variants (`ValidationError`, `NotFoundError`, `AuthorizationError`, `SystemError`, `NetworkError`) with only safe-for-client fields (no `cause`, no `stack`)
+   2. `PresentationResult<T>` is a plain object discriminated union with `_tag` discriminant that survives JSON serialization/deserialization
+   3. Application-to-Presentation error mapper converts any `ApplicationError` to the correct `PresentationError` variant, stripping internal details
+   4. Client component can exhaustively match on `PresentationError._tag` in a switch statement with TypeScript narrowing
+**Plans**: 4 plans
 
-Plans:
-- (Plans defined during gsd-plan-phase)
+**Wave 1 *(Types & Cleanup — zero dependency within phase)***
+- [ ] 06-01-PLAN.md — Delete OOP stubs, create PresentationError DU (5 variants + factories), update Errors barrel
+
+**Wave 2 *(depends on Wave 1) — Result DU***
+- [ ] 06-02-PLAN.md — Delete Result stubs, create PresentationResult DU (_tag discriminant + operationId metadata), update Results barrel
+
+**Wave 3 *(depends on Waves 1+2) — Mappers***
+- [ ] 06-03-PLAN.md — Implement error mapper (hybrid instanceof/duck-type detection) + result mapper (try/catch safety), update Mappers barrel
+
+**Wave 4 *(depends on all prior waves) — Barrel Chain & Final Cleanup***
+- [ ] 06-04-PLAN.md — Create Presentation/index.ts barrel, verify sub-barrels, final tsc type-check
+
+**Cross-cutting constraints:**
+- All plans must execute `npx tsc --noEmit` for verification
+- Zero external dependencies — pure TypeScript only
+- Import boundary: Presentation imports from Application + Kernel only (no Domain, Infrastructure)
+- ES2022+ target
+- Barrel chain: each subdirectory `index.ts` → `Presentation/index.ts`
 
 ### Phase 7: Tooling & Boundary Enforcement
 **Goal**: Layer isolation is enforced by automated tooling, and all architectural invariants are validated in CI before any code reaches production
@@ -193,6 +209,6 @@ Plans:
 | 3. Domain Layer | 3/3 | ✓ Complete | 2026-06-08 |
 | 4. Application Layer | 4/4 | ✓ Complete | 2026-06-11 |
 | 5. Infrastructure Layer | 4/4 | ✓ Complete | 2026-06-16 |
-| 6. Presentation Layer | 0/0 | Not started | - |
+| 6. Presentation Layer | 0/4 | Planned | - |
 | 7. Tooling & Boundary Enforcement | 0/0 | Not started | - |
 | 8. Module Integration & Server Actions | 0/0 | Not started | - |
