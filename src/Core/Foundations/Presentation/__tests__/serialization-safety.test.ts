@@ -1,3 +1,4 @@
+// Phase 7: Serialization safety tests -- verifies boundary enforcement per CONTEXT.md D-08
 import { describe, expect, it } from "vitest";
 import {
   createAuthorizationError,
