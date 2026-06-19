@@ -174,14 +174,26 @@ Plans:
 **Depends on**: Phase 1
 **Requirements**: (Infrastructure/tooling — supports all phases)
 **Success Criteria** (what must be TRUE):
-  1. `dependency-cruiser` detects and blocks any import from Domain to Infrastructure (or other layer violations) as a CI-blocking failure
-  2. Biome `noRestrictedImports` rule prevents cross-layer imports during local development with clear error messages
-  3. `madge` circular dependency detection runs as a pre-commit hook and in CI
-  4. Serialization safety tests verify that no OOP class (no prototype methods) can accidentally cross the Presentation boundary in a Server Action
-**Plans**: TBD
+   1. `dependency-cruiser` detects and blocks any import from Domain to Infrastructure (or other layer violations) as a CI-blocking failure
+   2. Biome `noRestrictedImports` rule prevents cross-layer imports during local development with clear error messages
+   3. `madge` is NOT used per D-01 — depcruiser covers circular deps
+   4. Serialization safety tests verify that no OOP class (no prototype methods) can accidentally cross the Presentation boundary in a Server Action
+**Plans**: 3 plans
 
-Plans:
-- (Plans defined during gsd-plan-phase)
+**Wave 1 *(Config + Infrastructure — no inter-dependency)***
+- [ ] 07-01-PLAN.md — Boundary Configuration: Biome noRestrictedImports + dependency-cruiser per-layer allow-lists
+- [ ] 07-02-PLAN.md — Tooling Infrastructure: package.json deps/scripts, vitest.config.ts, GitHub Actions CI workflow
+
+**Wave 2 *(depends on Wave 1 for deps + scripts)***
+- [ ] 07-03-PLAN.md — Hooks & Tests: Husky pre-commit/pre-push hooks, serialization safety tests (vitest)
+
+**Cross-cutting constraints:**
+- Per D-01: dependency-cruiser v16 LTS, no madge, vitest for tests, Biome for lint/format
+- Per D-04: All 5 layers protected equally with verbose error messages
+- Per D-06: CI runs on every push with 5 steps (install -> lint -> type-check -> depcruise -> test)
+- Per D-07: husky v9, pre-commit: lint-staged, pre-push: depcruise:check
+- Per D-08: Serialization tests colocated in Presentation/__tests__/, 4 coverage areas, no jsdom
+- Per D-10: Foundations/index.ts stays Base-only (no change)
 
 ### Phase 8: Module Integration & Server Actions
 **Goal**: The complete 5-layer error/result system works end-to-end in real Next.js Server Actions and client components, validating the architecture holistically
