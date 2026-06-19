@@ -8,6 +8,12 @@
     "start": "next start",
     "lint": "biome check",
     "format": "biome format --write",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "type-check": "tsc --noEmit",
+    "depcruise": "depcruise src",
+    "depcruise:check": "depcruise src --output-type dot | grep -q error",
+    "prepare": "husky",
     "db:drizzleGenerate": "drizzle-kit generate",
     "db:drizzleMigrate": "drizzle-kit migrate",
     "db:drizzleDrop": "drizzle-kit drop",
@@ -54,9 +60,18 @@
     "@types/pg": "^8.20.0",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "dependency-cruiser": "^16.0.0",
     "drizzle-kit": "^0.31.10",
+    "husky": "^9.0.0",
+    "lint-staged": "latest",
     "tailwindcss": "^4",
     "tsx": "^4.22.4",
-    "typescript": "^5"
+    "typescript": "^5",
+    "vitest": "latest"
+  },
+  "lint-staged": {
+    "*.{ts,tsx,js,jsx,json}": [
+      "biome check --no-errors-on-unmatched --write"
+    ]
   }
 }
