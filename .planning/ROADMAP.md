@@ -180,9 +180,9 @@ Plans:
    4. Serialization safety tests verify that no OOP class (no prototype methods) can accidentally cross the Presentation boundary in a Server Action
 **Plans**: 3 plans
 
-**Wave 1 *(Config + Infrastructure — no inter-dependency)***
-- [ ] 07-01-PLAN.md — Boundary Configuration: Biome noRestrictedImports + dependency-cruiser per-layer allow-lists
-- [ ] 07-02-PLAN.md — Tooling Infrastructure: package.json deps/scripts, vitest.config.ts, GitHub Actions CI workflow
+**Wave 1 *(Config + Infrastructure — no inter-dependency)* ✅**
+- [x] 07-01-PLAN.md — Boundary Configuration: Biome noRestrictedImports + dependency-cruiser per-layer allow-lists
+- [x] 07-02-PLAN.md — Tooling Infrastructure: package.json deps/scripts, vitest.config.ts, GitHub Actions CI workflow
 
 **Wave 2 *(depends on Wave 1 for deps + scripts)***
 - [ ] 07-03-PLAN.md — Hooks & Tests: Husky pre-commit/pre-push hooks, serialization safety tests (vitest)
