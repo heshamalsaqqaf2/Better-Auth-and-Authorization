@@ -28,6 +28,14 @@
       "recommended": true,
       "suspicious": {
         "noUnknownAtRules": "off"
+      },
+      "style": {
+        "noRestrictedImports": {
+          "level": "error",
+          "options": {
+            "paths": {}
+          }
+        }
       }
     },
     "domains": {
@@ -35,6 +43,194 @@
       "react": "recommended"
     }
   },
+  "overrides": [
+    {
+      "includes": ["src/Core/Kernel/**"],
+      "linter": {
+        "rules": {
+          "style": {
+            "noRestrictedImports": {
+              "level": "error",
+              "options": {
+                "paths": {
+                  "@/Core/Foundations": {
+                    "message": "Kernel cannot import from any Foundation layer. Allowed imports: none (zero external dependencies). See docs/Architecture.md for layer rules."
+                  },
+                  "@/Core/Foundations/**": {
+                    "message": "Kernel cannot import from any Foundation layer. Allowed imports: none (zero external dependencies). See docs/Architecture.md for layer rules."
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "includes": ["src/Core/Foundations/Base/**"],
+      "linter": {
+        "rules": {
+          "style": {
+            "noRestrictedImports": {
+              "level": "error",
+              "options": {
+                "paths": {
+                  "@/Core/Foundations/Domain": {
+                    "message": "Base cannot import from Domain. Allowed imports: Kernel only. See docs/Architecture.md for layer rules."
+                  },
+                  "@/Core/Foundations/Domain/**": {
+                    "message": "Base cannot import from Domain. Allowed imports: Kernel only. See docs/Architecture.md for layer rules."
+                  },
+                  "@/Core/Foundations/Application": {
+                    "message": "Base cannot import from Application. Allowed imports: Kernel only. See docs/Architecture.md for layer rules."
+                  },
+                  "@/Core/Foundations/Application/**": {
+                    "message": "Base cannot import from Application. Allowed imports: Kernel only. See docs/Architecture.md for layer rules."
+                  },
+                  "@/Core/Foundations/Infrastructure": {
+                    "message": "Base cannot import from Infrastructure. Allowed imports: Kernel only. See docs/Architecture.md for layer rules."
+                  },
+                  "@/Core/Foundations/Infrastructure/**": {
+                    "message": "Base cannot import from Infrastructure. Allowed imports: Kernel only. See docs/Architecture.md for layer rules."
+                  },
+                  "@/Core/Foundations/Presentation": {
+                    "message": "Base cannot import from Presentation. Allowed imports: Kernel only. See docs/Architecture.md for layer rules."
+                  },
+                  "@/Core/Foundations/Presentation/**": {
+                    "message": "Base cannot import from Presentation. Allowed imports: Kernel only. See docs/Architecture.md for layer rules."
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "includes": ["src/Core/Foundations/Domain/**"],
+      "linter": {
+        "rules": {
+          "style": {
+            "noRestrictedImports": {
+              "level": "error",
+              "options": {
+                "paths": {
+                  "@/Core/Foundations/Application": {
+                    "message": "Domain cannot import from Application. Allowed imports: Kernel, Base only. See docs/Architecture.md for layer rules."
+                  },
+                  "@/Core/Foundations/Application/**": {
+                    "message": "Domain cannot import from Application. Allowed imports: Kernel, Base only. See docs/Architecture.md for layer rules."
+                  },
+                  "@/Core/Foundations/Infrastructure": {
+                    "message": "Domain cannot import from Infrastructure. Allowed imports: Kernel, Base only. See docs/Architecture.md for layer rules."
+                  },
+                  "@/Core/Foundations/Infrastructure/**": {
+                    "message": "Domain cannot import from Infrastructure. Allowed imports: Kernel, Base only. See docs/Architecture.md for layer rules."
+                  },
+                  "@/Core/Foundations/Presentation": {
+                    "message": "Domain cannot import from Presentation. Allowed imports: Kernel, Base only. See docs/Architecture.md for layer rules."
+                  },
+                  "@/Core/Foundations/Presentation/**": {
+                    "message": "Domain cannot import from Presentation. Allowed imports: Kernel, Base only. See docs/Architecture.md for layer rules."
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "includes": ["src/Core/Foundations/Application/**"],
+      "linter": {
+        "rules": {
+          "style": {
+            "noRestrictedImports": {
+              "level": "error",
+              "options": {
+                "paths": {
+                  "@/Core/Foundations/Infrastructure": {
+                    "message": "Application cannot import from Infrastructure. Allowed imports: Kernel, Base, Domain only. See docs/Architecture.md for layer rules."
+                  },
+                  "@/Core/Foundations/Infrastructure/**": {
+                    "message": "Application cannot import from Infrastructure. Allowed imports: Kernel, Base, Domain only. See docs/Architecture.md for layer rules."
+                  },
+                  "@/Core/Foundations/Presentation": {
+                    "message": "Application cannot import from Presentation. Allowed imports: Kernel, Base, Domain only. See docs/Architecture.md for layer rules."
+                  },
+                  "@/Core/Foundations/Presentation/**": {
+                    "message": "Application cannot import from Presentation. Allowed imports: Kernel, Base, Domain only. See docs/Architecture.md for layer rules."
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "includes": ["src/Core/Foundations/Infrastructure/**"],
+      "linter": {
+        "rules": {
+          "style": {
+            "noRestrictedImports": {
+              "level": "error",
+              "options": {
+                "paths": {
+                  "@/Core/Foundations/Domain": {
+                    "message": "Infrastructure cannot import from Domain. Allowed imports: Kernel, Base, Application only. See docs/Architecture.md for layer rules."
+                  },
+                  "@/Core/Foundations/Domain/**": {
+                    "message": "Infrastructure cannot import from Domain. Allowed imports: Kernel, Base, Application only. See docs/Architecture.md for layer rules."
+                  },
+                  "@/Core/Foundations/Presentation": {
+                    "message": "Infrastructure cannot import from Presentation. Allowed imports: Kernel, Base, Application only. See docs/Architecture.md for layer rules."
+                  },
+                  "@/Core/Foundations/Presentation/**": {
+                    "message": "Infrastructure cannot import from Presentation. Allowed imports: Kernel, Base, Application only. See docs/Architecture.md for layer rules."
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "includes": ["src/Core/Foundations/Presentation/**"],
+      "linter": {
+        "rules": {
+          "style": {
+            "noRestrictedImports": {
+              "level": "error",
+              "options": {
+                "paths": {
+                  "@/Core/Foundations/Base": {
+                    "message": "Presentation cannot import from Base. Allowed imports: Kernel, Application only. See docs/Architecture.md for layer rules."
+                  },
+                  "@/Core/Foundations/Base/**": {
+                    "message": "Presentation cannot import from Base. Allowed imports: Kernel, Application only. See docs/Architecture.md for layer rules."
+                  },
+                  "@/Core/Foundations/Domain": {
+                    "message": "Presentation cannot import from Domain. Allowed imports: Kernel, Application only. See docs/Architecture.md for layer rules."
+                  },
+                  "@/Core/Foundations/Domain/**": {
+                    "message": "Presentation cannot import from Domain. Allowed imports: Kernel, Application only. See docs/Architecture.md for layer rules."
+                  },
+                  "@/Core/Foundations/Infrastructure": {
+                    "message": "Presentation cannot import from Infrastructure. Allowed imports: Kernel, Application only. See docs/Architecture.md for layer rules."
+                  },
+                  "@/Core/Foundations/Infrastructure/**": {
+                    "message": "Presentation cannot import from Infrastructure. Allowed imports: Kernel, Application only. See docs/Architecture.md for layer rules."
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  ],
   "assist": {
     "actions": {
       "source": {
