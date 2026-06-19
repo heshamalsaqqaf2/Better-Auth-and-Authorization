@@ -12,7 +12,7 @@ Build a production-grade, multi-layered Error and Result system for a Next.js 16
 - [x] **Phase 4: Application Layer** ✅ — Use case orchestration with observability hooks and cross-layer mapping
 - [x] **Phase 5: Infrastructure Layer** ✅ — Resilient I/O error handling with retry, timeout, and sanitization
 - [x] **Phase 6: Presentation Layer** ✅ — Serialization-safe discriminated unions for RSC transport — 3 requirements covered, `npx tsc --noEmit` clean
-- [ ] **Phase 7: Tooling & Boundary Enforcement** — Layer isolation enforcement via Biome rules, dependency-cruiser, and CI
+- [x] **Phase 7: Tooling & Boundary Enforcement** ✅ — Layer isolation enforcement via Biome rules, dependency-cruiser, CI, husky hooks, and serialization safety tests
 - [ ] **Phase 8: Module Integration & Server Actions** — End-to-end architecture validation in real Server Actions
 
 ## Phase Details
@@ -184,8 +184,8 @@ Plans:
 - [x] 07-01-PLAN.md — Boundary Configuration: Biome noRestrictedImports + dependency-cruiser per-layer allow-lists
 - [x] 07-02-PLAN.md — Tooling Infrastructure: package.json deps/scripts, vitest.config.ts, GitHub Actions CI workflow
 
-**Wave 2 *(depends on Wave 1 for deps + scripts)***
-- [ ] 07-03-PLAN.md — Hooks & Tests: Husky pre-commit/pre-push hooks, serialization safety tests (vitest)
+**Wave 2 *(depends on Wave 1 for deps + scripts)* ✅**
+- [x] 07-03-PLAN.md — Hooks & Tests: Husky pre-commit/pre-push hooks, serialization safety tests (vitest)
 
 **Cross-cutting constraints:**
 - Per D-01: dependency-cruiser v16 LTS, no madge, vitest for tests, Biome for lint/format
@@ -222,5 +222,5 @@ Plans:
 | 4. Application Layer | 4/4 | ✓ Complete | 2026-06-11 |
 | 5. Infrastructure Layer | 4/4 | ✓ Complete | 2026-06-16 |
 | 6. Presentation Layer | 4/4 | ✓ Complete | 2026-06-17 |
-| 7. Tooling & Boundary Enforcement | 0/0 | Not started | - |
+| 7. Tooling & Boundary Enforcement | 3/3 | ✓ Complete | 2026-06-19 |
 | 8. Module Integration & Server Actions | 0/0 | Not started | - |

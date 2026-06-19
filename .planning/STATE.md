@@ -5,16 +5,16 @@
 See: .planning/PROJECT.md (updated 2026-06-07)
 
 **Core value:** Every error in the system is typed, traceable to its origin layer, and safely serializable — no untyped exceptions, no information leaks, no "cannot read properties of undefined" in production.
-**Current focus: Phase 7 — Tooling & Boundary Enforcement (Planned — 2 waves)
+**Current focus: Phase 7 — Tooling & Boundary Enforcement (Completed)
 
 ## Current Position
 
 Phase: 7 of 8 (Tooling & Boundary Enforcement)
-Plan: 2/3 executed (Wave 1 done) — Wave 2: Hooks & Tests
-Status: ◆ Wave 1 Complete — Ready for Wave 2
-Last activity: 2026-06-19 — Wave 1 executed: 07-01 (Boundary Config) + 07-02 (Tooling Infra)
+Plan: 3/3 executed (Waves 1+2 complete)
+Status: ✓ Complete
+Last activity: 2026-06-19 — Wave 2 executed: 07-03 (Hooks & Tests)
 
-Progress: [████████████████████] 100% (Phase 1) — [████████████████████] 100% (Phase 2) — [████████████████████] 100% (Phase 3) — [████████████████████████] 100% (Phase 4) — [████████████████████████] 100% (Phase 5) — [████████████████████] 100% (Phase 6) — [████████████████████░░] 75% (Phase 7)
+Progress: [████████████████████] 100% (Phase 1) — [████████████████████] 100% (Phase 2) — [████████████████████] 100% (Phase 3) — [████████████████████████] 100% (Phase 4) — [████████████████████████] 100% (Phase 5) — [████████████████████] 100% (Phase 6) — [████████████████████] 100% (Phase 7)
 
 ## Performance Metrics
 
@@ -124,7 +124,7 @@ Items acknowledged and carried forward from previous milestone close:
 ## Session Continuity
 
 Last session: 2026-06-19
-Stopped at: Phase 7 Wave 1 complete — Boundary Config + Tooling Infra executed
-Resume file: None (Phase 7 Wave 2 ready)
-Next command: `/gsd-execute-phase 7 --wave 2`
+Stopped at: Phase 7 complete — all 3 plans executed across 2 waves
+Resume file: None (Phase 8 ready)
+Next command: `/gsd-execute-phase 8`
 
