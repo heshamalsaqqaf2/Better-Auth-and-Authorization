@@ -1,4 +1,4 @@
-import { err, ok } from "@/Core/Foundations/Base/Abstracts/result-base";
+import { err, Failure, ok, Success } from "@/Core/Foundations/Base/Abstracts/result-base";
 import { InfrastructureError } from "@/Core/Foundations/Infrastructure/Errors/infrastructure-error";
 import { ApiTimeoutError } from "@/Core/Foundations/Infrastructure/Errors/Specific/api-timeout.error";
 import { ApiUnavailableError } from "@/Core/Foundations/Infrastructure/Errors/Specific/api-unavailable.error";
@@ -46,10 +46,13 @@ class BetterAuthService {
       { systemComponent: "Network", errorCode: "AUTH_RETRY_EXHAUSTED" },
     );
 
-    if (result.isSuccess) {
-      return ok(this.toSessionData(result.data!.user, result.data!.token));
+    if (result instanceof Success) {
+      return ok(this.toSessionData(result.data.user, result.data.token));
     }
-    return err(this.toInfrastructureError(result.error));
+    if (result instanceof Failure) {
+      return err(this.toInfrastructureError(result.error));
+    }
+    return err(this.toInfrastructureError(undefined));
   }
 
   async signUp(name: string, email: string, password: string): Promise<InfrastructureResult<UserData>> {
@@ -63,10 +66,13 @@ class BetterAuthService {
       { systemComponent: "Network", errorCode: "AUTH_RETRY_EXHAUSTED" },
     );
 
-    if (result.isSuccess) {
-      return ok(result.data!.user as UserData);
+    if (result instanceof Success) {
+      return ok(result.data.user as UserData);
     }
-    return err(this.toInfrastructureError(result.error));
+    if (result instanceof Failure) {
+      return err(this.toInfrastructureError(result.error));
+    }
+    return err(this.toInfrastructureError(undefined));
   }
 
   async signOut(headers: Headers): Promise<InfrastructureResult<void>> {
@@ -75,10 +81,13 @@ class BetterAuthService {
       errorCode: "SIGNOUT_FAILED",
     });
 
-    if (result.isSuccess) {
+    if (result instanceof Success) {
       return ok(undefined);
     }
-    return err(this.toInfrastructureError(result.error));
+    if (result instanceof Failure) {
+      return err(this.toInfrastructureError(result.error));
+    }
+    return err(this.toInfrastructureError(undefined));
   }
 
   async getSession(headers: Headers): Promise<InfrastructureResult<SessionData | null>> {
@@ -87,15 +96,16 @@ class BetterAuthService {
       errorCode: "SESSION_FAILED",
     });
 
-    if (!raw.isSuccess) {
+    if (raw instanceof Failure) {
       return err(this.toInfrastructureError(raw.error));
     }
-
-    if (!raw.data) {
-      return ok(null);
+    if (raw instanceof Success) {
+      if (!raw.data) {
+        return ok(null);
+      }
+      return ok(this.toSessionData(raw.data.user, raw.data.session.token));
     }
-
-    return ok(this.toSessionData(raw.data.user, raw.data.session.token));
+    return err(this.toInfrastructureError(undefined));
   }
 
   private toSessionData(user: SessionUser, token: string): SessionData {
