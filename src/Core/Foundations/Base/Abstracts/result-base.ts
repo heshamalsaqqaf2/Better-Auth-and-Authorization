@@ -6,7 +6,7 @@ export abstract class ResultBase<T, E extends ErrorBase> {
   abstract readonly isFailure: boolean;
   abstract readonly data?: T;
   abstract readonly error?: E;
-  abstract fold<R>(onSuccess: (data: T) => R, onFailure: (error: E) => R): R;
+  abstract match<R>(handlers: { onSuccess: (data: T) => R; onFailure: (error: E) => R }): R;
 }
 
 export class Success<T> extends ResultBase<T, never> {
@@ -32,10 +32,6 @@ export class Success<T> extends ResultBase<T, never> {
 
   match<R>(handlers: { onSuccess: (data: T) => R; onFailure: (error: never) => R }): R {
     return handlers.onSuccess(this.data);
-  }
-
-  fold<R>(onSuccess: (data: T) => R, _onFailure: (error: never) => R): R {
-    return onSuccess(this.data);
   }
 
   tap(fn: (data: T) => void): this {
@@ -71,10 +67,6 @@ export class Failure<T, E extends ErrorBase> extends ResultBase<T, E> {
 
   match<R>(handlers: { onSuccess: (data: T) => R; onFailure: (error: E) => R }): R {
     return handlers.onFailure(this.error);
-  }
-
-  fold<R>(_onSuccess: (data: T) => R, onFailure: (error: E) => R): R {
-    return onFailure(this.error);
   }
 
   tap(_fn: (data: T) => void): this {

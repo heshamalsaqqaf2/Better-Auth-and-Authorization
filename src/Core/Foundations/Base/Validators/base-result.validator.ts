@@ -3,9 +3,7 @@ import type { ResultBase } from "@/Core/Kernel/Contracts/Base/result-base.contra
 import type { ValidationResult } from "@/Core/Kernel/Contracts/Validators/layer-validator.contract";
 import type { ResultValidator } from "@/Core/Kernel/Contracts/Validators/result-validator.contract";
 
-export class BaseResultValidator
-  implements ResultValidator<ResultBase<unknown, ErrorBase>>
-{
+export class BaseResultValidator implements ResultValidator<ResultBase<unknown, ErrorBase>> {
   validate(result: ResultBase<unknown, ErrorBase>): ValidationResult {
     const errors: string[] = [];
 
@@ -40,10 +38,6 @@ export class BaseResultValidator
 
     if (typeof result.match !== "function") {
       errors.push("match must be a function");
-    }
-
-    if (typeof result.fold !== "function") {
-      errors.push("fold must be a function");
     }
 
     if (typeof result.tap !== "function") {

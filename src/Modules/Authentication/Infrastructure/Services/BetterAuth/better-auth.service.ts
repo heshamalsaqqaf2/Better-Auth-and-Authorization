@@ -46,10 +46,10 @@ class BetterAuthService {
       { systemComponent: "Network", errorCode: "AUTH_RETRY_EXHAUSTED" },
     );
 
-    return result.fold<InfrastructureResult<SessionData>>(
-      (data) => ok(this.toSessionData(data.user, data.token)),
-      (error) => err(this.toInfrastructureError(error)),
-    );
+    return result.match<InfrastructureResult<SessionData>>({
+      onSuccess: (data) => ok(this.toSessionData(data.user, data.token)),
+      onFailure: (error) => err(this.toInfrastructureError(error)),
+    });
   }
 
   async signUp(name: string, email: string, password: string): Promise<InfrastructureResult<UserData>> {
@@ -63,10 +63,10 @@ class BetterAuthService {
       { systemComponent: "Network", errorCode: "AUTH_RETRY_EXHAUSTED" },
     );
 
-    return result.fold<InfrastructureResult<UserData>>(
-      (data) => ok(data.user as UserData),
-      (error) => err(this.toInfrastructureError(error)),
-    );
+    return result.match<InfrastructureResult<UserData>>({
+      onSuccess: (data) => ok(data.user as UserData),
+      onFailure: (error) => err(this.toInfrastructureError(error)),
+    });
   }
 
   async signOut(headers: Headers): Promise<InfrastructureResult<void>> {
@@ -75,10 +75,10 @@ class BetterAuthService {
       errorCode: "SIGNOUT_FAILED",
     });
 
-    return result.fold<InfrastructureResult<void>>(
-      () => ok(undefined),
-      (error) => err(this.toInfrastructureError(error)),
-    );
+    return result.match<InfrastructureResult<void>>({
+      onSuccess: () => ok(undefined),
+      onFailure: (error) => err(this.toInfrastructureError(error)),
+    });
   }
 
   async getSession(headers: Headers): Promise<InfrastructureResult<SessionData | null>> {
@@ -87,10 +87,10 @@ class BetterAuthService {
       errorCode: "SESSION_FAILED",
     });
 
-    return result.fold<InfrastructureResult<SessionData | null>>(
-      (data) => (data ? ok(this.toSessionData(data.user, data.session.token)) : ok(null)),
-      (error) => err(this.toInfrastructureError(error)),
-    );
+    return result.match<InfrastructureResult<SessionData | null>>({
+      onSuccess: (data) => (data ? ok(this.toSessionData(data.user, data.session.token)) : ok(null)),
+      onFailure: (error) => err(this.toInfrastructureError(error)),
+    });
   }
 
   private toSessionData(user: SessionUser, token: string): SessionData {
