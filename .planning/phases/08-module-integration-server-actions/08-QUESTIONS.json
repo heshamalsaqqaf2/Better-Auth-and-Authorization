@@ -1,0 +1,405 @@
+{
+  "phase": "08-module-integration-server-actions",
+  "generated_at": "2026-06-22T00:00:00.000Z",
+  "last_refreshed": "2026-06-22T00:00:00.000Z",
+  "stats": {
+    "total": 14,
+    "answered": 14,
+    "chat_more": 3,
+    "remaining": 0
+  },
+  "sections": [
+    {
+      "id": "server-action-architecture",
+      "title": "Server Action Architecture",
+      "questions": [
+        {
+          "id": "Q-01",
+          "title": "Action file organization",
+          "context": "Auth module has Presentation/Actions/ scaffolded but empty. Next.js 16 supports 'use server' in both standalone files and inline.",
+          "options": [
+            {
+              "id": "a",
+              "label": "One file per action",
+              "description": "Each action gets its own file (sign-in.action.ts, sign-up.action.ts). Matches existing single-file-per-entity pattern."
+            },
+            {
+              "id": "b",
+              "label": "Grouped by entity/domain",
+              "description": "All auth actions in one file (auth.actions.ts). Fewer files but larger files. Common in Next.js examples."
+            },
+            {
+              "id": "c",
+              "label": "Hybrid: grouped by route group",
+              "description": "Actions grouped by route/page domain (session.actions.ts, profile.actions.ts). Balances file count vs cohesion."
+            }
+          ],
+          "answer": "a",
+          "chat_more": "",
+          "status": "answered"
+        },
+        {
+          "id": "Q-02",
+          "title": "UseCase instantiation strategy",
+          "context": "Phase 4 created CQRS handler interfaces with DI. Composition Root is scaffolded but empty. Is it time to wire DI or keep it simple?",
+          "options": [
+            {
+              "id": "a",
+              "label": "Wire Composition Root",
+              "description": "Implement container.ts with concrete bindings. Server Actions import from Composition Root. Scales well but more boilerplate."
+            },
+            {
+              "id": "b",
+              "label": "Direct instantiation in actions",
+              "description": "Server Actions instantiate UseCases directly (new SignInUseCase(...)). Simpler for E2E validation. Refactor to DI later."
+            },
+            {
+              "id": "c",
+              "label": "Simple factory functions",
+              "description": "Per-module factory functions (createAuthUseCases()) that wire dependencies. Middle ground — no container, no inline new."
+            }
+          ],
+          "answer": "a",
+          "chat_more": "The initial setup must be correct.\nThe work should be organized and divided, following the principle of code separation.\nFiles should always contain short code snippets relevant to their intended purpose, and there should be no padding or overlapping of DI files.\nThe work should be organized according to the Composition Root structure.",
+          "status": "answered"
+        },
+        {
+          "id": "Q-03",
+          "title": "Server Action return type convention",
+          "context": "Phase 6 established PresentationResult<T>. But some actions (sign-out, redirect) don't return data. How handle non-data returns?",
+          "options": [
+            {
+              "id": "a",
+              "label": "Always PresentationResult<T | null>",
+              "description": "Every action returns PresentationResult, null data for no-return. Uniform contract. Client always unwraps via _tag."
+            },
+            {
+              "id": "b",
+              "label": "PresentationResult for data, void/redirect for side-effects",
+              "description": "Data actions use PresentationResult. Side-effect actions return void or redirect(). Simpler but breaks uniformity."
+            },
+            {
+              "id": "c",
+              "label": "PresentationResult always with no-data variant",
+              "description": "Extend with PresentationResult<undefined>. Keeps uniform contract. One more variant to match on."
+            }
+          ],
+          "answer": "a",
+          "chat_more": "",
+          "status": "answered"
+        }
+      ]
+    },
+    {
+      "id": "auth-integration",
+      "title": "Better Auth Integration",
+      "questions": [
+        {
+          "id": "Q-04",
+          "title": "Auth features to implement",
+          "context": "Better Auth supports email/password + OAuth + 2FA + passkeys. Config files are empty stubs. Phase 8 is E2E validation, not full auth.",
+          "options": [
+            {
+              "id": "a",
+              "label": "Email/password only",
+              "description": "Implement signIn/signUp/signOut with email/password. Wire server.ts and client.ts. Minimal scope to prove architecture."
+            },
+            {
+              "id": "b",
+              "label": "Email/password + one OAuth provider",
+              "description": "Email/password plus GitHub OAuth. Validates redirect/error handling in OAuth callback flow."
+            },
+            {
+              "id": "c",
+              "label": "Mock/simulated auth only",
+              "description": "Don't wire Better Auth. Create simulated auth flow exercising all 5 layers. Real auth deferred."
+            }
+          ],
+          "answer": "a",
+          "chat_more": "",
+          "status": "answered"
+        },
+        {
+          "id": "Q-05",
+          "title": "Auth error mapping strategy",
+          "context": "Better Auth has its own error types. Need to map to PresentationError. Options: layered mapper chain, direct mapping, or Infrastructure wrapper.",
+          "options": [
+            {
+              "id": "a",
+              "label": "Map through Application layer via custom mapper",
+              "description": "BetterAuth error → ApplicationError mapper, then reuse Application→Presentation. Consistent but more steps."
+            },
+            {
+              "id": "b",
+              "label": "Direct mapping to PresentationError in action",
+              "description": "Server Action catches Better Auth errors and maps directly to PresentationError. Shorter path, less boilerplate."
+            },
+            {
+              "id": "c",
+              "label": "Wrap Better Auth in Infrastructure layer",
+              "description": "Treat Better Auth as external service. Wrap with InfrastructureResult/withRetry. Map Infrastructure→Application→Presentation. Full traversal."
+            }
+          ],
+          "answer": "c",
+          "chat_more": "",
+          "status": "answered"
+        }
+      ]
+    },
+    {
+      "id": "middleware-correlation",
+      "title": "Middleware & Correlation ID Flow",
+      "questions": [
+        {
+          "id": "Q-06",
+          "title": "Correlation ID generation point",
+          "context": "ROADMAP: 'middleware hooks propagate correlation IDs'. Phase 4/5 pass CorrelationId as method arg. Where does per-request ID originate?",
+          "options": [
+            {
+              "id": "a",
+              "label": "Generated in middleware, passed via request header",
+              "description": "Middleware generates CorrelationId, stores in x-correlation-id header. Server Actions read it. Clean separation."
+            },
+            {
+              "id": "b",
+              "label": "Generated inside each Server Action",
+              "description": "Each Server Action generates own correlation ID at start. Simplest but loses end-to-end traceability."
+            },
+            {
+              "id": "c",
+              "label": "AsyncLocalStorage request context",
+              "description": "Use AsyncLocalStorage (available in Next.js 16). Middleware initializes, Server Actions read from context. Most idiomatic."
+            }
+          ],
+          "answer": "c",
+          "chat_more": "",
+          "status": "answered"
+        },
+        {
+          "id": "Q-07",
+          "title": "Middleware file naming and role",
+          "context": "AGENTS.md mentions proxy.ts as Next.js 16 convention. STACK.md (outdated) lists empty proxy.ts. File doesn't exist on disk.",
+          "options": [
+            {
+              "id": "a",
+              "label": "proxy.ts with correlation ID + auth guard",
+              "description": "Create proxy.ts for correlation IDs + Better Auth session check on protected routes. Two responsibilities."
+            },
+            {
+              "id": "b",
+              "label": "proxy.ts with correlation ID only",
+              "description": "Create proxy.ts for correlation ID only. Auth checks happen in Server Actions where error system handles them."
+            },
+            {
+              "id": "c",
+              "label": "middleware.ts with correlation ID only",
+              "description": "Use standard middleware.ts (no proxy.ts). Less confusing. Correlation ID only."
+            }
+          ],
+          "answer": "b",
+          "chat_more": "",
+          "status": "answered"
+        }
+      ]
+    },
+    {
+      "id": "client-patterns",
+      "title": "Client Consumption Patterns",
+      "questions": [
+        {
+          "id": "Q-08",
+          "title": "PresentationResult consumption on client",
+          "context": "Phase 6 chose no narrowing helpers (D-10). @tanstack/react-form, @tanstack/react-store, shadcn/ui available. What's the standardized pattern?",
+          "options": [
+            {
+              "id": "a",
+              "label": "useActionState with inline _tag matching",
+              "description": "Use Next.js useActionState directly. Each component does own _tag switch. Simple, zero new code. Matches D-10."
+            },
+            {
+              "id": "b",
+              "label": "Custom useServerAction hook",
+              "description": "Create shared useServerAction hook wrapping useActionState. Handles loading/success/error. Reusable across all actions."
+            },
+            {
+              "id": "c",
+              "label": "Shared form component with auto error handling",
+              "description": "Create <ServerForm> that auto-maps ValidationError.fieldErrors to form fields and toasts system errors."
+            }
+          ],
+          "answer": "a",
+          "chat_more": "",
+          "status": "answered"
+        },
+        {
+          "id": "Q-09",
+          "title": "Error feedback delivery mechanism",
+          "context": "sonner (toasts) and shadcn/ui installed. PresentationError has 5 variants. Different error types need different UX treatment.",
+          "options": [
+            {
+              "id": "a",
+              "label": "Hybrid: field errors inline, others via toast",
+              "description": "ValidationError.fieldErrors rendered next to form fields. SystemError/AuthorizationError via sonner toast. Industry UX pattern."
+            },
+            {
+              "id": "b",
+              "label": "All errors via toast notifications",
+              "description": "Use sonner toasts for every error variant. Simplest but loses field-level association for validation errors."
+            },
+            {
+              "id": "c",
+              "label": "Dedicated <ErrorDisplay> component",
+              "description": "Create component that renders differently based on _tag. Field errors inline, others as styled banner. Most flexible."
+            }
+          ],
+          "answer": "a",
+          "chat_more": "",
+          "status": "answered"
+        }
+      ]
+    },
+    {
+      "id": "page-coverage",
+      "title": "Page & Route Coverage",
+      "questions": [
+        {
+          "id": "Q-10",
+          "title": "Auth pages to build",
+          "context": "Only Home placeholder exists. (admin)/dashboard and (user)/dashboard are empty dirs. Minimum pages needed for E2E validation.",
+          "options": [
+            {
+              "id": "a",
+              "label": "Sign-in + User Dashboard",
+              "description": "Create sign-in page and basic user dashboard. Exercises auth flow, protected page, error display. Minimum viable validation."
+            },
+            {
+              "id": "b",
+              "label": "Sign-in, Sign-up, User + Admin Dashboard",
+              "description": "Sign-in, sign-up, both dashboards. Covers registration + role-based access. More comprehensive but more work."
+            },
+            {
+              "id": "c",
+              "label": "No new pages — test via test page or API",
+              "description": "Wire actions/middleware. Test via simple test page. Fastest to validate architecture but no real UX."
+            }
+          ],
+          "answer": "b",
+          "chat_more": "Important Note:\n\nRegarding the chosen option, here's what actually needs to be implemented: Create a login page, a completely blank user dashboard that only needs initialization, and an administrator dashboard that also has no details and is only configured for integration purposes.\n\nAs for \"roles-based access,\" it will be implemented and integrated with other system modules in the next phase. In the phase following authentication, we will begin building the permissions system (\"Roles and Permissions System\"), linking it to the existing authentication system, integrating it with the rest of the system, and verifying everything.",
+          "status": "answered"
+        },
+        {
+          "id": "Q-11",
+          "title": "Auth page rendering architecture",
+          "context": "Next.js 16 App Router. Auth forms need client interactivity. shadcn/ui and @tanstack/react-form available.",
+          "options": [
+            {
+              "id": "a",
+              "label": "Server Component page + Client Component form",
+              "description": "Auth pages are RSC. Auth form is a 'use client' island. Best of both worlds — SEO + interactivity."
+            },
+            {
+              "id": "b",
+              "label": "Fully client-side auth pages",
+              "description": "Auth pages are client components. Simpler mental model. No SEO concern for auth pages."
+            },
+            {
+              "id": "c",
+              "label": "Server Component with @tanstack/react-form",
+              "description": "Use @tanstack/react-form for form state. Most sophisticated but most dependencies to wire."
+            }
+          ],
+          "answer": "c",
+          "chat_more": "\"We choose @tanstack/react-form to establish a professional, consistent form management pattern across all modules. This aligns with our strategic adoption of the TanStack ecosystem and provides superior developer experience for complex form scenarios in future phases.\"",
+          "status": "answered"
+        }
+      ]
+    },
+    {
+      "id": "error-boundaries",
+      "title": "Error Boundaries & Unhandled Errors",
+      "questions": [
+        {
+          "id": "Q-12",
+          "title": "React error boundary strategy",
+          "context": "Success criteria: 'Error boundaries catch unhandled errors with full cause-chain context'. Next.js 16 supports error.tsx at any route segment.",
+          "options": [
+            {
+              "id": "a",
+              "label": "Global + per-route error boundaries",
+              "description": "error.tsx at root + optional route-specific for dashboards. Root shows generic recovery, route boundaries contextual."
+            },
+            {
+              "id": "b",
+              "label": "Single error.tsx at root only",
+              "description": "One global boundary. Shows generic 'Something went wrong' with retry. Minimal code."
+            },
+            {
+              "id": "c",
+              "label": "Global + ErrorBoundary client component",
+              "description": "Next.js error.tsx for top-level + reusable <ErrorBoundary> wrapping specific UI sections. Catches render errors in client components."
+            }
+          ],
+          "answer": "a",
+          "chat_more": "",
+          "status": "answered"
+        }
+      ]
+    },
+    {
+      "id": "module-wiring",
+      "title": "Module Implementations & Wiring",
+      "questions": [
+        {
+          "id": "Q-13",
+          "title": "Foundations barrel export scope",
+          "context": "Phase 7 D-10: Foundations/index.ts exports Base only. 'Revisit in Phase 8 if integration patterns demand it.' Now all 5 layers are implemented.",
+          "options": [
+            {
+              "id": "a",
+              "label": "Export all layers from Foundations/index.ts",
+              "description": "Re-export Base, Domain, Application, Infrastructure, Presentation. Single import path. Phase 7 deferral reason now satisfied."
+            },
+            {
+              "id": "b",
+              "label": "Keep Foundation export limited, import directly",
+              "description": "Keep Foundations/index.ts Base-only. Import layers directly. More explicit, clearer dependency graph."
+            },
+            {
+              "id": "c",
+              "label": "Export only Application + Presentation",
+              "description": "Selectively export what Server Actions need. Domain/Infrastructure stay direct-import. Partial convenience."
+            }
+          ],
+          "answer": "b",
+          "chat_more": "",
+          "status": "answered"
+        },
+        {
+          "id": "Q-14",
+          "title": "Module-level implementation depth",
+          "context": "Auth module has DB schema but no concrete UseCases/Repositories. Server Actions need something to call. Phase 8 validates architecture, not full auth.",
+          "options": [
+            {
+              "id": "a",
+              "label": "Thin: UseCase → direct DB via Drizzle",
+              "description": "Minimal UseCases calling Drizzle directly. Validates top of stack (Application→Presentation). Fastest E2E path."
+            },
+            {
+              "id": "b",
+              "label": "Full: UseCase → Repository → Drizzle",
+              "description": "Implement Domain repos, Infrastructure repos with InfrastructureResult, Application UseCases. Validates ALL 5 layers."
+            },
+            {
+              "id": "c",
+              "label": "Use Better Auth SDK directly, skip module layers",
+              "description": "Call Better Auth's built-in auth from Server Actions. Validates Presentation layer only. Least architectural validation."
+            }
+          ],
+          "answer": "b",
+          "chat_more": "",
+          "status": "answered"
+        }
+      ]
+    }
+  ]
+}
