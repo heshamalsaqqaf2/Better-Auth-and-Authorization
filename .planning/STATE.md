@@ -126,5 +126,24 @@ Items acknowledged and carried forward from previous milestone close:
 Last session: 2026-06-19
 Stopped at: Phase 7 complete — all 3 plans executed across 2 waves
 Resume file: None (Phase 8 ready)
-Next command: `/gsd-execute-phase 8`
+Next command: `/gsd-execute-phase 8` — 9 plans across 3 waves
+
+## Phase 8 Plans (2026-06-22)
+
+9 plans created across 3 waves:
+
+**Wave 1 (Plumbing — parallel):**
+- 08-01: Better Auth config + Composition Root bindings
+- 08-02: AsyncLocalStorage middleware (proxy.ts)
+- 08-03: Infrastructure Better Auth service wrapper
+
+**Wave 2 (Module implementation — depends on Wave 1):**
+- 08-04: Domain layer — repository interfaces, auth domain errors
+- 08-05: Application layer — UseCases, DTOs, mappers
+- 08-06: Infrastructure layer — Drizzle repository implementations, DB mappers
+
+**Wave 3 (UI — depends on Wave 2):**
+- 08-07: Server Actions (sign-in, sign-up, sign-out) + Better Auth API route
+- 08-08: Auth pages (sign-in, sign-up) with @tanstack/react-form
+- 08-09: Dashboards + global + per-route error boundaries
 

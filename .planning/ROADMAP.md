@@ -205,10 +205,22 @@ Plans:
   2. A client component can render different UI states based on `PresentationResult` match (success, validation error, not found, authorization error, system error)
   3. Error boundaries in the React tree catch unhandled errors and log them with full cause-chain context
   4. Middleware hooks propagate correlation IDs across the request lifecycle
-**Plans**: TBD
+**Plans**: 9 plans (3 waves)
 
-Plans:
-- (Plans defined during gsd-plan-phase)
+**Wave 1 *(Plumbing — no inter-dependency)***
+- [ ] 08-01-PLAN.md — Better Auth config + Composition Root bindings
+- [ ] 08-02-PLAN.md — AsyncLocalStorage middleware (proxy.ts)
+- [ ] 08-03-PLAN.md — Infrastructure Better Auth service wrapper
+
+**Wave 2 *(Module implementation — depends on Wave 1 for Infrastructure services + DI)***
+- [ ] 08-04-PLAN.md — Domain layer: repository interfaces, auth domain errors
+- [ ] 08-05-PLAN.md — Application layer: UseCases (Commands/Queries), DTOs, mappers
+- [ ] 08-06-PLAN.md — Infrastructure layer: Drizzle repository implementations, DB mappers
+
+**Wave 3 *(UI — depends on Wave 2 for UseCases and repositories)***
+- [ ] 08-07-PLAN.md — Server Actions (sign-in, sign-up, sign-out) + Better Auth API route
+- [ ] 08-08-PLAN.md — Auth pages (sign-in, sign-up) with @tanstack/react-form
+- [ ] 08-09-PLAN.md — Dashboards (user + admin) + global + per-route error boundaries
 
 ## Progress
 
