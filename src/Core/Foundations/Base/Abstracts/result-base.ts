@@ -6,6 +6,7 @@ export abstract class ResultBase<T, E extends ErrorBase> {
   abstract readonly isFailure: boolean;
   abstract readonly data?: T;
   abstract readonly error?: E;
+  abstract fold<R>(onSuccess: (data: T) => R, onFailure: (error: E) => R): R;
 }
 
 export class Success<T> extends ResultBase<T, never> {
@@ -21,9 +22,7 @@ export class Success<T> extends ResultBase<T, never> {
     return new Success(fn(this.data));
   }
 
-  flatMap<U>(
-    fn: (data: T) => ResultBaseContract<U, never>,
-  ): ResultBaseContract<U, never> {
+  flatMap<U>(fn: (data: T) => ResultBaseContract<U, never>): ResultBaseContract<U, never> {
     return fn(this.data);
   }
 
@@ -31,10 +30,7 @@ export class Success<T> extends ResultBase<T, never> {
     return this;
   }
 
-  match<R>(handlers: {
-    onSuccess: (data: T) => R;
-    onFailure: (error: never) => R;
-  }): R {
+  match<R>(handlers: { onSuccess: (data: T) => R; onFailure: (error: never) => R }): R {
     return handlers.onSuccess(this.data);
   }
 
@@ -65,9 +61,7 @@ export class Failure<T, E extends ErrorBase> extends ResultBase<T, E> {
     return this as unknown as ResultBaseContract<U, E>;
   }
 
-  flatMap<U>(
-    _fn: (data: T) => ResultBaseContract<U, E>,
-  ): ResultBaseContract<U, E> {
+  flatMap<U>(_fn: (data: T) => ResultBaseContract<U, E>): ResultBaseContract<U, E> {
     return this as unknown as ResultBaseContract<U, E>;
   }
 
@@ -75,10 +69,7 @@ export class Failure<T, E extends ErrorBase> extends ResultBase<T, E> {
     return new Failure<T, F>(fn(this.error));
   }
 
-  match<R>(handlers: {
-    onSuccess: (data: T) => R;
-    onFailure: (error: E) => R;
-  }): R {
+  match<R>(handlers: { onSuccess: (data: T) => R; onFailure: (error: E) => R }): R {
     return handlers.onFailure(this.error);
   }
 
