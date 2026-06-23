@@ -1,2 +1,2 @@
-export { registerAuthBindings } from "./registration";
+export { authContainerModule } from "./registration";
 export { AUTH_TOKENS } from "./tokens";
