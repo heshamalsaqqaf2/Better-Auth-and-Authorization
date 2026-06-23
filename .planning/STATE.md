@@ -10,8 +10,8 @@ See: .planning/PROJECT.md (updated 2026-06-07)
 ## Current Position
 
 Phase: 8 of 8 (Module Integration & Server Actions)
-Plan: 3/9 executed (08-01 ✅, 08-02, 08-03 ✅), 6 planned (08-04 → 08-09)
-Status: ◐ In Progress — Wave 1 complete (08-01: InversifyJS migration). Ready for Wave 2 (08-04→08-06).
+Plan: 3/9 executed (08-01 ✅, 08-02, 08-03 ✅), 6 planned (08-04 → 08-09 across 6 waves)
+Status: ◐ In Progress — Wave 1 complete (08-01: InversifyJS migration). Ready for Wave 2 (08-04).
 Last activity: 2026-06-24 — 08-01 executed with InversifyJS v8 (validateBindings fallback)
 
 Progress: [████████████████████] 100% (Phase 1) — [████████████████████] 100% (Phase 2) — [████████████████████] 100% (Phase 3) — [████████████████████████] 100% (Phase 4) — [████████████████████████] 100% (Phase 5) — [████████████████████] 100% (Phase 6) — [████████████████████] 100% (Phase 7) — [████████░░░░░░░░░░░░] 33% (Phase 8)
@@ -136,24 +136,30 @@ Items acknowledged and carried forward from previous milestone close:
 Last session: 2026-06-24
 Stopped at: Phase 8 — Wave 1 complete (08-01: InversifyJS migration). Ready for Wave 2.
 Resume file: `.planning/phases/08-module-integration-server-actions/08-CONTEXT.md`
-Next command: `/gsd-execute-phase 08 --wave 2` — Execute Wave 2: 08-04 (Domain), 08-05 (Application), 08-06 (Infrastructure)
+Next command: `/gsd-execute-phase 08 --wave 2` — Execute Wave 2: 08-04 (Domain auth types)
 
 ## Phase 8 Plans (2026-06-24 — 08-01 executed)
 
 3 plans complete (08-01 ✅, 08-02, 08-03 ✅), 6 planned (08-04→08-09):
 
-**Wave 1 (Plumbing — complete):**
-- [x] 08-01: Migrate to InversifyJS + Hybrid 4+6 — install inversify, replace container.ts, convert registration.ts to ContainerModule, add @injectable() to BetterAuthService
-- [x] 08-02: AsyncLocalStorage middleware (proxy.ts) — ✅ KEEPER, complete
-- [x] 08-03: Infrastructure BetterAuth service wrapper — ✅ KEEPER, complete
+**Wave 1 (Plumbing ✅):**
+- [x] 08-01: Migrate to InversifyJS + Hybrid 4+6
 
-**Wave 2 (Module layers — depends on 08-01):**
+**Wave 2 (Domain auth types):**
 - [ ] 08-04: **[REWRITTEN]** Domain layer — repository interfaces (interface-only, no InversifyJS), auth domain errors, aggregates
+
+**Wave 3 (Application UseCases):**
 - [ ] 08-05: **[REWRITTEN]** Application layer — UseCases with @injectable() + @inject(), DTOs, mappers
+
+**Wave 4 (Infrastructure repos):**
 - [ ] 08-06: **[REWRITTEN]** Infrastructure layer — Drizzle repositories with @injectable(), DB mappers
 
-**Wave 3 (Presentation/UI — depends on Wave 2):**
+**Wave 5 (Server Actions):**
 - [ ] 08-07: **[REWRITTEN]** Server Actions — resolve from InversifyJS container, Better Auth API route
+
+**Wave 6 (Auth pages):**
 - [ ] 08-08: **[REWRITTEN]** Auth pages (sign-in, sign-up) with @tanstack/react-form
+
+**Wave 7 (Error boundaries):**
 - [ ] 08-09: **[REWRITTEN]** Dashboards + global + per-route error boundaries
 

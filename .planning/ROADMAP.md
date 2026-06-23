@@ -205,22 +205,30 @@ Plans:
   2. A client component can render different UI states based on `PresentationResult` match (success, validation error, not found, authorization error, system error)
   3. Error boundaries in the React tree catch unhandled errors and log them with full cause-chain context
   4. Middleware hooks propagate correlation IDs across the request lifecycle
-**Plans**: 9 plans (3 waves)
+**Plans**: 9 plans (7 waves)
 
-**Wave 1 *(Plumbing — no inter-dependency)* ✅**
-- [ ] 08-01-PLAN.md — **[REWRITTEN]** InversifyJS migration: install inversify+reflect-metadata, enable decorators in tsconfig, replace container.ts with InversifyJS Container, convert registration.ts to ContainerModule, add @injectable() to BetterAuthService
-- [x] 08-02-PLAN.md — AsyncLocalStorage middleware (proxy.ts) ✅ (KEEPER — no changes needed)
-- [x] 08-03-PLAN.md — Infrastructure Better Auth service wrapper ✅ (KEEPER — no changes needed)
+**Wave 1 *(Plumbing ✅)* — 08-01**
+- [x] 08-01-PLAN.md — **[REWRITTEN]** InversifyJS migration
+- [x] 08-02-PLAN.md — AsyncLocalStorage middleware (proxy.ts) ✅ (KEEPER)
+- [x] 08-03-PLAN.md — Infrastructure Better Auth service wrapper ✅ (KEEPER)
 
-**Wave 2 *(Module implementation — depends on 08-01 for InversifyJS plumbing)* 🔄**
-- [ ] 08-04-PLAN.md — **[REWRITTEN]** Domain layer: repository interfaces (pure TS — no decorators), auth domain errors, aggregate types
-- [ ] 08-05-PLAN.md — **[REWRITTEN]** Application layer: UseCases with @injectable() + @inject(AUTH_TOKENS.XXX), DTOs, mappers, registered in ContainerModule
-- [ ] 08-06-PLAN.md — **[REWRITTEN]** Infrastructure layer: Drizzle repositories with @injectable() + @inject(), DB mappers, DrizzleClient binding as constant value
+**Wave 2 *(Domain auth types 🔄)* — 08-04**
+- [ ] 08-04-PLAN.md — **[REWRITTEN]** Domain layer: repository interfaces, auth domain errors, aggregate types
 
-**Wave 3 *(UI — depends on Wave 2 for UseCases)* 🔄**
-- [ ] 08-07-PLAN.md — **[REWRITTEN]** Server Actions: resolve UseCases via container.get(AUTH_TOKENS.XXX) from InversifyJS, map to PresentationResult, Better Auth API route
-- [ ] 08-08-PLAN.md — **[REWRITTEN]** Auth pages (sign-in, sign-up) with @tanstack/react-form, useActionState, _tag error display, no InversifyJS in UI
-- [ ] 08-09-PLAN.md — **[REWRITTEN]** Dashboards (user + admin), sign-out button, global + per-route error boundaries, no InversifyJS in UI
+**Wave 3 *(Application UseCases 🔄)* — 08-05**
+- [ ] 08-05-PLAN.md — **[REWRITTEN]** Application layer: UseCases with @injectable() + @inject(), DTOs, mappers
+
+**Wave 4 *(Infrastructure repos 🔄)* — 08-06**
+- [ ] 08-06-PLAN.md — **[REWRITTEN]** Infrastructure layer: Drizzle repositories with @injectable(), DB mappers
+
+**Wave 5 *(Server Actions 🔄)* — 08-07**
+- [ ] 08-07-PLAN.md — **[REWRITTEN]** Server Actions: resolve UseCases from InversifyJS, map to PresentationResult
+
+**Wave 6 *(Auth pages 🔄)* — 08-08**
+- [ ] 08-08-PLAN.md — **[REWRITTEN]** Auth pages (sign-in, sign-up) with @tanstack/react-form
+
+**Wave 7 *(Error boundaries 🔄)* — 08-09**
+- [ ] 08-09-PLAN.md — **[REWRITTEN]** Dashboards + error boundaries
 
 ## Progress
 
