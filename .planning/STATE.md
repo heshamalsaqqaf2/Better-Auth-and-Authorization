@@ -9,12 +9,12 @@ See: .planning/PROJECT.md (updated 2026-06-07)
 
 ## Current Position
 
-Phase: 7 of 8 (Tooling & Boundary Enforcement)
-Plan: 3/3 executed (Waves 1+2 complete)
-Status: ✓ Complete
-Last activity: 2026-06-19 — Wave 2 executed: 07-03 (Hooks & Tests)
+Phase: 8 of 8 (Module Integration & Server Actions)
+Plan: 3/9 executed (Wave 1 complete), 6 pending (to be rewritten)
+Status: ◐ In Progress — Wave 1 complete, context updated 2026-06-23
+Last activity: 2026-06-23 — Context updated: InversifyJS, Hybrid 4+6 Composition decisions
 
-Progress: [████████████████████] 100% (Phase 1) — [████████████████████] 100% (Phase 2) — [████████████████████] 100% (Phase 3) — [████████████████████████] 100% (Phase 4) — [████████████████████████] 100% (Phase 5) — [████████████████████] 100% (Phase 6) — [████████████████████] 100% (Phase 7)
+Progress: [████████████████████] 100% (Phase 1) — [████████████████████] 100% (Phase 2) — [████████████████████] 100% (Phase 3) — [████████████████████████] 100% (Phase 4) — [████████████████████████] 100% (Phase 5) — [████████████████████] 100% (Phase 6) — [████████████████████] 100% (Phase 7) — [██████████████░░░░░░] 33% (Phase 8)
 
 ## Performance Metrics
 
@@ -105,9 +105,19 @@ Recent decisions affecting current work:
 - [Phase 5] [executed]: withFallback is pure synchronous function — if Success returns unchanged, if Failure returns `ok(fallback)`
 - [Phase 5] [executed]: Infrastructure/index.ts top-level barrel follows Application/index.ts pattern: `export * from` for Contracts, Errors, Mappers, Results, Resilience (in that order)
 
-### Pending Todos
-
-None yet.
+- [Phase 8] [executed]: Hybrid 4+6 Composition pattern — module-owned Composition/{tokens,registration}.ts, CompositionRoot/index.ts orchestrator (19a7f4d)
+- [Phase 8] [executed]: Container hardened — Map<symbol> tokens, singleton=false default, TOKENS unified object
+- [Phase 8] [executed]: fold removed from ResultBase — match only dispatch method (bc61d52)
+- [Phase 8] [executed]: Better Auth server/client config with Drizzle adapter, email/password
+- [Phase 8] [executed]: proxy.ts with AsyncLocalStorage correlation ID propagation
+- [Phase 8] [executed]: BetterAuthService wrapping Better Auth with InfrastructureResult, withRetry, withTimeout
+- [Phase 8] [context]: Switch to InversifyJS — replace custom Container with InversifyJS (D-02/D-15)
+- [Phase 8] [context]: Module-owned ContainerModules — each module exports its own, CompositionRoot loads all (D-15)
+- [Phase 8] [context]: Symbol-based tokens — Symbol.for('Module.InterfaceName') (D-16)
+- [Phase 8] [context]: Transient default lifetime — explicit singleton only for infra services (D-17)
+- [Phase 8] [context]: Request scoping deferred — not needed for Phase 8 (D-18)
+- [Phase 8] [context]: Remove old Bindings/ and Containers/ directories (D-20)
+- [Phase 8] [context]: Rewrite plans 08-04 through 08-09 for InversifyJS + Hybrid 4+6 (D-21)
 
 ### Blockers/Concerns
 
@@ -123,27 +133,28 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-06-19
-Stopped at: Phase 7 complete — all 3 plans executed across 2 waves
-Resume file: None (Phase 8 ready)
-Next command: `/gsd-execute-phase 8` — 9 plans across 3 waves
+Last session: 2026-06-23
+Stopped at: Phase 8 context updated — InversifyJS + Hybrid 4+6 decisions captured
+Resume file: `.planning/phases/08-module-integration-server-actions/08-CONTEXT.md`
+Next command: `/gsd-plan-phase 08 --chain` — Rewrite plans 08-04 through 08-09 for new Composition structure
 
-## Phase 8 Plans (2026-06-22)
+## Phase 8 Plans (2026-06-23 — updated)
 
-9 plans created across 3 waves:
+3 Wave 1 plans executed, 6 pending to be rewritten for InversifyJS + Hybrid 4+6:
 
-**Wave 1 (Plumbing — parallel):**
-- 08-01: Better Auth config + Composition Root bindings
-- 08-02: AsyncLocalStorage middleware (proxy.ts)
-- 08-03: Infrastructure Better Auth service wrapper
+**Wave 1 (Plumbing — ✅ Complete):**
+- [x] 08-01: Better Auth config + Composition Root (HYBRID 4+6 PATTERN applied via refactor)
+- [x] 08-02: AsyncLocalStorage middleware (proxy.ts)
+- [x] 08-03: Infrastructure BetterAuth service wrapper
 
-**Wave 2 (Module implementation — depends on Wave 1):**
-- 08-04: Domain layer — repository interfaces, auth domain errors
-- 08-05: Application layer — UseCases, DTOs, mappers
-- 08-06: Infrastructure layer — Drizzle repository implementations, DB mappers
+**Wave 2 (TO BE REWRITTEN — InversifyJS migration + module layers):**
+- [ ] 08-04: **[NEW]** Migrate to InversifyJS — replace container, convert to ContainerModules, cleanup old dirs
+- [ ] 08-05: **[REWRITTEN]** Domain layer — repository interfaces, auth domain errors
+- [ ] 08-06: **[REWRITTEN]** Application layer — UseCases, DTOs, mappers
+- [ ] 08-07: **[REWRITTEN]** Infrastructure layer — Drizzle repository implementations, DB mappers
 
-**Wave 3 (UI — depends on Wave 2):**
-- 08-07: Server Actions (sign-in, sign-up, sign-out) + Better Auth API route
-- 08-08: Auth pages (sign-in, sign-up) with @tanstack/react-form
-- 08-09: Dashboards + global + per-route error boundaries
+**Wave 3 (TO BE REWRITTEN — Presentation/UI — depends on Wave 2):**
+- [ ] 08-08: **[REWRITTEN]** Server Actions (sign-in, sign-up, sign-out) + Better Auth API route
+- [ ] 08-09: **[REWRITTEN]** Auth pages (sign-in, sign-up) with @tanstack/react-form
+- [ ] 08-10: **[REWRITTEN]** Dashboards + global + per-route error boundaries
 
