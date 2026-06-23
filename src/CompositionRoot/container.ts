@@ -7,16 +7,16 @@ interface Binding<T> {
 }
 
 export class Container {
-  private readonly bindings = new Map<string, Binding<unknown>>();
+  private readonly bindings = new Map<symbol, Binding<unknown>>();
 
-  bind<T>(token: string, factory: Factory<T>, singleton = true): void {
+  bind<T>(token: symbol, factory: Factory<T>, singleton = false): void {
     this.bindings.set(token, { factory, singleton });
   }
 
-  resolve<T>(token: string): T {
+  resolve<T>(token: symbol): T {
     const binding = this.bindings.get(token);
     if (!binding) {
-      throw new Error(`No binding registered for token: ${token}`);
+      throw new Error(`No binding registered for token: ${token.description ?? String(token)}`);
     }
     if (binding.singleton) {
       if (!binding.instance) {
@@ -27,13 +27,12 @@ export class Container {
     return binding.factory() as T;
   }
 
-  isBound(token: string): boolean {
+  isBound(token: symbol): boolean {
     return this.bindings.has(token);
   }
 }
 
 export const container = new Container();
-
 export function getContainer(): Container {
   return container;
 }
