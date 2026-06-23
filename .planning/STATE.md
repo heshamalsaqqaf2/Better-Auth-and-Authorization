@@ -10,8 +10,8 @@ See: .planning/PROJECT.md (updated 2026-06-07)
 ## Current Position
 
 Phase: 8 of 8 (Module Integration & Server Actions)
-Plan: 3/9 executed (Wave 1 complete), 6 pending (to be rewritten)
-Status: ◐ In Progress — Wave 1 complete, context updated 2026-06-23
+Plan: 2/9 executed (08-02, 08-03 ✅), 1 reopened (08-01), 6 pending (to be written)
+Status: ◐ In Progress — 08-01 reopened for InversifyJS migration
 Last activity: 2026-06-23 — Context updated: InversifyJS, Hybrid 4+6 Composition decisions
 
 Progress: [████████████████████] 100% (Phase 1) — [████████████████████] 100% (Phase 2) — [████████████████████] 100% (Phase 3) — [████████████████████████] 100% (Phase 4) — [████████████████████████] 100% (Phase 5) — [████████████████████] 100% (Phase 6) — [████████████████████] 100% (Phase 7) — [██████████████░░░░░░] 33% (Phase 8)
@@ -117,7 +117,7 @@ Recent decisions affecting current work:
 - [Phase 8] [context]: Transient default lifetime — explicit singleton only for infra services (D-17)
 - [Phase 8] [context]: Request scoping deferred — not needed for Phase 8 (D-18)
 - [Phase 8] [context]: Remove old Bindings/ and Containers/ directories (D-20)
-- [Phase 8] [context]: Rewrite plans 08-04 through 08-09 for InversifyJS + Hybrid 4+6 (D-21)
+- [Phase 8] [context]: Rewrite plans 08-01, 08-04 through 08-09 — 08-01 reopened to include InversifyJS migration (D-21)
 
 ### Blockers/Concerns
 
@@ -134,27 +134,26 @@ Items acknowledged and carried forward from previous milestone close:
 ## Session Continuity
 
 Last session: 2026-06-23
-Stopped at: Phase 8 context updated — InversifyJS + Hybrid 4+6 decisions captured
+Stopped at: Phase 8 — 08-01 reopened for InversifyJS migration; plan-phase pending
 Resume file: `.planning/phases/08-module-integration-server-actions/08-CONTEXT.md`
-Next command: `/gsd-plan-phase 08 --chain` — Rewrite plans 08-04 through 08-09 for new Composition structure
+Next command: `/gsd-plan-phase 08` — Write/rewrite plans 08-01, 08-04 through 08-09
 
-## Phase 8 Plans (2026-06-23 — updated)
+## Phase 8 Plans (2026-06-23 — corrected)
 
-3 Wave 1 plans executed, 6 pending to be rewritten for InversifyJS + Hybrid 4+6:
+2 plans complete (08-02, 08-03), 08-01 reopened for InversifyJS migration, 6 pending:
 
-**Wave 1 (Plumbing — ✅ Complete):**
-- [x] 08-01: Better Auth config + Composition Root (HYBRID 4+6 PATTERN applied via refactor)
-- [x] 08-02: AsyncLocalStorage middleware (proxy.ts)
-- [x] 08-03: Infrastructure BetterAuth service wrapper
+**Wave 1 (Plumbing — 08-01 reopen, 08-02+08-03 ✅):**
+- [ ] 08-01: **[REOPENED]** Migrate to InversifyJS + Hybrid 4+6 — replace custom Container with InversifyJS, convert registration.ts to ContainerModule, cleanup Bindings/Containers/
+- [x] 08-02: AsyncLocalStorage middleware (proxy.ts) — ✅ no change needed
+- [x] 08-03: Infrastructure BetterAuth service wrapper — ✅ no change needed
 
-**Wave 2 (TO BE REWRITTEN — InversifyJS migration + module layers):**
-- [ ] 08-04: **[NEW]** Migrate to InversifyJS — replace container, convert to ContainerModules, cleanup old dirs
-- [ ] 08-05: **[REWRITTEN]** Domain layer — repository interfaces, auth domain errors
-- [ ] 08-06: **[REWRITTEN]** Application layer — UseCases, DTOs, mappers
-- [ ] 08-07: **[REWRITTEN]** Infrastructure layer — Drizzle repository implementations, DB mappers
+**Wave 2 (Module layers — depends on 08-01):**
+- [ ] 08-04: Domain layer — repository interfaces, auth domain errors
+- [ ] 08-05: Application layer — UseCases, DTOs, mappers
+- [ ] 08-06: Infrastructure layer — Drizzle repository implementations, DB mappers
 
-**Wave 3 (TO BE REWRITTEN — Presentation/UI — depends on Wave 2):**
-- [ ] 08-08: **[REWRITTEN]** Server Actions (sign-in, sign-up, sign-out) + Better Auth API route
-- [ ] 08-09: **[REWRITTEN]** Auth pages (sign-in, sign-up) with @tanstack/react-form
-- [ ] 08-10: **[REWRITTEN]** Dashboards + global + per-route error boundaries
+**Wave 3 (Presentation/UI — depends on Wave 2):**
+- [ ] 08-07: Server Actions + Better Auth API route
+- [ ] 08-08: Auth pages (sign-in, sign-up) with @tanstack/react-form
+- [ ] 08-09: Dashboards + global + per-route error boundaries
 

@@ -56,7 +56,7 @@
 - **D-14 (carried forward): Full module stack: UseCase → Repository → Drizzle** — Implement the complete Authentication module layer chain: Domain (repository interfaces + errors), Application (UseCases + DTOs), Infrastructure (repository implementations + mappers), Presentation (Server Actions).
 
 ### Plan Rewrite
-- **D-21 (new): Rewrite plans 08-04 through 08-09** — Update all pending plans to reflect Hybrid 4+6 Composition, InversifyJS ContainerModules, and the new module-owned Composition pattern. Plan 08-04 becomes a standalone "Migrate to InversifyJS + cleanup" plan that replaces the custom Container, converts registrations to ContainerModules, and removes old Bindings/Containers/ directories.
+- **D-21 (new): Rewrite plans 08-01, 08-04 through 08-09** — 08-01 is reopened to include InversifyJS migration: replace custom Container with InversifyJS, convert module registration to ContainerModule, cleanup old Bindings/Containers/ directories. Plans 08-04 through 08-09 are written fresh with Hybrid 4+6 Composition and InversifyJS integration.
 
 ### the agent's Discretion
 - Exact file naming for action files (e.g., `sign-in.action.ts` vs `signInAction.ts`)
@@ -164,7 +164,7 @@
 - This means Better Auth errors pass through InfrastructureResult → InfrastructureError → ApplicationError → PresentationError
 - Composition Root loads InversifyJS ContainerModules from each module — modules own their bindings
 - Auth pages use @tanstack/react-form which is already installed — no new npm dependencies
-- `inversify` to be installed during plan execution (Migration Plan 08-04)
+- `inversify` to be installed during plan 08-01 execution (InversifyJS migration)
 
 </code_context>
 
