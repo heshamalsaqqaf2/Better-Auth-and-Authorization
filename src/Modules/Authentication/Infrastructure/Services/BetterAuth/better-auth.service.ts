@@ -1,3 +1,4 @@
+import { injectable } from "inversify";
 import { err, ok } from "@/Core/Foundations/Base/Abstracts/result-base";
 import { InfrastructureError } from "@/Core/Foundations/Infrastructure/Errors/infrastructure-error";
 import { ApiTimeoutError } from "@/Core/Foundations/Infrastructure/Errors/Specific/api-timeout.error";
@@ -34,6 +35,7 @@ export type UserData = SessionUser;
 const TIMEOUT_MS = 10_000;
 const MAX_RETRIES = 3;
 
+@injectable()
 class BetterAuthService {
   async signIn(email: string, password: string): Promise<InfrastructureResult<SessionData>> {
     const result = await withRetry(
