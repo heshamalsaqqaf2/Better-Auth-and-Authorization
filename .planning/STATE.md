@@ -10,11 +10,11 @@ See: .planning/PROJECT.md (updated 2026-06-07)
 ## Current Position
 
 Phase: 8 of 8 (Module Integration & Server Actions)
-Plan: 2/9 executed (08-02, 08-03 ✅), 7 planned/rewritten (08-01, 08-04 → 08-09)
-Status: ◐ Planned — All 9 plans ready. 08-01 rewritten for InversifyJS migration. 08-04→08-09 rewritten with Hybrid 4+6 + InversifyJS.
-Last activity: 2026-06-23 — All Phase 8 plans rewritten per D-21
+Plan: 3/9 executed (08-01 ✅, 08-02, 08-03 ✅), 6 planned (08-04 → 08-09)
+Status: ◐ In Progress — Wave 1 complete (08-01: InversifyJS migration). Ready for Wave 2 (08-04→08-06).
+Last activity: 2026-06-24 — 08-01 executed with InversifyJS v8 (validateBindings fallback)
 
-Progress: [████████████████████] 100% (Phase 1) — [████████████████████] 100% (Phase 2) — [████████████████████] 100% (Phase 3) — [████████████████████████] 100% (Phase 4) — [████████████████████████] 100% (Phase 5) — [████████████████████] 100% (Phase 6) — [████████████████████] 100% (Phase 7) — [██████████████░░░░░░] 33% (Phase 8)
+Progress: [████████████████████] 100% (Phase 1) — [████████████████████] 100% (Phase 2) — [████████████████████] 100% (Phase 3) — [████████████████████████] 100% (Phase 4) — [████████████████████████] 100% (Phase 5) — [████████████████████] 100% (Phase 6) — [████████████████████] 100% (Phase 7) — [████████░░░░░░░░░░░░] 33% (Phase 8)
 
 ## Performance Metrics
 
@@ -133,17 +133,17 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-06-23
-Stopped at: Phase 8 — All 9 plans rewritten per D-21; ready to execute
+Last session: 2026-06-24
+Stopped at: Phase 8 — Wave 1 complete (08-01: InversifyJS migration). Ready for Wave 2.
 Resume file: `.planning/phases/08-module-integration-server-actions/08-CONTEXT.md`
-Next command: `/gsd-execute-phase 08` — Execute Wave 1 first, then Waves 2-3
+Next command: `/gsd-execute-phase 08 --wave 2` — Execute Wave 2: 08-04 (Domain), 08-05 (Application), 08-06 (Infrastructure)
 
-## Phase 8 Plans (2026-06-23 — all rewritten per D-21)
+## Phase 8 Plans (2026-06-24 — 08-01 executed)
 
-2 plans complete (08-02, 08-03 ✅), 7 rewritten (08-01 🔄, 08-04→08-09):
+3 plans complete (08-01 ✅, 08-02, 08-03 ✅), 6 planned (08-04→08-09):
 
-**Wave 1 (Plumbing — execute first):**
-- [ ] 08-01: **[REWRITTEN]** Migrate to InversifyJS + Hybrid 4+6 — install inversify, replace container.ts, convert registration.ts to ContainerModule, add @injectable() to BetterAuthService
+**Wave 1 (Plumbing — complete):**
+- [x] 08-01: Migrate to InversifyJS + Hybrid 4+6 — install inversify, replace container.ts, convert registration.ts to ContainerModule, add @injectable() to BetterAuthService
 - [x] 08-02: AsyncLocalStorage middleware (proxy.ts) — ✅ KEEPER, complete
 - [x] 08-03: Infrastructure BetterAuth service wrapper — ✅ KEEPER, complete
 
