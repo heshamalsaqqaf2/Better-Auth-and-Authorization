@@ -10,9 +10,9 @@ See: .planning/PROJECT.md (updated 2026-06-07)
 ## Current Position
 
 Phase: 8 of 8 (Module Integration & Server Actions)
-Plan: 2/9 executed (08-02, 08-03 ✅), 1 reopened (08-01), 6 pending (to be written)
-Status: ◐ In Progress — 08-01 reopened for InversifyJS migration
-Last activity: 2026-06-23 — Context updated: InversifyJS, Hybrid 4+6 Composition decisions
+Plan: 2/9 executed (08-02, 08-03 ✅), 7 planned/rewritten (08-01, 08-04 → 08-09)
+Status: ◐ Planned — All 9 plans ready. 08-01 rewritten for InversifyJS migration. 08-04→08-09 rewritten with Hybrid 4+6 + InversifyJS.
+Last activity: 2026-06-23 — All Phase 8 plans rewritten per D-21
 
 Progress: [████████████████████] 100% (Phase 1) — [████████████████████] 100% (Phase 2) — [████████████████████] 100% (Phase 3) — [████████████████████████] 100% (Phase 4) — [████████████████████████] 100% (Phase 5) — [████████████████████] 100% (Phase 6) — [████████████████████] 100% (Phase 7) — [██████████████░░░░░░] 33% (Phase 8)
 
@@ -134,26 +134,26 @@ Items acknowledged and carried forward from previous milestone close:
 ## Session Continuity
 
 Last session: 2026-06-23
-Stopped at: Phase 8 — 08-01 reopened for InversifyJS migration; plan-phase pending
+Stopped at: Phase 8 — All 9 plans rewritten per D-21; ready to execute
 Resume file: `.planning/phases/08-module-integration-server-actions/08-CONTEXT.md`
-Next command: `/gsd-plan-phase 08` — Write/rewrite plans 08-01, 08-04 through 08-09
+Next command: `/gsd-execute-phase 08` — Execute Wave 1 first, then Waves 2-3
 
-## Phase 8 Plans (2026-06-23 — corrected)
+## Phase 8 Plans (2026-06-23 — all rewritten per D-21)
 
-2 plans complete (08-02, 08-03), 08-01 reopened for InversifyJS migration, 6 pending:
+2 plans complete (08-02, 08-03 ✅), 7 rewritten (08-01 🔄, 08-04→08-09):
 
-**Wave 1 (Plumbing — 08-01 reopen, 08-02+08-03 ✅):**
-- [ ] 08-01: **[REOPENED]** Migrate to InversifyJS + Hybrid 4+6 — replace custom Container with InversifyJS, convert registration.ts to ContainerModule, cleanup Bindings/Containers/
-- [x] 08-02: AsyncLocalStorage middleware (proxy.ts) — ✅ no change needed
-- [x] 08-03: Infrastructure BetterAuth service wrapper — ✅ no change needed
+**Wave 1 (Plumbing — execute first):**
+- [ ] 08-01: **[REWRITTEN]** Migrate to InversifyJS + Hybrid 4+6 — install inversify, replace container.ts, convert registration.ts to ContainerModule, add @injectable() to BetterAuthService
+- [x] 08-02: AsyncLocalStorage middleware (proxy.ts) — ✅ KEEPER, complete
+- [x] 08-03: Infrastructure BetterAuth service wrapper — ✅ KEEPER, complete
 
 **Wave 2 (Module layers — depends on 08-01):**
-- [ ] 08-04: Domain layer — repository interfaces, auth domain errors
-- [ ] 08-05: Application layer — UseCases, DTOs, mappers
-- [ ] 08-06: Infrastructure layer — Drizzle repository implementations, DB mappers
+- [ ] 08-04: **[REWRITTEN]** Domain layer — repository interfaces (interface-only, no InversifyJS), auth domain errors, aggregates
+- [ ] 08-05: **[REWRITTEN]** Application layer — UseCases with @injectable() + @inject(), DTOs, mappers
+- [ ] 08-06: **[REWRITTEN]** Infrastructure layer — Drizzle repositories with @injectable(), DB mappers
 
 **Wave 3 (Presentation/UI — depends on Wave 2):**
-- [ ] 08-07: Server Actions + Better Auth API route
-- [ ] 08-08: Auth pages (sign-in, sign-up) with @tanstack/react-form
-- [ ] 08-09: Dashboards + global + per-route error boundaries
+- [ ] 08-07: **[REWRITTEN]** Server Actions — resolve from InversifyJS container, Better Auth API route
+- [ ] 08-08: **[REWRITTEN]** Auth pages (sign-in, sign-up) with @tanstack/react-form
+- [ ] 08-09: **[REWRITTEN]** Dashboards + global + per-route error boundaries
 
