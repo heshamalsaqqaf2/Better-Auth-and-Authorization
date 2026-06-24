@@ -5,5 +5,5 @@ export const AUTH_TOKENS = {
   SIGN_OUT_USE_CASE: Symbol.for("Auth.SignOutUseCase"),
   GET_SESSION_QUERY: Symbol.for("Auth.GetSessionQuery"),
   COMMAND_AUTH_REPOSITORY: Symbol.for("Auth.ICommandAuthRepository"),
-  QUERY_AUTH_REPOSITORY: Symbol.for("Auth.IQueryAuthRepository"),
+  QUERY_AUTH_REPOSITORY: Symbol.for("Auth.AuthQueryRepository"),
 } as const;
