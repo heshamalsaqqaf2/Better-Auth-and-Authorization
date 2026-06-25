@@ -1,5 +1,5 @@
 import { DomainError } from "@/Core/Foundations/Domain";
-import { AUTH_ERROR_CODES } from "./error-codes.constants";
+import { AUTH_ERROR_CODES } from "../Constants/error-codes.constants";
 
 export class UserNotFoundError extends DomainError {
   constructor(message: string, businessRule: string, aggregateId: string, cause?: DomainError) {

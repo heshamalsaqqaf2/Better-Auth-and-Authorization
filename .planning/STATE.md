@@ -5,22 +5,22 @@
 See: .planning/PROJECT.md (updated 2026-06-07)
 
 **Core value:** Every error in the system is typed, traceable to its origin layer, and safely serializable — no untyped exceptions, no information leaks, no "cannot read properties of undefined" in production.
-**Current focus: Phase 7 — Tooling & Boundary Enforcement (Completed)
+**Current focus: Phase 8 — Module Integration & Server Actions (In Progress)
 
 ## Current Position
 
 Phase: 8 of 8 (Module Integration & Server Actions)
-Plan: 3/9 executed (08-01 ✅, 08-02, 08-03 ✅), 6 planned (08-04 → 08-09 across 6 waves)
-Status: ◐ In Progress — Wave 1 complete (08-01: InversifyJS migration). Ready for Wave 2 (08-04).
-Last activity: 2026-06-24 — 08-01 executed with InversifyJS v8 (validateBindings fallback)
+Plan: 4/9 executed (08-01 ✅, 08-02 ✅, 08-03 ✅, 08-04 ✅), 5 planned (08-05 → 08-09 across 5 waves)
+Status: ◐ In Progress — Wave 2 complete (08-04: Domain auth types). Ready for Wave 3 (08-05).
+Last activity: 2026-06-25 — 08-04 executed with AuthQueryRepository, 4 domain errors, aggregates, and AUTH_ERROR_CODES constants
 
-Progress: [████████████████████] 100% (Phase 1) — [████████████████████] 100% (Phase 2) — [████████████████████] 100% (Phase 3) — [████████████████████████] 100% (Phase 4) — [████████████████████████] 100% (Phase 5) — [████████████████████] 100% (Phase 6) — [████████████████████] 100% (Phase 7) — [████████░░░░░░░░░░░░] 33% (Phase 8)
+Progress: [████████████████████] 100% (Phase 1) — [████████████████████] 100% (Phase 2) — [████████████████████] 100% (Phase 3) — [████████████████████████] 100% (Phase 4) — [████████████████████████] 100% (Phase 5) — [████████████████████] 100% (Phase 6) — [████████████████████] 100% (Phase 7) — [█████████░░░░░░░░░░░░░] 44% (Phase 8)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 21 (executed across Phases 1-6)
-- Total plans planned: 24 (Phase 7: 3)
+- Total plans completed: 22 (executed across Phases 1-8)
+- Total plans planned: 24 (Phase 7: 3, Phase 8: 9)
 - Average duration: ~2.7 min
 - Total execution time: ~43 min
 
@@ -35,7 +35,7 @@ Progress: [████████████████████] 100% (P
 | 5. Infrastructure Layer | 4 | Complete | ~3 min |
 
 **Recent Trend:**
-- Last 5 plans: 05-02 (~2 min), 05-01 (~5 min), 05-04 (~2 min)
+- Last 5 plans: 08-04 (~4 min), 08-03 (~3 min), 08-02 (~3 min), 08-01 (~5 min), 05-04 (~2 min)
 - Trend: Consistent ~3.5 min per plan
 
 *Updated after each plan completion*
@@ -111,6 +111,10 @@ Recent decisions affecting current work:
 - [Phase 8] [executed]: Better Auth server/client config with Drizzle adapter, email/password
 - [Phase 8] [executed]: proxy.ts with AsyncLocalStorage correlation ID propagation
 - [Phase 8] [executed]: BetterAuthService wrapping Better Auth with InfrastructureResult, withRetry, withTimeout
+- [Phase 8] [executed]: AUTH_ERROR_CODES const object with 4 codes (USER_NOT_FOUND, INVALID_CREDENTIALS, EMAIL_ALREADY_EXISTS, AUTH_FAILED) + AuthErrorCode union type
+- [Phase 8] [executed]: 4 auth-specific domain errors (UserNotFoundError, InvalidCredentialsError, EmailAlreadyExistsError, AuthenticationFailedError) — all extend DomainError with positional params
+- [Phase 8] [executed]: AuthenticatedUser and AuthSession aggregate interfaces matching DB schema shapes
+- [Phase 8] [executed]: AuthQueryRepository interface with findByEmail/findById — pure TypeScript, no InversifyJS decorators
 - [Phase 8] [context]: Switch to InversifyJS — replace custom Container with InversifyJS (D-02/D-15)
 - [Phase 8] [context]: Module-owned ContainerModules — each module exports its own, CompositionRoot loads all (D-15)
 - [Phase 8] [context]: Symbol-based tokens — Symbol.for('Module.InterfaceName') (D-16)
@@ -133,20 +137,20 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-06-24
-Stopped at: Phase 8 — Wave 1 complete (08-01: InversifyJS migration). Ready for Wave 2.
+Last session: 2026-06-25
+Stopped at: Phase 8 — Wave 2 complete (08-04: Domain auth types). Ready for Wave 3.
 Resume file: `.planning/phases/08-module-integration-server-actions/08-CONTEXT.md`
-Next command: `/gsd-execute-phase 08 --wave 2` — Execute Wave 2: 08-04 (Domain auth types)
+Next command: `/gsd-execute-phase 08 --wave 3` — Execute Wave 3: 08-05 (Application UseCases)
 
-## Phase 8 Plans (2026-06-24 — 08-01 executed)
+## Phase 8 Plans (2026-06-25 — 08-04 executed)
 
-3 plans complete (08-01 ✅, 08-02, 08-03 ✅), 6 planned (08-04→08-09):
+4 plans complete (08-01 ✅, 08-02 ✅, 08-03 ✅, 08-04 ✅), 5 planned (08-05→08-09):
 
 **Wave 1 (Plumbing ✅):**
 - [x] 08-01: Migrate to InversifyJS + Hybrid 4+6
 
-**Wave 2 (Domain auth types):**
-- [ ] 08-04: **[REWRITTEN]** Domain layer — repository interfaces (interface-only, no InversifyJS), auth domain errors, aggregates
+**Wave 2 (Domain auth types ✅):**
+- [x] 08-04: **[REWRITTEN]** Domain layer — repository interfaces (interface-only, no InversifyJS), auth domain errors, aggregates
 
 **Wave 3 (Application UseCases):**
 - [ ] 08-05: **[REWRITTEN]** Application layer — UseCases with @injectable() + @inject(), DTOs, mappers

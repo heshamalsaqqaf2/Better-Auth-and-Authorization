@@ -212,8 +212,8 @@ Plans:
 - [x] 08-02-PLAN.md — AsyncLocalStorage middleware (proxy.ts) ✅ (KEEPER)
 - [x] 08-03-PLAN.md — Infrastructure Better Auth service wrapper ✅ (KEEPER)
 
-**Wave 2 *(Domain auth types 🔄)* — 08-04**
-- [ ] 08-04-PLAN.md — **[REWRITTEN]** Domain layer: repository interfaces, auth domain errors, aggregate types
+**Wave 2 *(Domain auth types ✅)* — 08-04**
+- [x] 08-04-PLAN.md — **[REWRITTEN]** Domain layer: repository interfaces, auth domain errors, aggregate types
 
 **Wave 3 *(Application UseCases 🔄)* — 08-05**
 - [ ] 08-05-PLAN.md — **[REWRITTEN]** Application layer: UseCases with @injectable() + @inject(), DTOs, mappers
@@ -243,4 +243,4 @@ Plans:
 | 5. Infrastructure Layer | 4/4 | ✓ Complete | 2026-06-16 |
 | 6. Presentation Layer | 4/4 | ✓ Complete | 2026-06-17 |
 | 7. Tooling & Boundary Enforcement | 3/3 | ✓ Complete | 2026-06-19 |
-| 8. Module Integration & Server Actions | 0/0 | Not started | - |
+| 8. Module Integration & Server Actions | 4/9 | ◐ In Progress | 2026-06-25 |
