@@ -1,6 +1,5 @@
 import type { ErrorBase } from "@/Core/Kernel/Contracts/Base/error-base.contract";
-import type { InfrastructureComponent } from "./infrastructure-component.type";
-import type { InfrastructureRetryStrategy } from "./infrastructure-retry-strategy.type";
+import type { InfrastructureComponent, InfrastructureRetryStrategy } from "../Types";
 
 export interface InfrastructureErrorContract extends ErrorBase {
   readonly systemComponent: InfrastructureComponent;

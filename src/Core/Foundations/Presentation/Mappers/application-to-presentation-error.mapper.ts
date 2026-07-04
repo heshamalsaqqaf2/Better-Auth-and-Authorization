@@ -1,4 +1,6 @@
+import { Severity } from "@/Core/Kernel/Primitives/Enums/severity.enum";
 import type { ApplicationError } from "../../Application/Errors/application-error";
+import { APPLICATION_ERROR_CODES } from "../../Application/Errors/application-error-codes";
 import { AuthorizationFailedError } from "../../Application/Errors/Specific/authorization.error";
 import { CommandValidationError } from "../../Application/Errors/Specific/command-validation.error";
 import {
@@ -35,6 +37,16 @@ function getUserMessage(
   return autoUserMessage(appError.message);
 }
 
+function hasFieldErrors(
+  error: ApplicationError,
+): error is ApplicationError & { fieldErrors: Record<string, string[]> } {
+  return "fieldErrors" in error;
+}
+
+function hasReason(error: ApplicationError): error is ApplicationError & { reason: string } {
+  return "reason" in error;
+}
+
 export function mapApplicationToPresentationError(
   appError: ApplicationError,
   options?: { userMessageOverrides?: Record<string, string> },
@@ -47,20 +59,17 @@ export function mapApplicationToPresentationError(
     return createAuthorizationError(appError.code, getUserMessage(appError, options));
   }
 
-  if (appError.code.startsWith("NOT_FOUND_")) {
+  if (appError.code === APPLICATION_ERROR_CODES.NOT_FOUND) {
     return createNotFoundError(appError.code, getUserMessage(appError, options));
   }
 
-  const hasFieldErrors = "fieldErrors" in appError;
-  if (hasFieldErrors) {
-    const fieldErrors = (appError as Record<string, unknown>).fieldErrors;
-    return createValidationError(appError.code, fieldErrors as Record<string, string[]>);
+  if (hasFieldErrors(appError)) {
+    return createValidationError(appError.code, appError.fieldErrors);
   }
 
-  const hasReason = "reason" in appError;
-  if (hasReason) {
+  if (hasReason(appError)) {
     return createAuthorizationError(appError.code, getUserMessage(appError, options));
   }
 
-  return createSystemError(appError.code, getUserMessage(appError, options), "error");
+  return createSystemError(appError.code, getUserMessage(appError, options), Severity.ERROR);
 }

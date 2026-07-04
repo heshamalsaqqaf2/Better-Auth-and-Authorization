@@ -6,7 +6,7 @@
 <domain>
 ## Phase Boundary
 
-**What Phase 8 delivers:** End-to-end integration of the 5-layer Error/Result system with real Next.js Server Actions, middleware, and client components. Wire the complete Foundation layers into working auth pages (sign-in, sign-up, dashboards) with proper error propagation through all layers, AsyncLocalStorage correlation ID middleware, React error boundaries, and full module implementations (UseCase → Repository → Drizzle).
+**What Phase 8 delivers:** End-to-end integration of the 5-layer Error/Result system with real Next.js Server Actions, middleware, and client components. Wire the complete Foundation layers into working auth pages (sign-in, sign-up, dashboards) with proper error propagation through all layers, correlation ID propagation via proxy.ts headers + AsyncLocalStorage in Server Actions, React error boundaries, and full module implementations (UseCase → Repository → Drizzle).
 
 **What Phase 8 does NOT deliver:**
 - OAuth providers — deferred to Phase 9 (Production Auth)
@@ -37,8 +37,8 @@
 - **D-05 (carried forward): Wrap Better Auth in Infrastructure layer** — Treat Better Auth as an external service. Create a Better Auth service wrapper in the Infrastructure layer that wraps calls with `InfrastructureResult` and `withRetry`/`withTimeout`. Errors flow through the full layer chain: InfrastructureError → (mapper) → ApplicationError → (mapper) → PresentationError. Validates complete stack traversal.
 
 ### Middleware & Correlation ID Flow
-- **D-06 (carried forward): AsyncLocalStorage request context** — Use Node.js `AsyncLocalStorage` (available in Next.js 16) for per-request correlation ID propagation. Middleware (proxy.ts) initializes the context with a generated `CorrelationId` on every request. Server Actions and downstream layers read from the async context.
-- **D-07 (carried forward): `proxy.ts` with correlation ID only** — Create `proxy.ts` at `src/proxy.ts`. Single responsibility: generate and propagate correlation IDs. Auth checks happen in Server Actions where the error system handles them properly.
+- **D-06 (updated): AsyncLocalStorage request context** — Use Node.js `AsyncLocalStorage` (available in Next.js 16) for per-request correlation ID propagation. **Middleware propagates correlation ID via headers only** — ALS cannot persist across the Next.js middleware boundary because `proxy()` returns `NextResponse.next()` and the function scope exits before any downstream handler runs. Server Actions initialize ALS via `withRequestContext()` at the action entry point, reading `x-correlation-id` from headers and creating the async context that persists through UseCase → Repository.
+- **D-07 (carried forward): `proxy.ts` with correlation ID only** — Create `proxy.ts` at `src/proxy.ts`. Single responsibility: generate and propagate correlation IDs via `x-correlation-id` headers. Auth checks happen in Server Actions where the error system handles them properly.
 
 ### Client Consumption Patterns
 - **D-08 (carried forward): `useActionState` with inline `_tag` matching** — Use Next.js `useActionState` hook directly in client components. Each component performs its own `_tag` switch to render success state, error state, etc.
@@ -112,8 +112,9 @@
 - `src/Lib/BetterAuth/Config/index.ts` — Barrel exports
 - `src/Lib/BetterAuth/utils/get-session.ts` — `getSession(headers)` utility
 - `src/Lib/RequestContext/store.ts` — AsyncLocalStorage store with get/set helpers
+- `src/Lib/RequestContext/init.ts` — `withRequestContext()` helper for ALS initialization in Server Actions
 - `src/Lib/RequestContext/index.ts` — Barrel
-- `src/proxy.ts` — Next.js 16 proxy middleware with correlation ID propagation
+- `src/proxy.ts` — Next.js 16 proxy middleware with `x-correlation-id` header propagation (no ALS — see D-06)
 - `src/Modules/Authentication/Infrastructure/Services/BetterAuth/better-auth.service.ts` — BetterAuthService with InfrastructureResult wrapping
 - `src/Modules/Authentication/Infrastructure/Services/BetterAuth/index.ts` — Barrel
 - `src/Modules/Authentication/Infrastructure/Services/index.ts` — Parent barrel
@@ -155,7 +156,7 @@
 - `src/app/(user)/dashboard/` — User dashboard page (blank directory)
 - `src/Modules/Authentication/Presentation/Actions/` — Server Action files location (scaffolded directory)
 - `src/Modules/Authentication/Presentation/Components/` — Auth UI components location (scaffolded directory)
-- `src/proxy.ts` — Already implemented with AsyncLocalStorage middleware
+- `src/proxy.ts` — Already implemented with `x-correlation-id` header propagation (ALS initialization deferred to Server Actions)
 - `src/Core/Foundations/Presentation/` — Mappers used by Server Actions
 
 ### Domain-Specific Context
@@ -178,7 +179,7 @@
 - "Transient default is defensive container design that serves large complex projects. Changing default to Singleton is premature optimization that leads to fragile hard-to-maintain code in a 4+6 architecture." (new — D-17 discussion)
 - Dashboards are blank/initialization only — no detailed content in Phase 8 (D-10)
 - Role-based access (admin vs user dashboard separation) is specifically NOT in Phase 8 — it belongs to Phase 9's Authorization module (D-10)
-- `proxy.ts` follows Next.js 16 conventions — already implemented at `src/proxy.ts` (D-07)
+- `proxy.ts` follows Next.js 16 conventions — already implemented at `src/proxy.ts` with header-only propagation per D-06 (D-07)
 
 </specifics>
 

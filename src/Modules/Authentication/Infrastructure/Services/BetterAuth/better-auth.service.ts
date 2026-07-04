@@ -1,39 +1,19 @@
 import { injectable } from "inversify";
+
 import { err, ok } from "@/Core/Foundations/Base/Abstracts/result-base";
 import { InfrastructureError } from "@/Core/Foundations/Infrastructure/Errors/infrastructure-error";
+import { INFRASTRUCTURE_ERROR_CODES } from "@/Core/Foundations/Infrastructure/Errors/infrastructure-error-codes";
 import { ApiTimeoutError } from "@/Core/Foundations/Infrastructure/Errors/Specific/api-timeout.error";
-import { ApiUnavailableError } from "@/Core/Foundations/Infrastructure/Errors/Specific/api-unavailable.error";
 import { withRetry } from "@/Core/Foundations/Infrastructure/Resilience/with-retry";
 import { withTimeout } from "@/Core/Foundations/Infrastructure/Resilience/with-timeout";
 import type { InfrastructureResult } from "@/Core/Foundations/Infrastructure/Results/infrastructure-result";
 import { auth } from "@/Lib/BetterAuth/Config/server";
-
-export interface SessionUser {
-  id: string;
-  email: string;
-  emailVerified: boolean;
-  name: string;
-  image?: string | null | undefined;
-  createdAt: Date;
-  updatedAt: Date;
-}
-
-export interface SessionData {
-  session: {
-    id: string;
-    userId: string;
-    expiresAt: Date;
-    token: string;
-    createdAt: Date;
-    updatedAt: Date;
-  };
-  user: SessionUser;
-}
-
-export type UserData = SessionUser;
+import { AUTH_INFRA_ERROR_CODES } from "../../Common/Constants/error-codes.constants";
+import type { SessionData, SessionUser, UserData } from "../../Common/Types";
 
 const TIMEOUT_MS = 10_000;
 const MAX_RETRIES = 3;
+const DEFAULT_SESSION_EXPIRY_MS = 7 * 24 * 60 * 60 * 1_000;
 
 @injectable()
 class BetterAuthService {
@@ -42,10 +22,13 @@ class BetterAuthService {
       () =>
         withTimeout(() => auth.api.signInEmail({ body: { email, password } }), TIMEOUT_MS, {
           systemComponent: "Network",
-          errorCode: "AUTH_FAILED",
+          errorCode: INFRASTRUCTURE_ERROR_CODES.API_TIMEOUT_ERROR,
         }),
       MAX_RETRIES,
-      { systemComponent: "Network", errorCode: "AUTH_RETRY_EXHAUSTED" },
+      {
+        systemComponent: "Network",
+        errorCode: AUTH_INFRA_ERROR_CODES.AUTH_RETRY_EXHAUSTED,
+      },
     );
 
     return result.match<InfrastructureResult<SessionData>>({
@@ -59,10 +42,13 @@ class BetterAuthService {
       () =>
         withTimeout(() => auth.api.signUpEmail({ body: { name, email, password } }), TIMEOUT_MS, {
           systemComponent: "Network",
-          errorCode: "AUTH_FAILED",
+          errorCode: AUTH_INFRA_ERROR_CODES.AUTH_API_TIMEOUT,
         }),
       MAX_RETRIES,
-      { systemComponent: "Network", errorCode: "AUTH_RETRY_EXHAUSTED" },
+      {
+        systemComponent: "Network",
+        errorCode: AUTH_INFRA_ERROR_CODES.AUTH_RETRY_EXHAUSTED,
+      },
     );
 
     return result.match<InfrastructureResult<UserData>>({
@@ -74,7 +60,7 @@ class BetterAuthService {
   async signOut(headers: Headers): Promise<InfrastructureResult<void>> {
     const result = await withTimeout(() => auth.api.signOut({ headers }), TIMEOUT_MS, {
       systemComponent: "Network",
-      errorCode: "SIGNOUT_FAILED",
+      errorCode: AUTH_INFRA_ERROR_CODES.AUTH_API_TIMEOUT,
     });
 
     return result.match<InfrastructureResult<void>>({
@@ -86,7 +72,7 @@ class BetterAuthService {
   async getSession(headers: Headers): Promise<InfrastructureResult<SessionData | null>> {
     const result = await withTimeout(() => auth.api.getSession({ headers }), TIMEOUT_MS, {
       systemComponent: "Network",
-      errorCode: "SESSION_FAILED",
+      errorCode: AUTH_INFRA_ERROR_CODES.AUTH_SESSION_FAILED,
     });
 
     return result.match<InfrastructureResult<SessionData | null>>({
@@ -100,7 +86,7 @@ class BetterAuthService {
       session: {
         id: user.id,
         userId: user.id,
-        expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+        expiresAt: new Date(Date.now() + DEFAULT_SESSION_EXPIRY_MS),
         token,
         createdAt: user.createdAt,
         updatedAt: user.updatedAt,
@@ -112,7 +98,7 @@ class BetterAuthService {
   private toInfrastructureError(error?: InfrastructureError): InfrastructureError {
     if (!error) {
       return new InfrastructureError({
-        code: "UNKNOWN_ERROR",
+        code: AUTH_INFRA_ERROR_CODES.AUTH_UNKNOWN_ERROR,
         message: "Unknown auth error",
         systemComponent: "Network",
       });
@@ -121,16 +107,16 @@ class BetterAuthService {
     const code = error.code;
     const message = error.message;
 
-    if (code === "AUTH_FAILED" || code === "TIMEOUT") {
+    if (
+      code === INFRASTRUCTURE_ERROR_CODES.API_TIMEOUT_ERROR ||
+      code === AUTH_INFRA_ERROR_CODES.AUTH_API_TIMEOUT ||
+      code === AUTH_INFRA_ERROR_CODES.AUTH_SESSION_FAILED
+    ) {
       return new ApiTimeoutError({ message, cause: error });
     }
 
-    if (code?.startsWith("5")) {
-      return new ApiUnavailableError({ message, cause: error, retryStrategy: "exponential" });
-    }
-
     return new InfrastructureError({
-      code: "UNKNOWN_ERROR",
+      code: AUTH_INFRA_ERROR_CODES.AUTH_UNKNOWN_ERROR,
       message,
       systemComponent: "Network",
       cause: error,

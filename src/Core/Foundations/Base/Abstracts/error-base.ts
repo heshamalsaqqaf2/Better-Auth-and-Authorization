@@ -2,6 +2,7 @@ import type { ErrorBase as ErrorBaseContract } from "@/Core/Kernel/Contracts/Bas
 import type { LayerType } from "@/Core/Kernel/Primitives/Enums/layer-type.enum";
 import type { Severity as SeverityType } from "@/Core/Kernel/Primitives/Enums/severity.enum";
 import { Severity } from "@/Core/Kernel/Primitives/Enums/severity.enum";
+import type { ErrorCode } from "@/Core/Kernel/Primitives/Types/error-code.type";
 
 export abstract class ErrorBase implements ErrorBaseContract {
   readonly timestamp: Date = new Date();
@@ -9,12 +10,12 @@ export abstract class ErrorBase implements ErrorBaseContract {
 
   constructor(
     readonly layer: LayerType,
-    readonly code: string,
+    readonly code: ErrorCode,
     readonly message: string,
     cause?: ErrorBaseContract,
   ) {
     if (cause !== undefined) {
-      (this as { cause: ErrorBaseContract }).cause = cause;
+      Object.defineProperty(this, "cause", { value: cause, writable: false, configurable: false });
     }
   }
 

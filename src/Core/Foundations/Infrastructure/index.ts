@@ -1,5 +1,6 @@
 export * from "./Contracts";
 export * from "./Errors";
 export * from "./Mappers";
-export * from "./Results";
 export * from "./Resilience";
+export * from "./Results";
+export * from "./Types";

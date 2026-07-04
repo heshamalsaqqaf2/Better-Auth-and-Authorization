@@ -1,6 +1,7 @@
 import type { ErrorBase as ErrorBaseContract } from "@/Core/Kernel/Contracts/Base/error-base.contract";
 import type { CorrelationId } from "@/Core/Kernel/Primitives/Types/correlation-id.type";
 import { ApplicationError } from "../application-error";
+import { APPLICATION_ERROR_CODES } from "../application-error-codes";
 
 export class CommandValidationError extends ApplicationError {
   readonly fieldErrors: Record<string, string[]>;
@@ -14,7 +15,7 @@ export class CommandValidationError extends ApplicationError {
   }) {
     const fieldCount = Object.keys(params.fieldErrors).length;
     const appErrorParams: ConstructorParameters<typeof ApplicationError>[0] = {
-      code: "COMMAND_VALIDATION_ERROR",
+      code: APPLICATION_ERROR_CODES.COMMAND_VALIDATION_ERROR,
       message: `Command validation failed with ${fieldCount} field error(s)`,
       operationName: params.operationName,
       correlationId: params.correlationId,

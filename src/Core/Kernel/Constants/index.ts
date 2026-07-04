@@ -1,2 +1,1 @@
-export { type ErrorCode, ErrorCodes } from "./error-codes.constants";
-export { type LayerName, LayerNames } from "./layer-names.constants";
+export { LAYER_NAMES, type LayerName } from "./layer-names.constants";

@@ -3,8 +3,8 @@ export {
   createCorrelationId,
   isCorrelationId,
 } from "./correlation-id.type";
-export type { ErrorCode as BrandedErrorCode } from "./error-code.type";
-export { createErrorCode, isErrorCode } from "./error-code.type";
+export type { ErrorCode } from "./error-code.type";
+export { createErrorCode, defineErrorCode, isErrorCode } from "./error-code.type";
 export {
   createOperationId,
   isOperationId,

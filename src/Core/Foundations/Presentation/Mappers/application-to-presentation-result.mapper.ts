@@ -1,6 +1,8 @@
+import { Severity } from "@/Core/Kernel/Primitives/Enums/severity.enum";
 import { createOperationId } from "@/Core/Kernel/Primitives/Types/operation-id.type";
 import type { ApplicationResult } from "../../Application/Results/application-result";
 import { createSystemError } from "../Errors/presentation-error";
+import { PRESENTATION_ERROR_CODES } from "../Errors/presentation-error-codes";
 import type { PresentationResult } from "../Results/presentation-result";
 import { failureResult, successResult } from "../Results/presentation-result";
 import { mapApplicationToPresentationError } from "./application-to-presentation-error.mapper";
@@ -24,6 +26,9 @@ export function mapApplicationToPresentationResult<T>(
     return failureResult(mappedError, operationId);
   } catch {
     const operationId = createOperationId(params.operationName);
-    return failureResult(createSystemError("MAPPER_ERROR", "An unexpected error occurred", "critical"), operationId);
+    return failureResult(
+      createSystemError(PRESENTATION_ERROR_CODES.CONFLICT, "An unexpected error occurred", Severity.CRITICAL),
+      operationId,
+    );
   }
 }

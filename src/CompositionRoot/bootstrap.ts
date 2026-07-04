@@ -4,14 +4,7 @@ import { AUTH_TOKENS, authContainerModule } from "@/Modules/Authentication/Compo
 
 let _container: Container | null = null;
 
-const VALIDATION_TOKENS: symbol[] = [
-  AUTH_TOKENS.BETTER_AUTH_SERVICE,
-  AUTH_TOKENS.SIGN_IN_USE_CASE,
-  AUTH_TOKENS.SIGN_UP_USE_CASE,
-  AUTH_TOKENS.SIGN_OUT_USE_CASE,
-  AUTH_TOKENS.GET_SESSION_QUERY,
-  AUTH_TOKENS.QUERY_AUTH_REPOSITORY,
-];
+const VALIDATION_TOKENS: symbol[] = [AUTH_TOKENS.BETTER_AUTH_SERVICE];
 
 function getOrCreateContainer(): Container {
   if (!_container) {

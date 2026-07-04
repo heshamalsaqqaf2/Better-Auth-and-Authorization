@@ -1,6 +1,7 @@
 import type { ErrorBase as ErrorBaseContract } from "@/Core/Kernel/Contracts/Base/error-base.contract";
-import type { InfrastructureRetryStrategy } from "../../Contracts/infrastructure-retry-strategy.type";
+import type { InfrastructureRetryStrategy } from "../../Types/infrastructure-retry-strategy.type";
 import { InfrastructureError } from "../infrastructure-error";
+import { INFRASTRUCTURE_ERROR_CODES } from "../infrastructure-error-codes";
 
 export class DatabaseConnectionError extends InfrastructureError {
   constructor(params: {
@@ -11,22 +12,14 @@ export class DatabaseConnectionError extends InfrastructureError {
     cause?: ErrorBaseContract;
   }) {
     const infraParams: ConstructorParameters<typeof InfrastructureError>[0] = {
-      code: "DATABASE_CONNECTION_ERROR",
+      code: INFRASTRUCTURE_ERROR_CODES.DATABASE_CONNECTION_ERROR,
       message: params.message ?? "Database connection failed",
       systemComponent: "Database",
     };
-    if (params.retryCount !== undefined) {
-      (infraParams as { retryCount: number }).retryCount = params.retryCount;
-    }
-    if (params.retryStrategy !== undefined) {
-      (infraParams as { retryStrategy: InfrastructureRetryStrategy }).retryStrategy = params.retryStrategy;
-    }
-    if (params.safeDetails !== undefined) {
-      (infraParams as { safeDetails: Record<string, unknown> }).safeDetails = params.safeDetails;
-    }
-    if (params.cause !== undefined) {
-      (infraParams as { cause: ErrorBaseContract }).cause = params.cause;
-    }
+    if (params.retryCount !== undefined) infraParams.retryCount = params.retryCount;
+    if (params.retryStrategy !== undefined) infraParams.retryStrategy = params.retryStrategy;
+    if (params.safeDetails !== undefined) infraParams.safeDetails = params.safeDetails;
+    if (params.cause !== undefined) infraParams.cause = params.cause;
     super(infraParams);
   }
 }

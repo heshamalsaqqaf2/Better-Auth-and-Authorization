@@ -1,9 +1,10 @@
 import { ErrorBase } from "@/Core/Foundations/Base/Abstracts/error-base";
 import type { ErrorBase as ErrorBaseContract } from "@/Core/Kernel/Contracts/Base/error-base.contract";
 import { LayerType } from "@/Core/Kernel/Primitives/Enums/layer-type.enum";
-import type { InfrastructureComponent } from "../Contracts/infrastructure-component.type";
+import type { ErrorCode } from "@/Core/Kernel/Primitives/Types/error-code.type";
 import type { InfrastructureErrorContract } from "../Contracts/infrastructure-error.contract";
-import type { InfrastructureRetryStrategy } from "../Contracts/infrastructure-retry-strategy.type";
+import type { InfrastructureComponent } from "../Types/infrastructure-component.type";
+import type { InfrastructureRetryStrategy } from "../Types/infrastructure-retry-strategy.type";
 
 export class InfrastructureError extends ErrorBase implements InfrastructureErrorContract {
   readonly systemComponent: InfrastructureComponent;
@@ -12,7 +13,7 @@ export class InfrastructureError extends ErrorBase implements InfrastructureErro
   readonly safeDetails?: Record<string, unknown>;
 
   constructor(params: {
-    code: string;
+    code: ErrorCode;
     message: string;
     systemComponent: InfrastructureComponent;
     retryCount?: number;

@@ -1,8 +1,9 @@
 import { LayerType } from "@/Core/Kernel/Primitives/Enums/layer-type.enum";
 import { Severity } from "@/Core/Kernel/Primitives/Enums/severity.enum";
+import { defineErrorCode, type ErrorCode } from "@/Core/Kernel/Primitives/Types/error-code.type";
 
 export interface ValidationError {
-  readonly code: string;
+  readonly code: ErrorCode;
   readonly message: string;
   readonly timestamp: Date;
   readonly layer: LayerType;
@@ -12,28 +13,49 @@ export interface ValidationError {
   toJSON(): Record<string, unknown>;
 }
 
-export function createValidationError(message: string): ValidationError {
+const DEFAULT_VALIDATION_CODE = defineErrorCode("VALIDATION_ERROR");
+const DEFAULT_LAYER = LayerType.DOMAIN;
+const DEFAULT_SEVERITY = Severity.ERROR;
+const DEFAULT_RECOVERABLE = false;
+
+export interface CreateValidationErrorOptions {
+  code?: ErrorCode;
+  layer?: LayerType;
+  severity?: Severity;
+  recoverable?: boolean;
+}
+
+export function createValidationError(message: string, options: CreateValidationErrorOptions = {}): ValidationError {
+  const {
+    code = DEFAULT_VALIDATION_CODE,
+    layer = DEFAULT_LAYER,
+    severity = DEFAULT_SEVERITY,
+    recoverable = DEFAULT_RECOVERABLE,
+  } = options;
   const timestamp = new Date();
-  return {
-    code: "VALIDATION_ERROR",
+
+  const error: ValidationError = {
+    code,
     message,
     timestamp,
-    layer: LayerType.DOMAIN,
+    layer,
+
     isRecoverable(): boolean {
-      return false;
+      return recoverable;
     },
     getSeverity(): Severity {
-      return Severity.ERROR;
+      return severity;
     },
     toJSON(): Record<string, unknown> {
       return {
-        code: "VALIDATION_ERROR",
-        message,
-        timestamp: timestamp.toISOString(),
-        layer: LayerType.DOMAIN,
-        severity: Severity.ERROR,
-        recoverable: false,
+        code: this.code,
+        message: this.message,
+        timestamp: this.timestamp.toISOString(),
+        layer: this.layer,
+        severity: this.getSeverity(),
+        recoverable: this.isRecoverable(),
       };
     },
   };
+  return Object.freeze(error);
 }

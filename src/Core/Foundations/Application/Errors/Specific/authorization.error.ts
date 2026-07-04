@@ -1,6 +1,7 @@
 import type { ErrorBase as ErrorBaseContract } from "@/Core/Kernel/Contracts/Base/error-base.contract";
 import type { CorrelationId } from "@/Core/Kernel/Primitives/Types/correlation-id.type";
 import { ApplicationError } from "../application-error";
+import { APPLICATION_ERROR_CODES } from "../application-error-codes";
 
 export class AuthorizationFailedError extends ApplicationError {
   readonly reason: string;
@@ -13,7 +14,7 @@ export class AuthorizationFailedError extends ApplicationError {
     cause?: ApplicationError;
   }) {
     const appErrorParams: ConstructorParameters<typeof ApplicationError>[0] = {
-      code: "AUTHORIZATION_FAILED",
+      code: APPLICATION_ERROR_CODES.AUTHORIZATION_ERROR,
       message: `Authorization failed: ${params.reason}`,
       operationName: params.operationName,
       correlationId: params.correlationId,

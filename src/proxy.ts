@@ -1,6 +1,5 @@
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
-import { runWithStore } from "@/Lib/RequestContext";
 
 export default async function proxy(request: NextRequest): Promise<NextResponse | undefined> {
   const correlationId = crypto.randomUUID();
@@ -15,5 +14,5 @@ export default async function proxy(request: NextRequest): Promise<NextResponse 
   });
   response.headers.set("x-correlation-id", correlationId);
 
-  return runWithStore({ correlationId, startTime: Date.now() }, async () => response);
+  return response;
 }

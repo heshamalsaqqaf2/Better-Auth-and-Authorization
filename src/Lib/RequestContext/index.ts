@@ -1,3 +1,4 @@
+export { withRequestContext } from "./init";
 export type { RequestContextStore } from "./store";
 export {
   getCorrelationId,
