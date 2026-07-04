@@ -1,4 +1,5 @@
 export const AUTH_TOKENS = {
+  BETTER_AUTH_INSTANCE: Symbol.for("Auth.BetterAuthInstance"),
   BETTER_AUTH_SERVICE: Symbol.for("Auth.BetterAuthService"),
   SIGN_IN_USE_CASE: Symbol.for("Auth.SignInUseCase"),
   SIGN_UP_USE_CASE: Symbol.for("Auth.SignUpUseCase"),

@@ -1,4 +1,4 @@
-import { injectable } from "inversify";
+import { inject, injectable } from "inversify";
 
 import { err, ok } from "@/Core/Foundations/Base/Abstracts/result-base";
 import { InfrastructureError } from "@/Core/Foundations/Infrastructure/Errors/infrastructure-error";
@@ -7,7 +7,8 @@ import { ApiTimeoutError } from "@/Core/Foundations/Infrastructure/Errors/Specif
 import { withRetry } from "@/Core/Foundations/Infrastructure/Resilience/with-retry";
 import { withTimeout } from "@/Core/Foundations/Infrastructure/Resilience/with-timeout";
 import type { InfrastructureResult } from "@/Core/Foundations/Infrastructure/Results/infrastructure-result";
-import { auth } from "@/Lib/BetterAuth/Config/server";
+import type { AuthServer } from "@/Lib/BetterAuth/Config/server";
+import { AUTH_TOKENS } from "@/Modules/Authentication/Composition/tokens";
 import { AUTH_INFRA_ERROR_CODES } from "../../Common/Constants/error-codes.constants";
 import type { SessionData, SessionUser, UserData } from "../../Common/Types";
 
@@ -17,10 +18,12 @@ const DEFAULT_SESSION_EXPIRY_MS = 7 * 24 * 60 * 60 * 1_000;
 
 @injectable()
 class BetterAuthService {
+  constructor(@inject(AUTH_TOKENS.BETTER_AUTH_INSTANCE) private readonly authInstance: AuthServer) {}
+
   async signIn(email: string, password: string): Promise<InfrastructureResult<SessionData>> {
     const result = await withRetry(
       () =>
-        withTimeout(() => auth.api.signInEmail({ body: { email, password } }), TIMEOUT_MS, {
+        withTimeout(() => this.authInstance.api.signInEmail({ body: { email, password } }), TIMEOUT_MS, {
           systemComponent: "Network",
           errorCode: INFRASTRUCTURE_ERROR_CODES.API_TIMEOUT_ERROR,
         }),
@@ -40,7 +43,7 @@ class BetterAuthService {
   async signUp(name: string, email: string, password: string): Promise<InfrastructureResult<UserData>> {
     const result = await withRetry(
       () =>
-        withTimeout(() => auth.api.signUpEmail({ body: { name, email, password } }), TIMEOUT_MS, {
+        withTimeout(() => this.authInstance.api.signUpEmail({ body: { name, email, password } }), TIMEOUT_MS, {
           systemComponent: "Network",
           errorCode: AUTH_INFRA_ERROR_CODES.AUTH_API_TIMEOUT,
         }),
@@ -58,7 +61,7 @@ class BetterAuthService {
   }
 
   async signOut(headers: Headers): Promise<InfrastructureResult<void>> {
-    const result = await withTimeout(() => auth.api.signOut({ headers }), TIMEOUT_MS, {
+    const result = await withTimeout(() => this.authInstance.api.signOut({ headers }), TIMEOUT_MS, {
       systemComponent: "Network",
       errorCode: AUTH_INFRA_ERROR_CODES.AUTH_API_TIMEOUT,
     });
@@ -70,7 +73,7 @@ class BetterAuthService {
   }
 
   async getSession(headers: Headers): Promise<InfrastructureResult<SessionData | null>> {
-    const result = await withTimeout(() => auth.api.getSession({ headers }), TIMEOUT_MS, {
+    const result = await withTimeout(() => this.authInstance.api.getSession({ headers }), TIMEOUT_MS, {
       systemComponent: "Network",
       errorCode: AUTH_INFRA_ERROR_CODES.AUTH_SESSION_FAILED,
     });

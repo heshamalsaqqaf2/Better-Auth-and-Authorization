@@ -7,13 +7,7 @@
   },
   "files": {
     "ignoreUnknown": true,
-    "includes": [
-      "**",
-      "!node_modules",
-      "!.next",
-      "!dist",
-      "!build"
-    ]
+    "includes": ["**", "!node_modules", "!.next", "!dist", "!build"]
   },
   "formatter": {
     "enabled": true,
@@ -26,6 +20,9 @@
     "enabled": true,
     "rules": {
       "recommended": true,
+      "correctness": {
+        "noUnusedFunctionParameters": "off"
+      },
       "suspicious": {
         "noUnknownAtRules": "off"
       },
@@ -41,6 +38,11 @@
     "domains": {
       "next": "recommended",
       "react": "recommended"
+    }
+  },
+  "javascript": {
+    "parser": {
+      "unsafeParameterDecoratorsEnabled": true
     }
   },
   "overrides": [
