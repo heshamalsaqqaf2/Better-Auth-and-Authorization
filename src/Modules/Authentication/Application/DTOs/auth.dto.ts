@@ -30,7 +30,7 @@ export interface SignOutDTO {
 }
 
 export interface SessionCheckDTO {
-  headers: Headers;
+  headers?: Headers | undefined;
   user: UserDTO | null;
   session: SessionDTO | null;
 }
