@@ -215,8 +215,8 @@ Plans:
 **Wave 2 *(Domain auth types ✅)* — 08-04**
 - [x] 08-04-PLAN.md — **[REWRITTEN]** Domain layer: repository interfaces, auth domain errors, aggregate types
 
-**Wave 3 *(Application UseCases 🔄)* — 08-05**
-- [ ] 08-05-PLAN.md — **[REWRITTEN]** Application layer: UseCases with @injectable() + @inject(), DTOs, mappers
+**Wave 3 *(Application UseCases ✅)* — 08-05**
+- [x] 08-05-PLAN.md — **[REWRITTEN]** Application layer: UseCases with @injectable() + @inject(), DTOs, mappers
 
 **Wave 4 *(Infrastructure repos 🔄)* — 08-06**
 - [ ] 08-06-PLAN.md — **[REWRITTEN]** Infrastructure layer: Drizzle repositories with @injectable(), DB mappers

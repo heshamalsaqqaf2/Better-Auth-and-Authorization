@@ -10,11 +10,11 @@ See: .planning/PROJECT.md (updated 2026-06-07)
 ## Current Position
 
 Phase: 8 of 8 (Module Integration & Server Actions)
-Plan: 4/9 executed (08-01 ✅, 08-02 ✅, 08-03 ✅, 08-04 ✅), 5 planned (08-05 → 08-09 across 5 waves)
-Status: ◐ In Progress — Wave 2 complete (08-04: Domain auth types). Ready for Wave 3 (08-05).
-Last activity: 2026-06-25 — 08-04 executed with AuthQueryRepository, 4 domain errors, aggregates, and AUTH_ERROR_CODES constants
+Plan: 5/9 executed (08-01 ✅, 08-02 ✅, 08-03 ✅, 08-04 ✅, 08-05 ✅), 4 planned (08-06 → 08-09 across 4 waves)
+Status: ◐ In Progress — Wave 3 complete (08-05: Application UseCases). Ready for Wave 4 (08-06).
+Last activity: 2026-07-06 — 08-05 executed with SignInUseCase, SignUpUseCase, SignOutUseCase, GetSessionQuery, DTOs, and Application mappers
 
-Progress: [████████████████████] 100% (Phase 1) — [████████████████████] 100% (Phase 2) — [████████████████████] 100% (Phase 3) — [████████████████████████] 100% (Phase 4) — [████████████████████████] 100% (Phase 5) — [████████████████████] 100% (Phase 6) — [████████████████████] 100% (Phase 7) — [█████████░░░░░░░░░░░░░] 44% (Phase 8)
+Progress: [████████████████████] 100% (Phase 1) — [████████████████████] 100% (Phase 2) — [████████████████████] 100% (Phase 3) — [████████████████████████] 100% (Phase 4) — [████████████████████████] 100% (Phase 5) — [████████████████████] 100% (Phase 6) — [████████████████████] 100% (Phase 7) — [███████████░░░░░░░░░░] 56% (Phase 8)
 
 ## Performance Metrics
 
@@ -122,6 +122,11 @@ Recent decisions affecting current work:
 - [Phase 8] [context]: Request scoping deferred — not needed for Phase 8 (D-18)
 - [Phase 8] [context]: Remove old Bindings/ and Containers/ directories (D-20)
 - [Phase 8] [context]: Rewrite plans 08-01, 08-04 through 08-09 — 08-01 reopened to include InversifyJS migration (D-21)
+- [Phase 8] [executed 08-05]: 4 UseCases created (SignIn, SignUp, SignOut, GetSession) — all inject only BetterAuthService per Phase 8 design (Better Auth handles DB internally)
+- [Phase 8] [executed 08-05]: DTOs defined with client-safe shapes (no sensitive fields); SignOutDTO/SessionCheckDTO include headers for Better Auth API calls
+- [Phase 8] [executed 08-05]: 3 pure-function mappers created (mapUserAggregateToDTO, mapSessionAggregateToDTO, mapAuthResultToResponse)
+- [Phase 8] [executed 08-05]: registration.ts updated with all 4 UseCase bindings (transient scope)
+- [Phase 8] [executed 08-05]: All 12 implementation files pass npx tsc --noEmit
 
 ### Blockers/Concerns
 
@@ -137,14 +142,14 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-06-25
-Stopped at: Phase 8 — Wave 2 complete (08-04: Domain auth types). Ready for Wave 3.
+Last session: 2026-07-06
+Stopped at: Phase 8 — Wave 3 complete (08-05: Application UseCases). Ready for Wave 4 (08-06).
 Resume file: `.planning/phases/08-module-integration-server-actions/08-CONTEXT.md`
-Next command: `/gsd-execute-phase 08 --wave 3` — Execute Wave 3: 08-05 (Application UseCases)
+Next command: `/gsd-execute-phase 08 --wave 4` — Execute Wave 4: 08-06 (Infrastructure Drizzle repositories)
 
-## Phase 8 Plans (2026-06-25 — 08-04 executed)
+## Phase 8 Plans (2026-07-06 — 08-05 executed)
 
-4 plans complete (08-01 ✅, 08-02 ✅, 08-03 ✅, 08-04 ✅), 5 planned (08-05→08-09):
+5 plans complete (08-01 ✅, 08-02 ✅, 08-03 ✅, 08-04 ✅, 08-05 ✅), 4 planned (08-06→08-09):
 
 **Wave 1 (Plumbing ✅):**
 - [x] 08-01: Migrate to InversifyJS + Hybrid 4+6
@@ -152,8 +157,8 @@ Next command: `/gsd-execute-phase 08 --wave 3` — Execute Wave 3: 08-05 (Applic
 **Wave 2 (Domain auth types ✅):**
 - [x] 08-04: **[REWRITTEN]** Domain layer — repository interfaces (interface-only, no InversifyJS), auth domain errors, aggregates
 
-**Wave 3 (Application UseCases):**
-- [ ] 08-05: **[REWRITTEN]** Application layer — UseCases with @injectable() + @inject(), DTOs, mappers
+**Wave 3 (Application UseCases ✅):**
+- [x] 08-05: **[REWRITTEN]** Application layer — UseCases with @injectable() + @inject(), DTOs, mappers
 
 **Wave 4 (Infrastructure repos):**
 - [ ] 08-06: **[REWRITTEN]** Infrastructure layer — Drizzle repositories with @injectable(), DB mappers
