@@ -8,26 +8,26 @@ import { mapInfrastructureToAppError } from "@/Core/Foundations/Infrastructure/M
 import type { ErrorBase as ErrorBaseContract } from "@/Core/Kernel/Contracts/Base/error-base.contract";
 import { AUTH_TOKENS } from "@/Modules/Authentication/Composition/tokens";
 import type { BetterAuthService } from "@/Modules/Authentication/Infrastructure/Services";
-import type { SignOutDTO } from "../../DTOs/auth.dto";
+import type { SignOutCommandDTO } from "../../DTOs/auth.dto";
 
 @injectable()
-export class SignOutUseCase implements ICommandHandler<SignOutDTO, void> {
+export class SignOutUseCase implements ICommandHandler<SignOutCommandDTO, void> {
   constructor(@inject(AUTH_TOKENS.BETTER_AUTH_SERVICE) private readonly authService: BetterAuthService) {}
 
-  async execute(dto: SignOutDTO, ctx: RequestContext): Promise<ApplicationResult<void>> {
+  async execute(dto: SignOutCommandDTO, ctx: RequestContext): Promise<ApplicationResult<void>> {
     try {
       const result = await this.authService.signOut(dto.headers);
 
-      if (result.isFailure) {
-        return err(
-          mapInfrastructureToAppError(result.error!, {
-            operationName: "SignOut",
-            correlationId: ctx.correlationId,
-          }),
-        );
-      }
-
-      return ok(undefined);
+      return result.match<ApplicationResult<void>>({
+        onSuccess: () => ok(undefined),
+        onFailure: (error) =>
+          err(
+            mapInfrastructureToAppError(error, {
+              operationName: "SignOut",
+              correlationId: ctx.correlationId,
+            }),
+          ),
+      });
     } catch (error) {
       return err(
         new UseCaseExecutionError({

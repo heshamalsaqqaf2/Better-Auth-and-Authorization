@@ -5,10 +5,7 @@
 
 import { drizzle, type NodePgDatabase } from "drizzle-orm/node-postgres";
 import { Pool } from "pg";
-import {
-  getConnectionPoolConfig,
-  validateDatabaseUrl,
-} from "../Database/connection.pool";
+import { getConnectionPoolConfig, validateDatabaseUrl } from "../Database/connection.pool";
 import * as schema from "../Database/Schema";
 
 // 🔒 Singleton instance
@@ -51,9 +48,12 @@ export const getDatabaseClient = (): NodePgDatabase<typeof schema> => {
  */
 export const getConnectionPool = (): Pool => {
   if (!poolInstance) {
-    getDatabaseClient(); // Initialize if not already done
+    getDatabaseClient();
   }
-  return poolInstance!;
+  if (!poolInstance) {
+    throw new Error("Database pool failed to initialize — getDatabaseClient() did not set poolInstance");
+  }
+  return poolInstance;
 };
 
 /**

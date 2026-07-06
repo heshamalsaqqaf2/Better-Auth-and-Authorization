@@ -1,9 +1,10 @@
 export type {
   AuthResponseDTO,
-  SessionCheckDTO,
+  GetSessionQueryDTO,
   SessionDTO,
-  SignInDTO,
-  SignOutDTO,
-  SignUpDTO,
+  SessionResponseDTO,
+  SignInCommandDTO,
+  SignOutCommandDTO,
+  SignUpCommandDTO,
   UserDTO,
 } from "./auth.dto";

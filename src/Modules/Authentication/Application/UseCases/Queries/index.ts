@@ -1,1 +1,1 @@
-export { GetSessionQuery } from "./get-session.query";
+export { GetSessionQuery } from "./get-session.use-case";

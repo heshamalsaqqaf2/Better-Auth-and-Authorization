@@ -8,36 +8,36 @@ import { mapInfrastructureToAppError } from "@/Core/Foundations/Infrastructure/M
 import type { ErrorBase as ErrorBaseContract } from "@/Core/Kernel/Contracts/Base/error-base.contract";
 import { AUTH_TOKENS } from "@/Modules/Authentication/Composition/tokens";
 import type { BetterAuthService } from "@/Modules/Authentication/Infrastructure/Services";
-import type { AuthResponseDTO, SignUpDTO } from "../../DTOs/auth.dto";
+import type { AuthResponseDTO, SignUpCommandDTO } from "../../DTOs/auth.dto";
 
 @injectable()
-export class SignUpUseCase implements ICommandHandler<SignUpDTO, AuthResponseDTO> {
+export class SignUpUseCase implements ICommandHandler<SignUpCommandDTO, AuthResponseDTO> {
   constructor(@inject(AUTH_TOKENS.BETTER_AUTH_SERVICE) private readonly authService: BetterAuthService) {}
 
-  async execute(dto: SignUpDTO, ctx: RequestContext): Promise<ApplicationResult<AuthResponseDTO>> {
+  async execute(dto: SignUpCommandDTO, ctx: RequestContext): Promise<ApplicationResult<AuthResponseDTO>> {
     try {
       const result = await this.authService.signUp(dto.name, dto.email, dto.password);
 
-      if (result.isFailure) {
-        return err(
-          mapInfrastructureToAppError(result.error!, {
-            operationName: "SignUp",
-            correlationId: ctx.correlationId,
+      return result.match<ApplicationResult<AuthResponseDTO>>({
+        onSuccess: (data) =>
+          ok({
+            user: {
+              id: data.id,
+              name: data.name,
+              email: data.email,
+            },
+            session: {
+              id: "",
+              expiresAt: new Date().toISOString(),
+            },
           }),
-        );
-      }
-
-      // Sign-up returns user data; session is handled by redirect + getSession
-      return ok({
-        user: {
-          id: result.data!.id,
-          name: result.data!.name,
-          email: result.data!.email,
-        },
-        session: {
-          id: "",
-          expiresAt: new Date().toISOString(),
-        },
+        onFailure: (error) =>
+          err(
+            mapInfrastructureToAppError(error, {
+              operationName: "SignUp",
+              correlationId: ctx.correlationId,
+            }),
+          ),
       });
     } catch (error) {
       return err(

@@ -8,40 +8,40 @@ import { mapInfrastructureToAppError } from "@/Core/Foundations/Infrastructure/M
 import type { ErrorBase as ErrorBaseContract } from "@/Core/Kernel/Contracts/Base/error-base.contract";
 import { AUTH_TOKENS } from "@/Modules/Authentication/Composition/tokens";
 import type { BetterAuthService } from "@/Modules/Authentication/Infrastructure/Services";
-import type { SessionCheckDTO } from "../../DTOs/auth.dto";
+import type { GetSessionQueryDTO, SessionResponseDTO } from "../../DTOs/auth.dto";
 
 @injectable()
-export class GetSessionQuery implements IQueryHandler<SessionCheckDTO, SessionCheckDTO> {
+export class GetSessionQuery implements IQueryHandler<GetSessionQueryDTO, SessionResponseDTO> {
   constructor(@inject(AUTH_TOKENS.BETTER_AUTH_SERVICE) private readonly authService: BetterAuthService) {}
 
-  async execute(dto: SessionCheckDTO, ctx: RequestContext): Promise<ApplicationResult<SessionCheckDTO>> {
+  async execute(dto: GetSessionQueryDTO, ctx: RequestContext): Promise<ApplicationResult<SessionResponseDTO>> {
     try {
-      const result = await this.authService.getSession(dto.headers!);
+      const result = await this.authService.getSession(dto.headers);
 
-      if (result.isFailure) {
-        return err(
-          mapInfrastructureToAppError(result.error!, {
-            operationName: "GetSession",
-            correlationId: ctx.correlationId,
-          }),
-        );
-      }
-
-      const sessionData = result.data!;
-      if (!sessionData) {
-        return ok({ user: null, session: null });
-      }
-
-      return ok({
-        user: {
-          id: sessionData.user.id,
-          name: sessionData.user.name,
-          email: sessionData.user.email,
+      return result.match<ApplicationResult<SessionResponseDTO>>({
+        onSuccess: (sessionData) => {
+          if (!sessionData) {
+            return ok({ user: null, session: null });
+          }
+          return ok({
+            user: {
+              id: sessionData.user.id,
+              name: sessionData.user.name,
+              email: sessionData.user.email,
+            },
+            session: {
+              id: sessionData.session.id,
+              expiresAt: sessionData.session.expiresAt.toISOString(),
+            },
+          });
         },
-        session: {
-          id: sessionData.session.id,
-          expiresAt: sessionData.session.expiresAt.toISOString(),
-        },
+        onFailure: (error) =>
+          err(
+            mapInfrastructureToAppError(error, {
+              operationName: "GetSession",
+              correlationId: ctx.correlationId,
+            }),
+          ),
       });
     } catch (error) {
       return err(

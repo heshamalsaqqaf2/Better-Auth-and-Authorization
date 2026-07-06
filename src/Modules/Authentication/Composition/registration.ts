@@ -1,9 +1,9 @@
 import { ContainerModule } from "inversify";
 import { auth } from "@/Lib/BetterAuth/Config/server";
-import { SignInUseCase } from "@/Modules/Authentication/Application/UseCases/Commands/sign-in.use-case";
-import { SignOutUseCase } from "@/Modules/Authentication/Application/UseCases/Commands/sign-out.use-case";
-import { SignUpUseCase } from "@/Modules/Authentication/Application/UseCases/Commands/sign-up.use-case";
-import { GetSessionQuery } from "@/Modules/Authentication/Application/UseCases/Queries/get-session.query";
+import { SignInUseCase } from "@/Modules/Authentication/Application/UseCases/Handlers/sign-in.use-case";
+import { SignOutUseCase } from "@/Modules/Authentication/Application/UseCases/Handlers/sign-out.use-case";
+import { SignUpUseCase } from "@/Modules/Authentication/Application/UseCases/Handlers/sign-up.use-case";
+import { GetSessionQuery } from "@/Modules/Authentication/Application/UseCases/Queries/get-session.use-case";
 import { BetterAuthService } from "@/Modules/Authentication/Infrastructure/Services";
 import { AUTH_TOKENS } from "./tokens";
 
