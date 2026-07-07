@@ -1,13 +1,4 @@
-// ==== Commands (Input) ====
-export interface SignInCommandDTO {
-  email: string;
-  password: string;
-}
-export interface SignUpCommandDTO {
-  name: string;
-  email: string;
-  password: string;
-}
+export type { SignInCommandDTO, SignUpCommandDTO } from "../Validators";
 
 // ==== Response (Output) ====
 export interface UserDTO {

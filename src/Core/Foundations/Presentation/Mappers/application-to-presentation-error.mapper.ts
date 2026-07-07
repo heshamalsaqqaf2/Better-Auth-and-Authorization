@@ -1,14 +1,8 @@
+import type { ApplicationError } from "@/Core/Foundations/Application/Errors/application-error";
+import { CommandValidationError } from "@/Core/Foundations/Application/Errors/Specific/command-validation.error";
+import { QueryValidationError } from "@/Core/Foundations/Application/Errors/Specific/query-validation.error";
 import { Severity } from "@/Core/Kernel/Primitives/Enums/severity.enum";
-import type { ApplicationError } from "../../Application/Errors/application-error";
-import { APPLICATION_ERROR_CODES } from "../../Application/Errors/application-error-codes";
-import { AuthorizationFailedError } from "../../Application/Errors/Specific/authorization.error";
-import { CommandValidationError } from "../../Application/Errors/Specific/command-validation.error";
-import {
-  createAuthorizationError,
-  createNotFoundError,
-  createSystemError,
-  createValidationError,
-} from "../Errors/presentation-error";
+import { createAuthorizationError, createSystemError, createValidationError } from "../Errors/presentation-error";
 import type { PresentationError } from "../Errors/presentation-error.types";
 
 function autoUserMessage(message: string): string {
@@ -51,16 +45,8 @@ export function mapApplicationToPresentationError(
   appError: ApplicationError,
   options?: { userMessageOverrides?: Record<string, string> },
 ): PresentationError {
-  if (appError instanceof CommandValidationError) {
+  if (appError instanceof CommandValidationError || appError instanceof QueryValidationError) {
     return createValidationError(appError.code, appError.fieldErrors);
-  }
-
-  if (appError instanceof AuthorizationFailedError) {
-    return createAuthorizationError(appError.code, getUserMessage(appError, options));
-  }
-
-  if (appError.code === APPLICATION_ERROR_CODES.NOT_FOUND) {
-    return createNotFoundError(appError.code, getUserMessage(appError, options));
   }
 
   if (hasFieldErrors(appError)) {

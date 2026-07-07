@@ -3,19 +3,20 @@ import type { CorrelationId } from "@/Core/Kernel/Primitives/Types/correlation-i
 import { ApplicationError } from "../application-error";
 import { APPLICATION_ERROR_CODES } from "../application-error-codes";
 
-export class AuthorizationFailedError extends ApplicationError {
-  readonly reason: string;
+export class QueryValidationError extends ApplicationError {
+  readonly fieldErrors: Record<string, string[]>;
 
   constructor(params: {
     operationName: string;
     correlationId: CorrelationId;
     userId?: string;
-    reason: string;
+    fieldErrors: Record<string, string[]>;
     cause?: ApplicationError;
   }) {
+    const fieldCount = Object.keys(params.fieldErrors).length;
     const appErrorParams: ConstructorParameters<typeof ApplicationError>[0] = {
-      code: APPLICATION_ERROR_CODES.AUTHORIZATION_ERROR,
-      message: `Authorization failed: ${params.reason}`,
+      code: APPLICATION_ERROR_CODES.QUERY_VALIDATION_ERROR,
+      message: `Query validation failed with ${fieldCount} field error(s)`,
       operationName: params.operationName,
       correlationId: params.correlationId,
     };
@@ -26,7 +27,7 @@ export class AuthorizationFailedError extends ApplicationError {
       (appErrorParams as { cause: ErrorBaseContract }).cause = params.cause;
     }
     super(appErrorParams);
-    this.reason = params.reason;
+    this.fieldErrors = params.fieldErrors;
   }
 
   override isRecoverable(): boolean {

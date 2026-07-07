@@ -1,7 +1,9 @@
 import { inject, injectable } from "inversify";
 import type { ICommandHandler } from "@/Core/Foundations/Application/Contracts/command-handler.contract";
 import type { RequestContext } from "@/Core/Foundations/Application/Contracts/request-context.contract";
+import { CommandValidationError } from "@/Core/Foundations/Application/Errors/Specific/command-validation.error";
 import { UseCaseExecutionError } from "@/Core/Foundations/Application/Errors/Specific/use-case-execution.error";
+import { formatZodErrors } from "@/Core/Foundations/Application/Helpers/validation.helper";
 import type { ApplicationResult } from "@/Core/Foundations/Application/Results/application-result";
 import { err, ok } from "@/Core/Foundations/Base/Abstracts/result-base";
 import { mapInfrastructureToAppError } from "@/Core/Foundations/Infrastructure/Mappers/infrastructure-to-application-error.mapper";
@@ -9,14 +11,26 @@ import type { ErrorBase as ErrorBaseContract } from "@/Core/Kernel/Contracts/Bas
 import { AUTH_TOKENS } from "@/Modules/Authentication/Composition/tokens";
 import type { BetterAuthService } from "@/Modules/Authentication/Infrastructure/Services";
 import type { AuthResponseDTO, SignUpCommandDTO } from "../../DTOs/auth.dto";
+import { SignUpSchema } from "../../Validators";
 
 @injectable()
 export class SignUpUseCase implements ICommandHandler<SignUpCommandDTO, AuthResponseDTO> {
   constructor(@inject(AUTH_TOKENS.BETTER_AUTH_SERVICE) private readonly authService: BetterAuthService) {}
 
   async execute(dto: SignUpCommandDTO, ctx: RequestContext): Promise<ApplicationResult<AuthResponseDTO>> {
+    const parsed = SignUpSchema.safeParse(dto);
+    if (!parsed.success) {
+      return err(
+        new CommandValidationError({
+          operationName: "SignUp",
+          correlationId: ctx.correlationId,
+          fieldErrors: formatZodErrors(parsed.error),
+        }),
+      );
+    }
+
     try {
-      const result = await this.authService.signUp(dto.name, dto.email, dto.password);
+      const result = await this.authService.signUp(parsed.data.name, parsed.data.email, parsed.data.password);
 
       return result.match<ApplicationResult<AuthResponseDTO>>({
         onSuccess: (data) =>

@@ -7,10 +7,12 @@ export interface RequestContextStore {
 
 const als = new AsyncLocalStorage<RequestContextStore>();
 
+// Provides a reading mechanism
 export function getCorrelationId(): CorrelationId | undefined {
   return als.getStore()?.correlationId;
 }
 
+// Provides a writing mechanism
 export function runWithStore<T>(store: RequestContextStore, fn: () => Promise<T>): Promise<T> {
   return als.run(store, fn);
 }

@@ -1,6 +1,6 @@
+import type { ApplicationResult } from "@/Core/Foundations/Application/Results/application-result";
 import { Severity } from "@/Core/Kernel/Primitives/Enums/severity.enum";
 import { createOperationId } from "@/Core/Kernel/Primitives/Types/operation-id.type";
-import type { ApplicationResult } from "../../Application/Results/application-result";
 import { createSystemError } from "../Errors/presentation-error";
 import { PRESENTATION_ERROR_CODES } from "../Errors/presentation-error-codes";
 import type { PresentationResult } from "../Results/presentation-result";
