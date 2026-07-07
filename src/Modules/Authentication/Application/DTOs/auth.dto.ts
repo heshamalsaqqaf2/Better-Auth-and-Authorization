@@ -8,14 +8,8 @@ export interface SignUpCommandDTO {
   email: string;
   password: string;
 }
-export interface SignOutCommandDTO {
-  headers: Headers;
-}
-// ==== Queries (Input) ====
-export interface GetSessionQueryDTO {
-  headers: Headers;
-}
-// ==== Responses (Output) ====
+
+// ==== Response (Output) ====
 export interface UserDTO {
   id: string;
   name: string;

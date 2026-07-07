@@ -1,5 +1,6 @@
 import { ContainerModule } from "inversify";
 import { auth } from "@/Lib/BetterAuth/Config/server";
+import { AsyncLocalHeadersProvider } from "@/Lib/RequestHeaders";
 import { SignInUseCase } from "@/Modules/Authentication/Application/UseCases/Handlers/sign-in.use-case";
 import { SignOutUseCase } from "@/Modules/Authentication/Application/UseCases/Handlers/sign-out.use-case";
 import { SignUpUseCase } from "@/Modules/Authentication/Application/UseCases/Handlers/sign-up.use-case";
@@ -9,6 +10,7 @@ import { AUTH_TOKENS } from "./tokens";
 
 export const authContainerModule = new ContainerModule(({ bind }) => {
   bind(AUTH_TOKENS.BETTER_AUTH_INSTANCE).toConstantValue(auth);
+  bind(AUTH_TOKENS.HEADERS_PROVIDER).to(AsyncLocalHeadersProvider).inSingletonScope();
   bind(AUTH_TOKENS.BETTER_AUTH_SERVICE).to(BetterAuthService).inSingletonScope();
 
   // UseCases — transient default scope (no .inSingletonScope()) per D-17

@@ -8,15 +8,14 @@ import { mapInfrastructureToAppError } from "@/Core/Foundations/Infrastructure/M
 import type { ErrorBase as ErrorBaseContract } from "@/Core/Kernel/Contracts/Base/error-base.contract";
 import { AUTH_TOKENS } from "@/Modules/Authentication/Composition/tokens";
 import type { BetterAuthService } from "@/Modules/Authentication/Infrastructure/Services";
-import type { SignOutCommandDTO } from "../../DTOs/auth.dto";
 
 @injectable()
-export class SignOutUseCase implements ICommandHandler<SignOutCommandDTO, void> {
+export class SignOutUseCase implements ICommandHandler<undefined, void> {
   constructor(@inject(AUTH_TOKENS.BETTER_AUTH_SERVICE) private readonly authService: BetterAuthService) {}
 
-  async execute(dto: SignOutCommandDTO, ctx: RequestContext): Promise<ApplicationResult<void>> {
+  async execute(_dto: undefined, ctx: RequestContext): Promise<ApplicationResult<void>> {
     try {
-      const result = await this.authService.signOut(dto.headers);
+      const result = await this.authService.signOut();
 
       return result.match<ApplicationResult<void>>({
         onSuccess: () => ok(undefined),

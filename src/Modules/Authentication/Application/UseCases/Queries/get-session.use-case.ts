@@ -8,15 +8,15 @@ import { mapInfrastructureToAppError } from "@/Core/Foundations/Infrastructure/M
 import type { ErrorBase as ErrorBaseContract } from "@/Core/Kernel/Contracts/Base/error-base.contract";
 import { AUTH_TOKENS } from "@/Modules/Authentication/Composition/tokens";
 import type { BetterAuthService } from "@/Modules/Authentication/Infrastructure/Services";
-import type { GetSessionQueryDTO, SessionResponseDTO } from "../../DTOs/auth.dto";
+import type { SessionResponseDTO } from "../../DTOs/auth.dto";
 
 @injectable()
-export class GetSessionQuery implements IQueryHandler<GetSessionQueryDTO, SessionResponseDTO> {
+export class GetSessionQuery implements IQueryHandler<undefined, SessionResponseDTO> {
   constructor(@inject(AUTH_TOKENS.BETTER_AUTH_SERVICE) private readonly authService: BetterAuthService) {}
 
-  async execute(dto: GetSessionQueryDTO, ctx: RequestContext): Promise<ApplicationResult<SessionResponseDTO>> {
+  async execute(_dto: undefined, ctx: RequestContext): Promise<ApplicationResult<SessionResponseDTO>> {
     try {
-      const result = await this.authService.getSession(dto.headers);
+      const result = await this.authService.getSession();
 
       return result.match<ApplicationResult<SessionResponseDTO>>({
         onSuccess: (sessionData) => {

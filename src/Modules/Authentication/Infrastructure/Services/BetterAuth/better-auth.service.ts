@@ -1,6 +1,7 @@
 import { inject, injectable } from "inversify";
 
 import { err, ok } from "@/Core/Foundations/Base/Abstracts/result-base";
+import type { HeadersProvider } from "@/Core/Foundations/Infrastructure/Contracts/headers-provider.contract";
 import { InfrastructureError } from "@/Core/Foundations/Infrastructure/Errors/infrastructure-error";
 import { INFRASTRUCTURE_ERROR_CODES } from "@/Core/Foundations/Infrastructure/Errors/infrastructure-error-codes";
 import { ApiTimeoutError } from "@/Core/Foundations/Infrastructure/Errors/Specific/api-timeout.error";
@@ -18,7 +19,10 @@ const DEFAULT_SESSION_EXPIRY_MS = 7 * 24 * 60 * 60 * 1_000;
 
 @injectable()
 class BetterAuthService {
-  constructor(@inject(AUTH_TOKENS.BETTER_AUTH_INSTANCE) private readonly authInstance: AuthServer) {}
+  constructor(
+    @inject(AUTH_TOKENS.BETTER_AUTH_INSTANCE) private readonly authInstance: AuthServer,
+    @inject(AUTH_TOKENS.HEADERS_PROVIDER) private readonly headersProvider: HeadersProvider,
+  ) {}
 
   async signIn(email: string, password: string): Promise<InfrastructureResult<SessionData>> {
     const result = await withRetry(
@@ -39,7 +43,6 @@ class BetterAuthService {
       onFailure: (error) => err(this.toInfrastructureError(error)),
     });
   }
-
   async signUp(name: string, email: string, password: string): Promise<InfrastructureResult<UserData>> {
     const result = await withRetry(
       () =>
@@ -59,8 +62,9 @@ class BetterAuthService {
       onFailure: (error) => err(this.toInfrastructureError(error)),
     });
   }
+  async signOut(): Promise<InfrastructureResult<void>> {
+    const headers = this.headersProvider.getHeaders();
 
-  async signOut(headers: Headers): Promise<InfrastructureResult<void>> {
     const result = await withTimeout(() => this.authInstance.api.signOut({ headers }), TIMEOUT_MS, {
       systemComponent: "Network",
       errorCode: AUTH_INFRA_ERROR_CODES.AUTH_API_TIMEOUT,
@@ -71,8 +75,9 @@ class BetterAuthService {
       onFailure: (error) => err(this.toInfrastructureError(error)),
     });
   }
+  async getSession(): Promise<InfrastructureResult<SessionData | null>> {
+    const headers = this.headersProvider.getHeaders();
 
-  async getSession(headers: Headers): Promise<InfrastructureResult<SessionData | null>> {
     const result = await withTimeout(() => this.authInstance.api.getSession({ headers }), TIMEOUT_MS, {
       systemComponent: "Network",
       errorCode: AUTH_INFRA_ERROR_CODES.AUTH_SESSION_FAILED,
@@ -97,7 +102,6 @@ class BetterAuthService {
       user,
     };
   }
-
   private toInfrastructureError(error?: InfrastructureError): InfrastructureError {
     if (!error) {
       return new InfrastructureError({
