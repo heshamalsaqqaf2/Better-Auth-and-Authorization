@@ -5,19 +5,12 @@ export interface RequestContextStore {
   readonly correlationId: CorrelationId;
 }
 
-export const requestContextStore = new AsyncLocalStorage<RequestContextStore>();
-
-export function setCorrelationId(id: CorrelationId): void {
-  const store = requestContextStore.getStore();
-  if (store) {
-    requestContextStore.enterWith({ ...store, correlationId: id });
-  }
-}
+const als = new AsyncLocalStorage<RequestContextStore>();
 
 export function getCorrelationId(): CorrelationId | undefined {
-  return requestContextStore.getStore()?.correlationId;
+  return als.getStore()?.correlationId;
 }
 
 export function runWithStore<T>(store: RequestContextStore, fn: () => Promise<T>): Promise<T> {
-  return requestContextStore.run(store, fn);
+  return als.run(store, fn);
 }
