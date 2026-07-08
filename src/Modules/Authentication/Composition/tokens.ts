@@ -7,4 +7,5 @@ export const AUTH_TOKENS = {
   SIGN_OUT_USE_CASE: Symbol.for("Auth.SignOutUseCase"),
   GET_SESSION_QUERY: Symbol.for("Auth.GetSessionQuery"),
   QUERY_AUTH_REPOSITORY: Symbol.for("Auth.AuthQueryRepository"),
+  DRIZZLE_CLIENT: Symbol.for("Infra.DrizzleClient"),
 } as const;
