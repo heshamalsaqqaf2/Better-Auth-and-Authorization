@@ -15,7 +15,7 @@ export function getCorrelationId(): CorrelationId | undefined {
 // Throws if called outside ALS scope — use inside withRequestContextFromHeaders callback
 export function requireCorrelationId(): CorrelationId {
   const id = als.getStore()?.correlationId;
-  if (!id) {
+  if (id === undefined) {
     throw new Error("CorrelationId unavailable — called outside withRequestContext scope");
   }
   return id;
