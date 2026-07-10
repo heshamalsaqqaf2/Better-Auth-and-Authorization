@@ -1,3 +1,8 @@
+import type { NodePgDatabase } from "drizzle-orm/node-postgres";
+import type * as schema from "../Infrastructure/Database/Schema";
+
+export type DrizzleClient = NodePgDatabase<typeof schema>;
+
 export const AUTH_TOKENS = {
   BETTER_AUTH_INSTANCE: Symbol.for("Auth.BetterAuthInstance"),
   BETTER_AUTH_SERVICE: Symbol.for("Auth.BetterAuthService"),

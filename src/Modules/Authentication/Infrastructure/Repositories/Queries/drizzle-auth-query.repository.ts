@@ -1,26 +1,22 @@
 import { eq } from "drizzle-orm";
-import type { NodePgDatabase } from "drizzle-orm/node-postgres";
 import { inject, injectable } from "inversify";
-import type { Failure, Success } from "@/Core/Foundations/Base/Abstracts/result-base";
 import { err, ok } from "@/Core/Foundations/Base/Abstracts/result-base";
+import { DOMAIN_ERROR_CODES, DomainError } from "@/Core/Foundations/Domain/Errors";
 import type { DomainResult } from "@/Core/Foundations/Domain/Results";
+import { INFRASTRUCTURE_ERROR_CODES } from "@/Core/Foundations/Infrastructure/Errors/infrastructure-error-codes";
 import { DatabaseQueryError } from "@/Core/Foundations/Infrastructure/Errors/Specific/database-query.error";
-import { AUTH_TOKENS } from "@/Modules/Authentication/Composition/tokens";
+import { withRetry } from "@/Core/Foundations/Infrastructure/Resilience/with-retry";
+import { withTimeout } from "@/Core/Foundations/Infrastructure/Resilience/with-timeout";
+import { AUTH_TOKENS, type DrizzleClient } from "@/Modules/Authentication/Composition/tokens";
 import type { AuthenticatedUser } from "@/Modules/Authentication/Domain/Aggregates/authenticated-user";
 import type { AuthQueryRepository } from "@/Modules/Authentication/Domain/Repositories/Queries/auth-query.repository";
-import type * as schema from "@/Modules/Authentication/Infrastructure/Database/Schema";
 import { user } from "@/Modules/Authentication/Infrastructure/Database/Schema/user.schema";
 import { mapUserRowToAggregate } from "../../Mappers/drizzle-to-domain.mapper";
 
-type DrizzleClient = NodePgDatabase<typeof schema>;
 type DomainAuthResult = DomainResult<AuthenticatedUser | null>;
 
-function intoDomainResult(success: Success<AuthenticatedUser | null>): DomainAuthResult;
-function intoDomainResult(failure: Failure<never, DatabaseQueryError>): DomainAuthResult;
-function intoDomainResult(
-  result: Success<AuthenticatedUser | null> | Failure<never, DatabaseQueryError>,
-): DomainAuthResult {
-  return result as unknown as DomainAuthResult;
+function extractErrorMessage(error: unknown): string {
+  return error instanceof Error ? error.message : String(error);
 }
 
 @injectable()
@@ -29,14 +25,38 @@ export class DrizzleAuthQueryRepository implements AuthQueryRepository {
 
   async findByEmail(email: string): Promise<DomainAuthResult> {
     try {
-      const rows = await this.db.select().from(user).where(eq(user.email, email)).limit(1);
-      return intoDomainResult(ok(rows[0] ? mapUserRowToAggregate(rows[0]) : null));
-    } catch (error) {
-      return intoDomainResult(
-        err(
-          new DatabaseQueryError({
-            message: `Failed to find user by email: ${(error as Error).message}`,
+      const result = await withRetry(
+        () =>
+          withTimeout(() => this.db.select().from(user).where(eq(user.email, email)).limit(1), 10_000, {
+            systemComponent: "Database",
+            errorCode: INFRASTRUCTURE_ERROR_CODES.OPERATION_TIMEOUT,
           }),
+        3,
+        { systemComponent: "Database", errorCode: INFRASTRUCTURE_ERROR_CODES.RETRY_EXHAUSTED },
+      );
+
+      return result.match<DomainAuthResult>({
+        onSuccess: (rows) => ok(rows[0] ? mapUserRowToAggregate(rows[0]) : null),
+        onFailure: (error) =>
+          err(
+            new DomainError(
+              DOMAIN_ERROR_CODES.REPOSITORY_ERROR,
+              `Failed to find user by email: ${error.message}`,
+              "USER_LOOKUP",
+              email,
+              error,
+            ),
+          ),
+      });
+    } catch (error) {
+      const message = extractErrorMessage(error);
+      return err(
+        new DomainError(
+          DOMAIN_ERROR_CODES.REPOSITORY_ERROR,
+          `Unexpected error finding user by email: ${message}`,
+          "USER_LOOKUP",
+          email,
+          new DatabaseQueryError({ message }),
         ),
       );
     }
@@ -44,14 +64,38 @@ export class DrizzleAuthQueryRepository implements AuthQueryRepository {
 
   async findById(id: string): Promise<DomainAuthResult> {
     try {
-      const rows = await this.db.select().from(user).where(eq(user.id, id)).limit(1);
-      return intoDomainResult(ok(rows[0] ? mapUserRowToAggregate(rows[0]) : null));
-    } catch (error) {
-      return intoDomainResult(
-        err(
-          new DatabaseQueryError({
-            message: `Failed to find user by id: ${(error as Error).message}`,
+      const result = await withRetry(
+        () =>
+          withTimeout(() => this.db.select().from(user).where(eq(user.id, id)).limit(1), 10_000, {
+            systemComponent: "Database",
+            errorCode: INFRASTRUCTURE_ERROR_CODES.OPERATION_TIMEOUT,
           }),
+        3,
+        { systemComponent: "Database", errorCode: INFRASTRUCTURE_ERROR_CODES.RETRY_EXHAUSTED },
+      );
+
+      return result.match<DomainAuthResult>({
+        onSuccess: (rows) => ok(rows[0] ? mapUserRowToAggregate(rows[0]) : null),
+        onFailure: (error) =>
+          err(
+            new DomainError(
+              DOMAIN_ERROR_CODES.REPOSITORY_ERROR,
+              `Failed to find user by id: ${error.message}`,
+              "USER_LOOKUP",
+              id,
+              error,
+            ),
+          ),
+      });
+    } catch (error) {
+      const message = extractErrorMessage(error);
+      return err(
+        new DomainError(
+          DOMAIN_ERROR_CODES.REPOSITORY_ERROR,
+          `Unexpected error finding user by id: ${message}`,
+          "USER_LOOKUP",
+          id,
+          new DatabaseQueryError({ message }),
         ),
       );
     }

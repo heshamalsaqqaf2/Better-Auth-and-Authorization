@@ -1,4 +1,3 @@
-import type { NodePgDatabase } from "drizzle-orm/node-postgres";
 import { ContainerModule } from "inversify";
 import { auth } from "@/Lib/BetterAuth/Config/server";
 import { getDatabaseClient } from "@/Lib/Drizzle/Config/drizzle.client";
@@ -7,12 +6,9 @@ import { SignInUseCase } from "@/Modules/Authentication/Application/UseCases/Han
 import { SignOutUseCase } from "@/Modules/Authentication/Application/UseCases/Handlers/sign-out.use-case";
 import { SignUpUseCase } from "@/Modules/Authentication/Application/UseCases/Handlers/sign-up.use-case";
 import { GetSessionQuery } from "@/Modules/Authentication/Application/UseCases/Queries/get-session.use-case";
-import type * as schema from "@/Modules/Authentication/Infrastructure/Database/Schema";
 import { DrizzleAuthQueryRepository } from "@/Modules/Authentication/Infrastructure/Repositories/Queries/drizzle-auth-query.repository";
 import { BetterAuthService } from "@/Modules/Authentication/Infrastructure/Services";
-import { AUTH_TOKENS } from "./tokens";
-
-type DrizzleClient = NodePgDatabase<typeof schema>;
+import { AUTH_TOKENS, type DrizzleClient } from "./tokens";
 
 export const authContainerModule = new ContainerModule(({ bind }) => {
   bind(AUTH_TOKENS.BETTER_AUTH_INSTANCE).toConstantValue(auth);
