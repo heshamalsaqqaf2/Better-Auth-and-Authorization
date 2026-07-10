@@ -13,7 +13,7 @@ import {
 import { Severity } from "@/Core/Kernel/Primitives/Enums/severity.enum";
 import { createOperationId } from "@/Core/Kernel/Primitives/Types/operation-id.type";
 import { withRequestContextFromHeaders } from "@/Lib/RequestContext/from-headers";
-import { getCorrelationId } from "@/Lib/RequestContext/store";
+import { requireCorrelationId } from "@/Lib/RequestContext/store";
 import type { AuthResponseDTO, SignUpCommandDTO } from "@/Modules/Authentication/Application/DTOs/auth.dto";
 import type { SignUpUseCase } from "@/Modules/Authentication/Application/UseCases/Handlers/sign-up.use-case";
 import { AUTH_TOKENS } from "@/Modules/Authentication/Composition/tokens";
@@ -27,25 +27,25 @@ export async function signUpAction(
     const email = formData.get("email") as string | null;
     const password = formData.get("password") as string | null;
 
-    const fieldErrors: Record<string, string[]> = {};
-    if (!name) fieldErrors["name"] = ["Name is required"];
-    if (!email) fieldErrors["email"] = ["Email is required"];
-    if (!password) {
-      fieldErrors["password"] = ["Password is required"];
-    } else if (password.length < 8) {
-      fieldErrors["password"] = ["Password must be at least 8 characters"];
-    }
-    if (Object.keys(fieldErrors).length > 0) {
+    if (!name || !email || !password || password.length < 8) {
+      const fieldErrors: Record<string, string[]> = {};
+      if (!name) fieldErrors["name"] = ["Name is required"];
+      if (!email) fieldErrors["email"] = ["Email is required"];
+      if (!password) {
+        fieldErrors["password"] = ["Password is required"];
+      } else if (password.length < 8) {
+        fieldErrors["password"] = ["Password must be at least 8 characters"];
+      }
       return failureResult(
         createValidationError(PRESENTATION_ERROR_CODES.BAD_REQUEST, fieldErrors),
         createOperationId("SignUp"),
       );
     }
 
-    const dto: SignUpCommandDTO = { name: name!, email: email!, password: password! };
+    const dto: SignUpCommandDTO = { name, email, password };
 
     return await withRequestContextFromHeaders(async () => {
-      const ctx: RequestContext = { correlationId: getCorrelationId()! };
+      const ctx: RequestContext = { correlationId: requireCorrelationId() };
       const useCase = resolve<SignUpUseCase>(AUTH_TOKENS.SIGN_UP_USE_CASE);
       const result = await useCase.execute(dto, ctx);
       return mapApplicationToPresentationResult(result, { operationName: "SignUp" });

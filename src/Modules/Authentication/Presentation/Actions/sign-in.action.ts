@@ -13,7 +13,7 @@ import {
 import { Severity } from "@/Core/Kernel/Primitives/Enums/severity.enum";
 import { createOperationId } from "@/Core/Kernel/Primitives/Types/operation-id.type";
 import { withRequestContextFromHeaders } from "@/Lib/RequestContext/from-headers";
-import { getCorrelationId } from "@/Lib/RequestContext/store";
+import { requireCorrelationId } from "@/Lib/RequestContext/store";
 import type { AuthResponseDTO, SignInCommandDTO } from "@/Modules/Authentication/Application/DTOs/auth.dto";
 import type { SignInUseCase } from "@/Modules/Authentication/Application/UseCases/Handlers/sign-in.use-case";
 import { AUTH_TOKENS } from "@/Modules/Authentication/Composition/tokens";
@@ -39,7 +39,7 @@ export async function signInAction(
     const dto: SignInCommandDTO = { email, password };
 
     return await withRequestContextFromHeaders(async () => {
-      const ctx: RequestContext = { correlationId: getCorrelationId()! };
+      const ctx: RequestContext = { correlationId: requireCorrelationId() };
       const useCase = resolve<SignInUseCase>(AUTH_TOKENS.SIGN_IN_USE_CASE);
       const result = await useCase.execute(dto, ctx);
       return mapApplicationToPresentationResult(result, { operationName: "SignIn" });
