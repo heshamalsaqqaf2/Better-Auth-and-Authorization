@@ -29,12 +29,12 @@ export async function signUpAction(
 
     if (!name || !email || !password || password.length < 8) {
       const fieldErrors: Record<string, string[]> = {};
-      if (!name) fieldErrors["name"] = ["Name is required"];
-      if (!email) fieldErrors["email"] = ["Email is required"];
+      if (!name) fieldErrors.name = ["Name is required"];
+      if (!email) fieldErrors.email = ["Email is required"];
       if (!password) {
-        fieldErrors["password"] = ["Password is required"];
+        fieldErrors.password = ["Password is required"];
       } else if (password.length < 8) {
-        fieldErrors["password"] = ["Password must be at least 8 characters"];
+        fieldErrors.password = ["Password must be at least 8 characters"];
       }
       return failureResult(
         createValidationError(PRESENTATION_ERROR_CODES.BAD_REQUEST, fieldErrors),

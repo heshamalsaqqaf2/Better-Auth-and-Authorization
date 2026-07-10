@@ -28,8 +28,8 @@ export async function signInAction(
 
     if (!email || !password) {
       const fieldErrors: Record<string, string[]> = {};
-      if (!email) fieldErrors["email"] = ["Email is required"];
-      if (!password) fieldErrors["password"] = ["Password is required"];
+      if (!email) fieldErrors.email = ["Email is required"];
+      if (!password) fieldErrors.password = ["Password is required"];
       return failureResult(
         createValidationError(PRESENTATION_ERROR_CODES.BAD_REQUEST, fieldErrors),
         createOperationId("SignIn"),
