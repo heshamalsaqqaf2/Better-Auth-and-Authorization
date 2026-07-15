@@ -23,9 +23,9 @@ export default defineConfig({
   // Database dialect
   dialect: "postgresql",
   // Path to schema files (absolute path using resolve)
-  schema: resolve(process.cwd(), "src/Lib/Drizzle/Database/Schema/index.ts"),
+  schema: "./src/Lib/Drizzle/Database/Schema/index.ts",
   // Output directory for migrations (absolute path)
-  out: resolve(process.cwd(), "src/Lib/Drizzle/Database/migrations"),
+  out: "./src/Lib/Drizzle/Database/migrations",
   // Database credentials
   dbCredentials: {
     url: process.env.DATABASE_URL,
