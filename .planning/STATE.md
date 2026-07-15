@@ -10,11 +10,11 @@ See: .planning/PROJECT.md (updated 2026-06-07)
 ## Current Position
 
 Phase: 8 of 8 (Module Integration & Server Actions)
-Plan: 7/9 executed (08-01 ✅, 08-02 ✅, 08-03 ✅, 08-04 ✅, 08-05 ✅, 08-06 ✅, 08-07 ✅), 2 planned (08-08, 08-09 across Wave 6, 7)
-Status: ◐ In Progress — Wave 5 complete (08-07: Server Actions). Ready for Wave 6 (08-08).
-Last activity: 2026-07-11 — 08-07 executed with Server Actions (sign-in, sign-up, sign-out) + Better Auth API route
+Plan: 8/9 executed (08-01 ✅, 08-02 ✅, 08-03 ✅, 08-04 ✅, 08-05 ✅, 08-06 ✅, 08-07 ✅, 08-08 ✅), 1 planned (08-09 across Wave 7)
+Status: ◐ In Progress — Wave 6 complete (08-08: Auth pages). Ready for Wave 7 (08-09).
+Last activity: 2026-07-15 — 08-08 executed with auth pages (sign-in, sign-up forms) + auth layout
 
-Progress: [████████████████████] 100% (Phase 1) — [████████████████████] 100% (Phase 2) — [████████████████████] 100% (Phase 3) — [████████████████████████] 100% (Phase 4) — [████████████████████████] 100% (Phase 5) — [████████████████████] 100% (Phase 6) — [████████████████████] 100% (Phase 7) — [██████████████████░░░░] 78% (Phase 8)
+Progress: [████████████████████] 100% (Phase 1) — [████████████████████] 100% (Phase 2) — [████████████████████] 100% (Phase 3) — [████████████████████████] 100% (Phase 4) — [████████████████████████] 100% (Phase 5) — [████████████████████] 100% (Phase 6) — [████████████████████] 100% (Phase 7) — [██████████████████████░░] 89% (Phase 8)
 
 ## Performance Metrics
 
@@ -142,10 +142,10 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-07-11
-Stopped at: Phase 8 — Wave 5 complete (08-07: Server Actions). Ready for Wave 6 (08-08).
+Last session: 2026-07-15
+Stopped at: Phase 8 — Wave 6 complete (08-08: Auth pages). Ready for Wave 7 (08-09).
 Resume file: `.planning/phases/08-module-integration-server-actions/08-CONTEXT.md`
-Next command: `/gsd-execute-phase 08 --wave 6` — Execute Wave 6: 08-08 (Auth pages)
+Next command: `/gsd-execute-phase 08 --wave 7` — Execute Wave 7: 08-09 (Dashboards + error boundaries)
 
 ## Phase 8 Plans (2026-07-06 — 08-05 executed)
 
@@ -166,8 +166,8 @@ Next command: `/gsd-execute-phase 08 --wave 6` — Execute Wave 6: 08-08 (Auth p
 **Wave 5 (Server Actions ✅):**
 - [x] 08-07: **[REWRITTEN]** Server Actions — resolve from InversifyJS container, Better Auth API route
 
-**Wave 6 (Auth pages):**
-- [ ] 08-08: **[REWRITTEN]** Auth pages (sign-in, sign-up) with @tanstack/react-form
+**Wave 6 (Auth pages ✅):**
+- [x] 08-08: **[REWRITTEN]** Auth pages (sign-in, sign-up) with @tanstack/react-form
 
 **Wave 7 (Error boundaries):**
 - [ ] 08-09: **[REWRITTEN]** Dashboards + global + per-route error boundaries
