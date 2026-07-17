@@ -13,7 +13,7 @@ export default function DashboardError({
   unstable_retry: () => void;
 }) {
   useEffect(() => {
-    console.error("User dashboard error:", { message: error.message, cause: error.cause, digest: error.digest });
+    console.error("Dashboard error:", { message: error.message, cause: error.cause, digest: error.digest });
   }, [error]);
 
   return (

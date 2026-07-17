@@ -3,7 +3,7 @@ import { redirect } from "next/navigation";
 import { getSession } from "@/Lib/BetterAuth/utils/get-session";
 import { Card, CardContent, CardHeader, CardTitle } from "@/Shared/components/ui/card";
 
-export default async function UserDashboardPage() {
+export default async function DashboardPage() {
   const h = await headers();
   const session = await getSession(h);
 

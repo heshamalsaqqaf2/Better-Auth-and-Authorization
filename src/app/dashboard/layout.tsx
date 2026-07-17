@@ -3,7 +3,7 @@ import { redirect } from "next/navigation";
 import { getSession } from "@/Lib/BetterAuth/utils/get-session";
 import UserNav from "@/Modules/Authentication/Presentation/Components/user-nav";
 
-export default async function AdminDashboardLayout({ children }: { children: React.ReactNode }) {
+export default async function DashboardLayout({ children }: { children: React.ReactNode }) {
   const h = await headers();
   const session = await getSession(h);
 
