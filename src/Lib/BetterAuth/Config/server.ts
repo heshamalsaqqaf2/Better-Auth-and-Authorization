@@ -9,9 +9,9 @@ export const auth = betterAuth({
   database: drizzleAdapter(db, {
     provider: "pg",
   }),
-  plugins: [nextCookies()],
   emailAndPassword: {
     enabled: true,
+    requireEmailVerification: false,
   },
   baseURL: process.env.BETTER_AUTH_URL ?? "http://localhost:3000",
   secret: process.env.BETTER_AUTH_SECRET,
@@ -20,6 +20,7 @@ export const auth = betterAuth({
       generateId: "uuid",
     },
   },
+  plugins: [nextCookies()],
 });
 
 export type AuthServer = typeof auth;

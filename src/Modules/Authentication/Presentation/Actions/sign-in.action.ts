@@ -1,6 +1,5 @@
 "use server";
 
-import { redirect } from "next/navigation";
 import { resolve } from "@/CompositionRoot";
 import type { RequestContext } from "@/Core/Foundations/Application/Contracts/request-context.contract";
 import {
@@ -39,39 +38,13 @@ export async function signInAction(
 
     const dto: SignInCommandDTO = { email, password };
 
-    type ExecResult =
-      | { kind: "redirect"; to: string }
-      | { kind: "result"; result: PresentationResult<AuthResponseDTO | null> };
-
-    const execResult: ExecResult = await withRequestContextFromHeaders(async () => {
+    return await withRequestContextFromHeaders(async () => {
       const ctx: RequestContext = { correlationId: requireCorrelationId() };
       const useCase = resolve<SignInUseCase>(AUTH_TOKENS.SIGN_IN_USE_CASE);
-      const appResult = await useCase.execute(dto, ctx);
-
-      if (appResult.isSuccess) {
-        return { kind: "redirect", to: "/dashboard" } as const;
-      }
-
-      return {
-        kind: "result",
-        result: mapApplicationToPresentationResult(appResult, { operationName: "SignIn" }),
-      } as const;
+      const result = await useCase.execute(dto, ctx);
+      return mapApplicationToPresentationResult(result, { operationName: "SignIn" });
     });
-
-    if (execResult.kind === "redirect") {
-      redirect(execResult.to);
-    }
-
-    return execResult.result;
-  } catch (error) {
-    if (
-      error instanceof Error &&
-      "digest" in error &&
-      typeof (error as Error & { digest: string }).digest === "string" &&
-      (error as Error & { digest: string }).digest.startsWith("NEXT_REDIRECT")
-    ) {
-      throw error;
-    }
+  } catch {
     return failureResult(
       createSystemError(
         PRESENTATION_ERROR_CODES.INTERNAL_ERROR,
