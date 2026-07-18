@@ -1,5 +1,6 @@
 "use server";
 
+import { redirect } from "next/navigation";
 import { resolve } from "@/CompositionRoot";
 import type { RequestContext } from "@/Core/Foundations/Application/Contracts/request-context.contract";
 import {
@@ -44,13 +45,39 @@ export async function signUpAction(
 
     const dto: SignUpCommandDTO = { name, email, password };
 
-    return await withRequestContextFromHeaders(async () => {
+    type ExecResult =
+      | { kind: "redirect"; to: string }
+      | { kind: "result"; result: PresentationResult<AuthResponseDTO | null> };
+
+    const execResult: ExecResult = await withRequestContextFromHeaders(async () => {
       const ctx: RequestContext = { correlationId: requireCorrelationId() };
       const useCase = resolve<SignUpUseCase>(AUTH_TOKENS.SIGN_UP_USE_CASE);
-      const result = await useCase.execute(dto, ctx);
-      return mapApplicationToPresentationResult(result, { operationName: "SignUp" });
+      const appResult = await useCase.execute(dto, ctx);
+
+      if (appResult.isSuccess) {
+        return { kind: "redirect", to: "/sign-in" } as const;
+      }
+
+      return {
+        kind: "result",
+        result: mapApplicationToPresentationResult(appResult, { operationName: "SignUp" }),
+      } as const;
     });
-  } catch {
+
+    if (execResult.kind === "redirect") {
+      redirect(execResult.to);
+    }
+
+    return execResult.result;
+  } catch (error) {
+    if (
+      error instanceof Error &&
+      "digest" in error &&
+      typeof (error as Error & { digest: string }).digest === "string" &&
+      (error as Error & { digest: string }).digest.startsWith("NEXT_REDIRECT")
+    ) {
+      throw error;
+    }
     return failureResult(
       createSystemError(
         PRESENTATION_ERROR_CODES.INTERNAL_ERROR,
