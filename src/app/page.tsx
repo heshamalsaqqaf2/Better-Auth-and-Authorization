@@ -1,7 +1,18 @@
+import Link from "next/link";
+import { Button } from "@/Shared/components/ui/button";
+
 export default async function Home() {
   return (
-    <div className="grid min-h-screen grid-rows-[20px_1fr_20px] items-center justify-items-center gap-16 p-8 pb-20 font-(family-name:--font-geist-sans) sm:p-20">
-      <h1>Home Page</h1>
+    <div className="grid min-h-screen items-center justify-items-center">
+      <div className="p-5">
+        <h1>Home Page</h1>
+        <Button variant={"default"}>
+          <Link href={"sign-in"}>SIGN IN</Link>
+        </Button>
+        <Button variant={"secondary"}>
+          <Link href={"sign-up"}>SIGN UP</Link>
+        </Button>
+      </div>
     </div>
   );
 }

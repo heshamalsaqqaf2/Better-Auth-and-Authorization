@@ -6,10 +6,7 @@ import UserNav from "@/Modules/Authentication/Presentation/Components/user-nav";
 export default async function AdminLayout({ children }: { children: React.ReactNode }) {
   const h = await headers();
   const session = await getSession(h);
-
-  if (!session) {
-    redirect("/sign-in");
-  }
+  if (!session) redirect("/sign-in");
 
   return (
     <div className="min-h-screen flex flex-col">
