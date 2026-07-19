@@ -29,12 +29,15 @@ class BetterAuthService {
       () =>
         withTimeout(() => this.authInstance.api.signInEmail({ body: { email, password } }), TIMEOUT_MS, {
           systemComponent: "Network",
-          errorCode: INFRASTRUCTURE_ERROR_CODES.API_TIMEOUT_ERROR,
+          errorCode: AUTH_INFRA_ERROR_CODES.AUTH_API_TIMEOUT,
         }),
       MAX_RETRIES,
       {
         systemComponent: "Network",
         errorCode: AUTH_INFRA_ERROR_CODES.AUTH_RETRY_EXHAUSTED,
+        retryable: (error) =>
+          error.code === INFRASTRUCTURE_ERROR_CODES.API_TIMEOUT_ERROR ||
+          error.code === INFRASTRUCTURE_ERROR_CODES.OPERATION_TIMEOUT,
       },
     );
 
@@ -54,6 +57,9 @@ class BetterAuthService {
       {
         systemComponent: "Network",
         errorCode: AUTH_INFRA_ERROR_CODES.AUTH_RETRY_EXHAUSTED,
+        retryable: (error) =>
+          error.code === INFRASTRUCTURE_ERROR_CODES.API_TIMEOUT_ERROR ||
+          error.code === INFRASTRUCTURE_ERROR_CODES.OPERATION_TIMEOUT,
       },
     );
 
@@ -114,12 +120,20 @@ class BetterAuthService {
     const code = error.code;
     const message = error.message;
 
-    if (
-      code === INFRASTRUCTURE_ERROR_CODES.API_TIMEOUT_ERROR ||
-      code === AUTH_INFRA_ERROR_CODES.AUTH_API_TIMEOUT ||
-      code === AUTH_INFRA_ERROR_CODES.AUTH_SESSION_FAILED
-    ) {
+    if (code === INFRASTRUCTURE_ERROR_CODES.API_TIMEOUT_ERROR || code === AUTH_INFRA_ERROR_CODES.AUTH_API_TIMEOUT) {
       return new ApiTimeoutError({ message, cause: error });
+    }
+
+    if (code === INFRASTRUCTURE_ERROR_CODES.SYSTEM_ERROR) {
+      const lowerMsg = message.toLowerCase();
+      if (lowerMsg.includes("user not found") || lowerMsg.includes("invalid")) {
+        return new InfrastructureError({
+          code: AUTH_INFRA_ERROR_CODES.AUTH_INVALID_CREDENTIALS,
+          message: "Invalid email or password",
+          systemComponent: "Network",
+          cause: error,
+        });
+      }
     }
 
     return new InfrastructureError({

@@ -7,7 +7,7 @@ export default function Provider({ children }: { children: React.ReactNode }) {
     <TooltipProvider>
       <NextTopLoader easing="ease" showSpinner={false} color="var(--primary)" />
       {children}
-      <Toaster position="top-center" />
+      <Toaster position="top-right" />
     </TooltipProvider>
   );
 }

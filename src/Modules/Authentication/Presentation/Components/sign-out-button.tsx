@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useActionState, useEffect } from "react";
+import { useActionState, useEffect, useRef } from "react";
 import { toast } from "sonner";
 import { type PresentationResult, successResult } from "@/Core/Foundations/Presentation";
 import { createOperationId } from "@/Core/Foundations/Types";
@@ -13,13 +13,14 @@ const initialState: PresentationResult<null> = successResult(null, createOperati
 export default function SignOutButton() {
   const [state, formAction, isPending] = useActionState(signOutAction, initialState);
   const router = useRouter();
+  const hasSubmitted = useRef(false);
 
   useEffect(() => {
-    if (state._tag === "Success") {
+    if (state._tag === "Success" && hasSubmitted.current) {
       router.push("/sign-in");
       return;
     }
-    if (state._tag === "Failure") {
+    if (state._tag === "Failure" && hasSubmitted.current) {
       if ("userMessage" in state.error) {
         toast.error(state.error.userMessage);
       }
@@ -27,7 +28,12 @@ export default function SignOutButton() {
   }, [state, router]);
 
   return (
-    <form action={formAction}>
+    <form
+      action={formAction}
+      onSubmit={() => {
+        hasSubmitted.current = true;
+      }}
+    >
       <Button type="submit" variant="destructive" disabled={isPending}>
         {isPending ? "Signing out..." : "Sign Out"}
       </Button>

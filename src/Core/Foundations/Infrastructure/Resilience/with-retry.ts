@@ -12,6 +12,7 @@ export interface RetryOptions {
   jitterFactor?: number;
   systemComponent?: InfrastructureComponent;
   errorCode?: ErrorCode;
+  retryable?: (error: InfrastructureError) => boolean;
 }
 
 export function withRetry<T>(
@@ -24,10 +25,14 @@ export function withRetry<T>(
   const jitterMax = options?.jitterFactor ?? 100;
   const systemComponent = options?.systemComponent ?? "Network";
   const errorCode = options?.errorCode ?? INFRASTRUCTURE_ERROR_CODES.RETRY_EXHAUSTED;
+  const isRetryable = options?.retryable ?? (() => true);
 
   async function attempt(attemptCount: number): Promise<InfrastructureResult<T>> {
     const result = await fn();
     if (result.isSuccess) {
+      return result;
+    }
+    if (result.error && !isRetryable(result.error)) {
       return result;
     }
     if (attemptCount >= maxRetries) {
