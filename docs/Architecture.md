@@ -25,7 +25,7 @@
 
 - **OOP**: مثالي للـ Polymorphism، Dependency Injection، والتغليف (Encapsulation)
 - **Discriminated Unions**: مثالية للتسلسل الآمن (JSON-safe)، Pattern Matching، و Type Narrowing
-- **Next.js 15 Constraint**: الـ Classes تفقد دوالها عند التسلسل عبر RSC Payload، بينما الـ DUs تبقى سليمة 100%
+- **Next.js 16 Constraint**: الـ Classes تفقد دوالها عند التسلسل عبر RSC Payload، بينما الـ DUs تبقى سليمة 100%
 
 ---
 
@@ -68,6 +68,19 @@
 - **L**: Polymorphism في Repositories و Services
 - **I**: Interfaces محددة لكل طبقة
 - **D**: Dependency Injection عبر Composition Root
+
+### 4.5 Data Transfer Objects (DTOs)
+
+- **Purpose**: نقل البيانات بين الطبقات دون تسرب السلوك
+- **Mapping**: تحويل صريح بين الـ Domain Entities و الـ DTOs باستخدام Mappers
+- **Validation**: DTOs يمكن التحقق منها قبل الوصول للـ Domain
+
+### 4.6 Data Access Layer (DAL)
+
+- **Repositories**: Classes تتعامل مع قواعد البيانات أو APIs خارجية
+- **Mappers**: تحويل البيانات بين الـ Domain و الـ Persistence Layer
+- **Abstraction**: استخدام Interfaces لتسهيل التبديل بين مصادر البيانات المختلفة
+- **Error Handling**: جميع الأخطاء يتم تغليفها في `InfrastructureError` قبل العودة للـ Application Layer
 
 ---
 
@@ -125,22 +138,22 @@
 src/
 └── app/           # Next.js 16 App Routes (Page Only, import components from Presentation Layer)  
 ├── Core/
-│   ├── Capabilities/          # Cross-cutting concerns
+│   ├── Capabilities/        # Cross-cutting concerns
 │   ├── Foundations/
 │   │   ├── Base/             # Abstract Classes, TypeGuards, Validation (OOP)
 │   │   ├── Domain/           # DomainResult, DomainError (OOP)
 │   │   ├── Application/      # ApplicationResult, ApplicationError, Mappers (OOP)
 │   │   ├── Infrastructure/   # InfrastructureResult, InfrastructureError, Mappers (OOP)
 │   │   └── Presentation/     # PresentationResult, PresentationError, Mappers (DU)
+│   │   └── Types/            # Discriminated Unions, Type Guards, etc. (DU)
 │   └── Kernel/              # Contracts, Primitives, Constants, etc.
-│
 ├── Modules/
 │   ├── [Name]Model/
 │   │   ├── Domain/          # Aggregate, etc (OOP)
 │   │   ├── Application/     # Handler UseCase etc. (OOP)
 │   │   ├── Infrastructure/  # Repository, Database Mappers etc. (OOP) DB Schema this is module's.
 │   │   └── Presentation/    # Server Actions, etc. (DU)
-└── compositions-root/       # DI Container Modern Composition Root Pattern [Bindings, Modules, etc.]
+└── compositions-root/       # DI Container Modern Composition Root Pattern [bootstrap, container]
 └── Shared/                  # Components, Action, Hooks, Utils, etc. shared between Modules
 └── Lib/                     # Third-party integrations, Library Config etc.
 └── Scripts/                 # Testing Conections Database, Seeding, etc.  
@@ -155,6 +168,7 @@ src/
 - ✅ **Bundle Size**: Tree-shaking فعال للدوال غير المستخدمة
 - ✅ **Maintainability**: سهولة إضافة ميزات جديدة دون كسر العزل
 - ✅ **Performance**: Lazy evaluation و Memoization للعمليات الثقيلة
+- ✅ **Best Practices**: الالتزام الصارم بمبادئ SOLID و DDD و CQRS, DAO, DTOs, Mappers, Dependency Injection, Composition Root, Deterministic Error Handling, Pattern Matching, Type Guards, Discriminated Unions, و Type Narrowing
 
 ---
 

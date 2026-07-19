@@ -320,7 +320,7 @@ ApplicationError.isApplicationError(error): error is ApplicationError
 - صحة Error Type
 - عدم وجود تسرب للـ Types
 
-### 5.4 ESLint Rules (موصى به)
+### 5.4 Biome Rules (موصى به)
 
 قواعد مخصصة تمنع:
 
@@ -587,7 +587,8 @@ src/
 ### ✅ متطلبات إلزامية
 
 1. ✅ كل Domain Entiti OR Domain Aggreagator يعيد `DomainResult<T, DomainError>`
-1. ✅ كل UseCase يعيد `ApplicationResult<T, ApplicationError>`
+1. ✅ كل UseCase/Handler يعيد `ApplicationResult<T, ApplicationError>`
+1. ✅ كل Repository يعيد `InfrastructureResult<T, InfrastructureError>`
 1. ✅ كل Server Action يعيد `PresentationResult<T>`
 1. ✅ استخدم Mappers صريحة عند التحويل
 1. ✅ احفظ `cause` chain للأخطاء
@@ -628,5 +629,4 @@ src/
 
 هذا التصميم يمثل **State of the Art** في بناء أنظمة Enterprise حديثة باستخدام TypeScript و Next.js 15.
 
----
 ---
